@@ -2,7 +2,6 @@ package io.github.mthli.dara.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -14,6 +13,7 @@ public class PermissionLayout extends FrameLayout implements View.OnClickListene
     public interface PermissionLayoutListener {
         void onPositionClick();
         void onNegativeClick();
+        void onNeutralClick();
     }
 
     private PermissionLayoutListener mPermissionLayoutListener;
@@ -38,11 +38,9 @@ public class PermissionLayout extends FrameLayout implements View.OnClickListene
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        AppCompatButton positive = (AppCompatButton) findViewById(R.id.positive);
-        positive.setOnClickListener(this);
-
-        AppCompatButton negative = (AppCompatButton) findViewById(R.id.negative);
-        negative.setOnClickListener(this);
+        findViewById(R.id.positive).setOnClickListener(this);
+        findViewById(R.id.negative).setOnClickListener(this);
+        findViewById(R.id.neutral).setOnClickListener(this);
     }
 
     @Override
@@ -54,6 +52,10 @@ public class PermissionLayout extends FrameLayout implements View.OnClickListene
         } else if (view.getId() == R.id.negative) {
             if (mPermissionLayoutListener != null) {
                 mPermissionLayoutListener.onNegativeClick();
+            }
+        } else if (view.getId() == R.id.neutral) {
+            if (mPermissionLayoutListener != null) {
+                mPermissionLayoutListener.onNeutralClick();
             }
         }
     }
