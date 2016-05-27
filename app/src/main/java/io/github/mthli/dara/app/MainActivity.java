@@ -1,8 +1,10 @@
-package io.github.mthli.dara;
+package io.github.mthli.dara.app;
 
 import android.os.Bundle;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
+import io.github.mthli.dara.R;
 
 public class MainActivity extends RxAppCompatActivity {
     @Override
