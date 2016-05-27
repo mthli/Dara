@@ -2,4 +2,11 @@
 
     <string name="app_name">Dara</string>
 
+    <!-- Permission -->
+    <string name="permission_detail">
+        Grant permission to shield notifications that you don\'t want to see.
+    </string>
+    <string name="permission_access">Access</string>
+    <string name="permission_cancel">Cancel</string>
+
 </resources>

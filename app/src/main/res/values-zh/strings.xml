@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="permission_detail">
+        为了隐藏你不希望看到的通知，请授予允许访问通知的权限。
+    </string>
+    <string name="permission_access">授权</string>
+    <string name="permission_cancel">取消</string>
+
+</resources>

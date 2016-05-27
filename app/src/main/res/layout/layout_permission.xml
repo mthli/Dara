@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<io.github.mthli.dara.widget.PermissionLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="144dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_gravity="center"
+            android:text="@string/permission_detail"
+            android:textColor="@color/white"
+            android:textSize="16sp">
+    </android.support.v7.widget.AppCompatTextView>
+
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="12dp"
+                  android:layout_marginEnd="12dp"
+                  android:layout_gravity="center|end">
+
+        <android.support.v7.widget.AppCompatButton
+                android:id="@+id/negative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/permission_cancel"
+                android:textColor="@color/blue_300"
+                style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        </android.support.v7.widget.AppCompatButton>
+
+        <android.support.v7.widget.AppCompatButton
+                android:id="@+id/positive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/permission_access"
+                android:textColor="@color/white"
+                style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        </android.support.v7.widget.AppCompatButton>
+
+    </LinearLayout>
+
+</io.github.mthli.dara.widget.PermissionLayout>
