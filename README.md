@@ -3,6 +3,8 @@ Dara
 
 Shielding notification that you don't want to see.
 
+Support Android Lollipop and up.
+
 **UNDER DEVELOPMENT**.
 
 ## License
