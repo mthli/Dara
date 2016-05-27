@@ -20,16 +20,21 @@ public class MainActivity extends RxAppCompatActivity implements PermissionLayou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mContainer = (FrameLayout) findViewById(R.id.container);
-        if (!DaraService.sIsAlive) {
-            setupPermission();
-        } else {
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!DaraService.sIsAlive) {
+            setupWhenPermissionDenied();
+        } else {
+            setupWhenPermissionGrant();
         }
     }
 
-    private void setupPermission() {
+    private void setupWhenPermissionDenied() {
         PermissionLayout layout = (PermissionLayout) getLayoutInflater().inflate(R.layout.layout_permission, null, false);
         layout.setPermissionLayoutListener(this);
         mContainer.removeAllViews();
@@ -52,5 +57,10 @@ public class MainActivity extends RxAppCompatActivity implements PermissionLayou
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         builder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         builder.build().launchUrl(this, Uri.parse(ConstantUtils.PERMISSION_DETAIL_URL));
+    }
+
+    // TODO
+    private void setupWhenPermissionGrant() {
+        mContainer.removeAllViews();
     }
 }
