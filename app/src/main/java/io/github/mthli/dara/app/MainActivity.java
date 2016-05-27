@@ -1,12 +1,16 @@
 package io.github.mthli.dara.app;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.v4.content.ContextCompat;
 import android.widget.FrameLayout;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.util.ConstantUtils;
 import io.github.mthli.dara.widget.PermissionLayout;
 
 public class MainActivity extends RxAppCompatActivity implements PermissionLayout.PermissionLayoutListener {
@@ -34,7 +38,7 @@ public class MainActivity extends RxAppCompatActivity implements PermissionLayou
 
     @Override
     public void onPositionClick() {
-        Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+        Intent intent = new Intent(ConstantUtils.PERMISIION_NAME);
         startActivity(intent);
     }
 
@@ -45,6 +49,8 @@ public class MainActivity extends RxAppCompatActivity implements PermissionLayou
 
     @Override
     public void onNeutralClick() {
-        // TODO
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        builder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        builder.build().launchUrl(this, Uri.parse(ConstantUtils.PERMISSION_DETAIL_URL));
     }
 }
