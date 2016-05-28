@@ -2,19 +2,19 @@ package io.github.mthli.dara.widget.item;
 
 public class Label {
 
-    private String mLabel;
+    private String mText;
 
     public Label() {}
 
-    public Label(String label) {
-        mLabel = label;
+    public Label(String text) {
+        mText = text;
     }
 
-    public String getLabel() {
-        return mLabel;
+    public String getText() {
+        return mText;
     }
 
-    public void setLabel(String label) {
-        mLabel = label;
+    public void setText(String text) {
+        mText = text;
     }
 }

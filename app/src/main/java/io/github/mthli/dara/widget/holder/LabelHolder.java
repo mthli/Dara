@@ -17,6 +17,6 @@ public class LabelHolder extends RecyclerView.ViewHolder {
     }
 
     public void setLabel(Label label) {
-        mLabelView.setText(label.getLabel());
+        mLabelView.setText(label.getText());
     }
 }

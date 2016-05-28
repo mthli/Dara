@@ -38,7 +38,7 @@ public class MainActivity extends RxAppCompatActivity
         setTaskDescription(new ActivityManager.TaskDescription(
                 getString(R.string.app_name),
                 BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
-                ContextCompat.getColor(MainActivity.this, R.color.blue_grey_800)
+                ContextCompat.getColor(MainActivity.this, R.color.blue_grey_900)
         ));
     }
 
@@ -80,7 +80,7 @@ public class MainActivity extends RxAppCompatActivity
     @Override
     public void onNeutralClick() {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        builder.setToolbarColor(ContextCompat.getColor(this, R.color.blue_grey_800));
+        builder.setToolbarColor(ContextCompat.getColor(this, R.color.blue_grey_900));
         builder.build().launchUrl(this, Uri.parse(ConstantUtils.PERMISSION_DETAIL_URL));
     }
 
