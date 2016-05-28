@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<io.github.mthli.dara.widget.layout.RecyclerLayout
+<io.github.mthli.dara.widget.RecyclerLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -15,4 +15,4 @@
 
     <!-- TODO empty -->
 
-</io.github.mthli.dara.widget.layout.RecyclerLayout>
+</io.github.mthli.dara.widget.RecyclerLayout>

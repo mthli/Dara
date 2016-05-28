@@ -11,8 +11,8 @@
     <string name="permission_detail">Detail</string>
 
     <!-- Label -->
-    <string name="label_current_notifications">
-        Current notifications
+    <string name="label_notification_center">
+        Notification center
     </string>
 
 </resources>

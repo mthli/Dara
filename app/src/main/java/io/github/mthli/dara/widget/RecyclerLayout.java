@@ -1,4 +1,4 @@
-package io.github.mthli.dara.widget.layout;
+package io.github.mthli.dara.widget;
 
 import android.content.Context;
 import android.service.notification.StatusBarNotification;
@@ -65,6 +65,7 @@ public class RecyclerLayout extends FrameLayout {
         mAdapter = new DaraAdapter(getContext(), mList);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+        mRecyclerView.addItemDecoration(new DaraItemDecoration(getContext()));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -98,7 +99,7 @@ public class RecyclerLayout extends FrameLayout {
         mList.clear();
 
         if (list != null && list.size() > 0) {
-            mList.add(new Label(getResources().getString(R.string.label_current_notifications)));
+            mList.add(new Label(getResources().getString(R.string.label_notification_center)));
             mList.addAll(list);
         }
 

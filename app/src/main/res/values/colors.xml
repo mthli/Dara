@@ -23,6 +23,7 @@
     <color name="blue_grey_100">#FFCFD8DC</color>
 
     <color name="black">@android:color/black</color>
+    <color name="divider">#26000000</color>
     <color name="white">@android:color/white</color>
     <color name="transparent">@android:color/transparent</color>
 
