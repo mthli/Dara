@@ -2,13 +2,25 @@
 
 <resources>
 
-    <color name="blue_700">#FF1976D2</color>
-    <color name="blue_500">#FF2196F3</color>
-    <color name="blue_300">#FF64B5F6</color>
+    <color name="teal_900">#FF004D40</color>
+    <color name="teal_800">#FF00695C</color>
+    <color name="teal_700">#FF00796B</color>
+    <color name="teal_600">#FF00897B</color>
+    <color name="teal_500">#FF009688</color>
+    <color name="teal_400">#FF26A69A</color>
+    <color name="teal_300">#FF4DB6AC</color>
+    <color name="teal_200">#FF80CBC4</color>
+    <color name="teal_100">#FFB2DFDB</color>
 
-    <color name="colorPrimary">@color/blue_500</color>
-    <color name="colorPrimaryDark">@color/blue_700</color>
-    <color name="colorAccent">@color/blue_500</color>
+    <color name="blue_grey_900">#FF263238</color>
+    <color name="blue_grey_800">#FF37474F</color>
+    <color name="blue_grey_700">#FF455A64</color>
+    <color name="blue_grey_600">#FF546E7A</color>
+    <color name="blue_grey_500">#FF607D8B</color>
+    <color name="blue_grey_400">#FF78909C</color>
+    <color name="blue_grey_300">#FF90A4AE</color>
+    <color name="blue_grey_200">#FFB0BEC5</color>
+    <color name="blue_grey_100">#FFCFD8DC</color>
 
     <color name="black">@android:color/black</color>
     <color name="white">@android:color/white</color>

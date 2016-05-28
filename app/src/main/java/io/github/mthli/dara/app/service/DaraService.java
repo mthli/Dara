@@ -1,4 +1,4 @@
-package io.github.mthli.dara.app;
+package io.github.mthli.dara.app.service;
 
 import android.content.Intent;
 import android.os.IBinder;

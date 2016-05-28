@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/permission_cancel"
-                android:textColor="@color/blue_300"
+                android:textColor="@color/teal_300"
                 style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
         </android.support.v7.widget.AppCompatButton>
 
@@ -52,7 +52,7 @@
             android:layout_marginEnd="12dp"
             android:layout_gravity="center|start"
             android:text="@string/permission_detail"
-            android:textColor="@color/blue_300"
+            android:textColor="@color/teal_300"
             style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
     </android.support.v7.widget.AppCompatButton>
 
