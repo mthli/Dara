@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.event.NotificationEvent;
 import io.github.mthli.dara.util.ConstantUtils;
 import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.util.RxBus;
@@ -78,22 +79,22 @@ public class MainActivity extends RxAppCompatActivity implements PermissionLayou
     }
 
     private void setupRxBus() {
-        RxBus.getInstance().toObservable(StatusBarNotification.class)
-                .compose(this.<StatusBarNotification>bindToLifecycle())
+        RxBus.getInstance().toObservable(NotificationEvent.class)
+                .compose(this.<NotificationEvent>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<StatusBarNotification>() {
+                .subscribe(new Action1<NotificationEvent>() {
                     @Override
-                    public void call(StatusBarNotification sbn) {
-                        onSbnEvent(sbn);
+                    public void call(NotificationEvent event) {
+                        onNotificationEvent(event);
                     }
                 });
     }
 
-    private void onSbnEvent(StatusBarNotification sbn) {
+    private void onNotificationEvent(NotificationEvent event) {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         mContainer.removeAllViews();
-        mContainer.addView(getNotificationView(sbn), params);
+        mContainer.addView(getNotificationView(event.getNotification()), params);
     }
 
     private View getNotificationView(StatusBarNotification sbn) {

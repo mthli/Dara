@@ -5,10 +5,24 @@ import android.os.IBinder;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.github.mthli.dara.event.NotificationEvent;
+import io.github.mthli.dara.event.NotificationListEvent;
+import io.github.mthli.dara.event.RequestActiveNotificationsEvent;
 import io.github.mthli.dara.util.RxBus;
+import rx.functions.Action1;
 
 public class DaraService extends NotificationListenerService {
+
     public static boolean sIsAlive = false;
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        setupRxBus();
+        return super.onStartCommand(intent, flags, startId);
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -22,10 +36,31 @@ public class DaraService extends NotificationListenerService {
         return super.onUnbind(intent);
     }
 
+    private void setupRxBus() {
+        RxBus.getInstance().toObservable(RequestActiveNotificationsEvent.class)
+                .subscribe(new Action1<RequestActiveNotificationsEvent>() {
+                    @Override
+                    public void call(RequestActiveNotificationsEvent event) {
+                        onRequestActiveNotificationsEvent(event);
+                    }
+                });
+    }
+
+    private void onRequestActiveNotificationsEvent(RequestActiveNotificationsEvent event) {
+        List<StatusBarNotification> list = new ArrayList<>();
+        for (StatusBarNotification notification : getActiveNotifications()) {
+            if (!notification.isOngoing()) {
+                list.add(notification);
+            }
+        }
+
+        RxBus.getInstance().post(new NotificationListEvent(list));
+    }
+
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         if (!sbn.isOngoing()) {
-            RxBus.getInstance().post(sbn);
+            RxBus.getInstance().post(new NotificationEvent(sbn));
         }
     }
 
