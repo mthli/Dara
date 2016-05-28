@@ -9,6 +9,7 @@ import android.view.View;
 import io.github.mthli.dara.R;
 
 public class PackageHolder extends RecyclerView.ViewHolder {
+
     private AppCompatTextView mPkg;
     private AppCompatImageButton mAction;
 

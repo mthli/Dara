@@ -7,6 +7,7 @@ import android.view.View;
 import io.github.mthli.dara.R;
 
 public class LabelHolder extends RecyclerView.ViewHolder {
+
     private AppCompatTextView mLabel;
 
     public LabelHolder(View view) {
