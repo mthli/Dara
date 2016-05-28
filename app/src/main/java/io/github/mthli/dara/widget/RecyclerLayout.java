@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.event.ClickNotifiHolderEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.util.RxBus;
@@ -29,7 +30,6 @@ import rx.functions.Action1;
 
 public class RecyclerLayout extends FrameLayout
         implements OnSheetDismissedListener, MenuSheetView.OnMenuItemClickListener {
-
     private RecyclerView mRecyclerView;
     private DaraAdapter mAdapter;
     private List<Object> mList;
@@ -37,7 +37,8 @@ public class RecyclerLayout extends FrameLayout
     private BottomSheetLayout mBottomSheetLayout;
     private MenuSheetView mMenuSheetView;
 
-    private Subscription mSubscription;
+    private Subscription mResponseSubscription;
+    private Subscription mClickSubscription;
 
     public RecyclerLayout(Context context) {
         super(context);
@@ -65,14 +66,19 @@ public class RecyclerLayout extends FrameLayout
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
-        if (mSubscription != null) {
-            mSubscription.unsubscribe();
+        if (mResponseSubscription != null) {
+            mResponseSubscription.unsubscribe();
+        }
+
+        if (mClickSubscription != null) {
+            mClickSubscription.unsubscribe();
         }
     }
 
     private void setupBottomSheet() {
         mBottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottom_sheet);
         mBottomSheetLayout.addOnSheetDismissedListener(this);
+        mBottomSheetLayout.setVisibility(GONE);
 
         mMenuSheetView = new MenuSheetView(getContext(), MenuSheetView.MenuType.LIST, null, this);
         mMenuSheetView.inflateMenu(R.menu.bottom_sheet);
@@ -80,7 +86,7 @@ public class RecyclerLayout extends FrameLayout
 
     @Override
     public void onDismissed(BottomSheetLayout layout) {
-        // TODO
+        mBottomSheetLayout.setVisibility(GONE);
     }
 
     @Override
@@ -100,12 +106,21 @@ public class RecyclerLayout extends FrameLayout
     }
 
     private void setupRxBus() {
-        mSubscription = RxBus.getInstance().toObservable(ResponseNotificationListEvent.class)
+        mResponseSubscription = RxBus.getInstance().toObservable(ResponseNotificationListEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ResponseNotificationListEvent>() {
                     @Override
                     public void call(ResponseNotificationListEvent event) {
                         onResponseNotificationListEvent(event);
+                    }
+                });
+
+        mClickSubscription = RxBus.getInstance().toObservable(ClickNotifiHolderEvent.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ClickNotifiHolderEvent>() {
+                    @Override
+                    public void call(ClickNotifiHolderEvent event) {
+                        onClickNotifiHolderEvent(event);
                     }
                 });
     }
@@ -134,5 +149,9 @@ public class RecyclerLayout extends FrameLayout
 
         // TODO
         mAdapter.notifyDataSetChanged();
+    }
+
+    private void onClickNotifiHolderEvent(ClickNotifiHolderEvent event) {
+        // TODO
     }
 }
