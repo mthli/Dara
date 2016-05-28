@@ -16,7 +16,7 @@ import io.github.mthli.dara.app.service.DaraService;
 import io.github.mthli.dara.event.RequestActiveNotificationsEvent;
 import io.github.mthli.dara.util.ConstantUtils;
 import io.github.mthli.dara.util.RxBus;
-import io.github.mthli.dara.widget.PagerLayout;
+import io.github.mthli.dara.widget.RecyclerLayout;
 import io.github.mthli.dara.widget.PermissionLayout;
 
 public class MainActivity extends RxAppCompatActivity
@@ -86,8 +86,8 @@ public class MainActivity extends RxAppCompatActivity
     }
 
     private void setupWhenPermissionGrant() {
-        PagerLayout layout = (PagerLayout) getLayoutInflater()
-                .inflate(R.layout.layout_pager, null, false);
+        RecyclerLayout layout = (RecyclerLayout) getLayoutInflater()
+                .inflate(R.layout.layout_recycler, null, false);
         mContainer.removeAllViews();
         mContainer.addView(layout);
     }
