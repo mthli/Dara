@@ -6,6 +6,6 @@
              android:foreground="?attr/selectableItemBackground"
              android:background="@drawable/background_notification">
 
-    <!-- DO NOTHING -->
+    <!-- TODO -->
 
 </FrameLayout>
