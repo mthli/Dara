@@ -15,8 +15,8 @@ import io.github.mthli.dara.R;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.util.ConstantUtils;
 import io.github.mthli.dara.util.RxBus;
-import io.github.mthli.dara.widget.RecyclerLayout;
-import io.github.mthli.dara.widget.PermissionLayout;
+import io.github.mthli.dara.widget.layout.RecyclerLayout;
+import io.github.mthli.dara.widget.layout.PermissionLayout;
 
 public class MainActivity extends RxAppCompatActivity
         implements PermissionLayout.PermissionLayoutListener {

@@ -55,6 +55,7 @@ public class DaraService extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         onRequestActiveNotificationsEvent();
+        // TODO
     }
 
     @Override

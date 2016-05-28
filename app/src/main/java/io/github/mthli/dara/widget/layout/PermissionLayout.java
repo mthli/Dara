@@ -1,4 +1,4 @@
-package io.github.mthli.dara.widget;
+package io.github.mthli.dara.widget.layout;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

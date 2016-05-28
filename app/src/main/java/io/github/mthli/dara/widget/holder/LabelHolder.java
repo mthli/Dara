@@ -5,17 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.widget.item.Label;
 
 public class LabelHolder extends RecyclerView.ViewHolder {
 
-    private AppCompatTextView mLabel;
+    private AppCompatTextView mLabelView;
 
     public LabelHolder(View view) {
         super(view);
-        mLabel = (AppCompatTextView) view.findViewById(R.id.label);
+        mLabelView = (AppCompatTextView) view.findViewById(R.id.label);
     }
 
-    public void setText(CharSequence label) {
-        mLabel.setText(label);
+    public void setLabel(Label label) {
+        mLabelView.setText(label.getLabel());
     }
 }
