@@ -7,10 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
-import com.flipboard.bottomsheet.OnSheetDismissedListener;
 import com.flipboard.bottomsheet.commons.MenuSheetView;
 
 import java.util.ArrayList;
@@ -28,14 +26,12 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class RecyclerLayout extends FrameLayout
-        implements OnSheetDismissedListener, MenuSheetView.OnMenuItemClickListener {
+public class RecyclerLayout extends BottomSheetLayout
+        implements MenuSheetView.OnMenuItemClickListener {
+    private MenuSheetView mMenuSheetView;
     private RecyclerView mRecyclerView;
     private DaraAdapter mAdapter;
     private List<Object> mList;
-
-    private BottomSheetLayout mBottomSheetLayout;
-    private MenuSheetView mMenuSheetView;
 
     private Subscription mResponseSubscription;
     private Subscription mClickSubscription;
@@ -76,17 +72,8 @@ public class RecyclerLayout extends FrameLayout
     }
 
     private void setupBottomSheet() {
-        mBottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottom_sheet);
-        mBottomSheetLayout.addOnSheetDismissedListener(this);
-        mBottomSheetLayout.setVisibility(GONE);
-
         mMenuSheetView = new MenuSheetView(getContext(), MenuSheetView.MenuType.LIST, null, this);
         mMenuSheetView.inflateMenu(R.menu.bottom_sheet);
-    }
-
-    @Override
-    public void onDismissed(BottomSheetLayout layout) {
-        mBottomSheetLayout.setVisibility(GONE);
     }
 
     @Override
@@ -152,6 +139,6 @@ public class RecyclerLayout extends FrameLayout
     }
 
     private void onClickNotifiHolderEvent(ClickNotifiHolderEvent event) {
-        // TODO
+        showWithSheetView(mMenuSheetView);
     }
 }

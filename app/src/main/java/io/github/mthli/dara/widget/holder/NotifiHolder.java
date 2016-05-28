@@ -17,9 +17,9 @@ public class NotifiHolder extends RecyclerView.ViewHolder implements View.OnClic
 
     public NotifiHolder(View view) {
         super(view);
+        view.setOnClickListener(this);
 
         mWrapperView = (FrameLayout) view.findViewById(R.id.wrapper);
-        mWrapperView.setOnClickListener(this);
         ViewCompat.setElevation(mWrapperView, DisplayUtils.dp2px(view.getContext(), 2.0f));
     }
 
