@@ -1,4 +1,4 @@
-package io.github.mthli.dara.app.activity;
+package io.github.mthli.dara.app;
 
 import android.app.ActivityManager;
 import android.content.Intent;
@@ -12,8 +12,7 @@ import android.widget.FrameLayout;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import io.github.mthli.dara.R;
-import io.github.mthli.dara.app.service.DaraService;
-import io.github.mthli.dara.event.RequestActiveNotificationsEvent;
+import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.util.ConstantUtils;
 import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.RecyclerLayout;
@@ -55,7 +54,7 @@ public class MainActivity extends RxAppCompatActivity
         }
 
         if (DaraService.sIsAlive) {
-            RxBus.getInstance().post(new RequestActiveNotificationsEvent());
+            RxBus.getInstance().post(new RequestNotificationListEvent());
         }
     }
 

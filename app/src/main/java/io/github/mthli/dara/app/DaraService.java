@@ -1,4 +1,4 @@
-package io.github.mthli.dara.app.service;
+package io.github.mthli.dara.app;
 
 import android.content.Intent;
 import android.os.IBinder;
@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import io.github.mthli.dara.event.NotificationEvent;
-import io.github.mthli.dara.event.NotificationListEvent;
-import io.github.mthli.dara.event.RequestActiveNotificationsEvent;
+import io.github.mthli.dara.event.ResponseNotificationListEvent;
+import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.util.RxBus;
 import rx.functions.Action1;
 
@@ -38,10 +37,10 @@ public class DaraService extends NotificationListenerService {
     }
 
     private void setupRxBus() {
-        RxBus.getInstance().toObservable(RequestActiveNotificationsEvent.class)
-                .subscribe(new Action1<RequestActiveNotificationsEvent>() {
+        RxBus.getInstance().toObservable(RequestNotificationListEvent.class)
+                .subscribe(new Action1<RequestNotificationListEvent>() {
                     @Override
-                    public void call(RequestActiveNotificationsEvent event) {
+                    public void call(RequestNotificationListEvent event) {
                         onRequestActiveNotificationsEvent();
                     }
                 });
@@ -50,12 +49,12 @@ public class DaraService extends NotificationListenerService {
     private void onRequestActiveNotificationsEvent() {
         List<StatusBarNotification> list = new ArrayList<>();
         list.addAll(Arrays.asList(getActiveNotifications()));
-        RxBus.getInstance().post(new NotificationListEvent(list));
+        RxBus.getInstance().post(new ResponseNotificationListEvent(list));
     }
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        RxBus.getInstance().post(new NotificationEvent(sbn));
+        onRequestActiveNotificationsEvent();
     }
 
     @Override

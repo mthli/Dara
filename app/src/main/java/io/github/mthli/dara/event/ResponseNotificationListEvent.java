@@ -4,10 +4,10 @@ import android.service.notification.StatusBarNotification;
 
 import java.util.List;
 
-public class NotificationListEvent {
+public class ResponseNotificationListEvent {
     private List<StatusBarNotification> mList;
 
-    public NotificationListEvent(List<StatusBarNotification> list) {
+    public ResponseNotificationListEvent(List<StatusBarNotification> list) {
         mList = list;
     }
 
