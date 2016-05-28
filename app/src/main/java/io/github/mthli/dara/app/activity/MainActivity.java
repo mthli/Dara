@@ -1,6 +1,8 @@
 package io.github.mthli.dara.app.activity;
 
+import android.app.ActivityManager;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
@@ -27,9 +29,18 @@ public class MainActivity extends RxAppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupTaskDescription();
 
         mContainer = (FrameLayout) findViewById(R.id.container);
         isFirstResume = true;
+    }
+
+    private void setupTaskDescription() {
+        setTaskDescription(new ActivityManager.TaskDescription(
+                getString(R.string.app_name),
+                BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
+                ContextCompat.getColor(MainActivity.this, R.color.blue_grey_800)
+        ));
     }
 
     @Override
@@ -70,7 +81,7 @@ public class MainActivity extends RxAppCompatActivity
     @Override
     public void onNeutralClick() {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        builder.setToolbarColor(ContextCompat.getColor(this, R.color.blue_grey_700));
+        builder.setToolbarColor(ContextCompat.getColor(this, R.color.blue_grey_800));
         builder.build().launchUrl(this, Uri.parse(ConstantUtils.PERMISSION_DETAIL_URL));
     }
 

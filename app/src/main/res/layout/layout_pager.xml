@@ -4,12 +4,13 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
     <TabHost android:id="@android:id/tabhost"
              android:layout_width="match_parent"
              android:layout_height="?attr/actionBarSize"
-            android:background="#37474F">
+             android:background="@color/blue_grey_800">
 
         <FrameLayout android:layout_width="match_parent"
                      android:layout_height="match_parent">
