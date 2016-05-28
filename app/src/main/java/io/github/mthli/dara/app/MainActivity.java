@@ -11,9 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
 import io.github.mthli.dara.R;
-import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.util.ConstantUtils;
-import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.layout.RecyclerLayout;
 import io.github.mthli.dara.widget.layout.PermissionLayout;
 
@@ -50,10 +48,6 @@ public class MainActivity extends AppCompatActivity
         } else if (isFirstResume) {
             setupWhenPermissionGrant();
             isFirstResume = false;
-        }
-
-        if (DaraService.sIsAlive) {
-            RxBus.getInstance().post(new RequestNotificationListEvent());
         }
     }
 

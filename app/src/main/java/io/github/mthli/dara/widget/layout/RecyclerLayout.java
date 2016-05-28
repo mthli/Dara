@@ -65,7 +65,6 @@ public class RecyclerLayout extends FrameLayout {
         mAdapter = new DaraAdapter(getContext(), mList);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
-        mRecyclerView.setItemAnimator(null);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -82,9 +81,12 @@ public class RecyclerLayout extends FrameLayout {
     }
 
     private void onResponseNotificationListEvent(ResponseNotificationListEvent event) {
+        List<String> group = new ArrayList<>();
+
         List<Notifi> list = new ArrayList<>();
         for (StatusBarNotification notification : event.getList()) {
-            if (!notification.isOngoing()) {
+            if (!notification.isOngoing() && !group.contains(notification.getGroupKey())) {
+                group.add(notification.getGroupKey());
                 list.add(new Notifi(notification));
             }
         }

@@ -12,7 +12,6 @@ import java.util.List;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.util.RxBus;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class DaraService extends NotificationListenerService {
@@ -34,7 +33,6 @@ public class DaraService extends NotificationListenerService {
 
     private void setupRxBus() {
         RxBus.getInstance().toObservable(RequestNotificationListEvent.class)
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<RequestNotificationListEvent>() {
                     @Override
                     public void call(RequestNotificationListEvent event) {
@@ -52,11 +50,15 @@ public class DaraService extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         onRequestActiveNotificationsEvent();
-        // TODO
+    }
+
+    @Override
+    public void onNotificationRankingUpdate(RankingMap rankingMap) {
+        onRequestActiveNotificationsEvent();
     }
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-        // DO NOTHING
+        onRequestActiveNotificationsEvent();
     }
 }
