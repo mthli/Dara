@@ -14,7 +14,6 @@ import io.github.mthli.dara.widget.item.Label;
 import io.github.mthli.dara.widget.item.Notifi;
 
 public class DaraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     private static final int VIEW_TYPE_LABEL = 0x100;
     private static final int VIEW_TYPE_NOTIFI = 0x102;
 
@@ -63,7 +62,9 @@ public class DaraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((LabelHolder) holder).setLabel((Label) object);
                 break;
             default:
-                ((NotifiHolder) holder).setNotifi((Notifi) object);
+                Notifi notifi = (Notifi) object;
+                notifi.setPosition(position);
+                ((NotifiHolder) holder).setNotifi(notifi);
                 break;
         }
     }

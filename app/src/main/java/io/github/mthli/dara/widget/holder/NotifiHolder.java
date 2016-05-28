@@ -6,21 +6,33 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.event.ClickNotifiHolderEvent;
 import io.github.mthli.dara.util.DisplayUtils;
+import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.item.Notifi;
 
-public class NotifiHolder extends RecyclerView.ViewHolder {
-
+public class NotifiHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private FrameLayout mWrapperView;
+    private Notifi mNotifi;
 
     public NotifiHolder(View view) {
         super(view);
 
         mWrapperView = (FrameLayout) view.findViewById(R.id.wrapper);
+        mWrapperView.setOnClickListener(this);
         ViewCompat.setElevation(mWrapperView, DisplayUtils.dp2px(view.getContext(), 2.0f));
     }
 
+    @Override
+    public void onClick(View view) {
+        if (mNotifi != null) {
+            RxBus.getInstance().post(new ClickNotifiHolderEvent(mNotifi));
+        }
+    }
+
     public void setNotifi(Notifi notifi) {
+        mNotifi = notifi;
+
         mWrapperView.removeAllViews();
         View view = notifi.getNotification().getNotification().contentView
                 .apply(mWrapperView.getContext().getApplicationContext(), mWrapperView);

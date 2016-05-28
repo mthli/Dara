@@ -6,7 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
+
+import com.flipboard.bottomsheet.BottomSheetLayout;
+import com.flipboard.bottomsheet.OnSheetDismissedListener;
+import com.flipboard.bottomsheet.commons.MenuSheetView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +27,15 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class RecyclerLayout extends FrameLayout {
+public class RecyclerLayout extends FrameLayout
+        implements OnSheetDismissedListener, MenuSheetView.OnMenuItemClickListener {
 
     private RecyclerView mRecyclerView;
     private DaraAdapter mAdapter;
     private List<Object> mList;
+
+    private BottomSheetLayout mBottomSheetLayout;
+    private MenuSheetView mMenuSheetView;
 
     private Subscription mSubscription;
 
@@ -46,6 +55,7 @@ public class RecyclerLayout extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+        setupBottomSheet();
         setupRecyclerView();
         setupRxBus();
         RxBus.getInstance().post(new RequestNotificationListEvent());
@@ -58,6 +68,25 @@ public class RecyclerLayout extends FrameLayout {
         if (mSubscription != null) {
             mSubscription.unsubscribe();
         }
+    }
+
+    private void setupBottomSheet() {
+        mBottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottom_sheet);
+        mBottomSheetLayout.addOnSheetDismissedListener(this);
+
+        mMenuSheetView = new MenuSheetView(getContext(), MenuSheetView.MenuType.LIST, null, this);
+        mMenuSheetView.inflateMenu(R.menu.bottom_sheet);
+    }
+
+    @Override
+    public void onDismissed(BottomSheetLayout layout) {
+        // TODO
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        // TODO
+        return false;
     }
 
     private void setupRecyclerView() {
@@ -88,7 +117,7 @@ public class RecyclerLayout extends FrameLayout {
         for (StatusBarNotification notification : event.getList()) {
             if (!notification.isOngoing() && !group.contains(notification.getGroupKey())) {
                 group.add(notification.getGroupKey());
-                list.add(new Notifi(notification));
+                list.add(new Notifi(notification, 0));
             }
         }
 

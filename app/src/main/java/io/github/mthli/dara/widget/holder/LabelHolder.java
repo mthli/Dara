@@ -8,7 +8,6 @@ import io.github.mthli.dara.R;
 import io.github.mthli.dara.widget.item.Label;
 
 public class LabelHolder extends RecyclerView.ViewHolder {
-
     private AppCompatTextView mLabelView;
 
     public LabelHolder(View view) {

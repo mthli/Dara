@@ -15,7 +15,6 @@ import io.github.mthli.dara.util.RxBus;
 import rx.functions.Action1;
 
 public class DaraService extends NotificationListenerService {
-
     public static boolean sIsAlive = false;
 
     @Override

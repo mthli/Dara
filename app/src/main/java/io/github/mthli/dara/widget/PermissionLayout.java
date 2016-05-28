@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import io.github.mthli.dara.R;
 
 public class PermissionLayout extends FrameLayout implements View.OnClickListener {
-
     public interface PermissionLayoutListener {
         void onPositionClick();
         void onNegativeClick();

@@ -16,7 +16,6 @@ import io.github.mthli.dara.widget.PermissionLayout;
 
 public class MainActivity extends AppCompatActivity
         implements PermissionLayout.PermissionLayoutListener {
-
     private FrameLayout mContainer;
     private boolean isFirstResume;
 

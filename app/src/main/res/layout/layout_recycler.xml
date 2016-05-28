@@ -2,7 +2,6 @@
 
 <io.github.mthli.dara.widget.RecyclerLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -12,6 +11,13 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true">
     </android.support.v7.widget.RecyclerView>
+
+    <com.flipboard.bottomsheet.BottomSheetLayout
+            android:id="@+id/bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+    </com.flipboard.bottomsheet.BottomSheetLayout>
 
     <!-- TODO empty -->
 

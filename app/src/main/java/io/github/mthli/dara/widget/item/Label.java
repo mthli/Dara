@@ -1,7 +1,6 @@
 package io.github.mthli.dara.widget.item;
 
 public class Label {
-
     private String mText;
 
     public Label(String text) {
