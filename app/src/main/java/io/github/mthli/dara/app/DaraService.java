@@ -24,11 +24,13 @@ public class DaraService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        RxBus.getInstance().post(sbn);
+        if (!sbn.isOngoing()) {
+            RxBus.getInstance().post(sbn);
+        }
     }
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-        // TODO
+        // DO NOTHING
     }
 }

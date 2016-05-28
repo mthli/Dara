@@ -56,7 +56,7 @@ public class MainActivity extends RxAppCompatActivity implements PermissionLayou
 
     @Override
     public void onPositionClick() {
-        Intent intent = new Intent(ConstantUtils.PERMISIION_NAME);
+        Intent intent = new Intent(ConstantUtils.PERMISSION_NAME);
         startActivity(intent);
     }
 
@@ -90,11 +90,8 @@ public class MainActivity extends RxAppCompatActivity implements PermissionLayou
     }
 
     private void onSbnEvent(StatusBarNotification sbn) {
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        int dp8 = (int) DisplayUtils.dp2px(this, 8.0f);
-        params.topMargin = params.bottomMargin = dp8;
-        params.leftMargin = params.rightMargin = dp8;
-
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         mContainer.removeAllViews();
         mContainer.addView(getNotificationView(sbn), params);
     }
