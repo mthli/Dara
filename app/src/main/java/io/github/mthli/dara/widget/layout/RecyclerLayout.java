@@ -11,8 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.event.ResponseNotificationListEvent;
+import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.adapter.DaraAdapter;
-import io.github.mthli.dara.widget.item.Label;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class RecyclerLayout extends FrameLayout {
 
@@ -38,14 +41,25 @@ public class RecyclerLayout extends FrameLayout {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         setupRecyclerView();
+        setupRxBus();
     }
 
     private void setupRecyclerView() {
         mList = new ArrayList<>();
-        mList.add(new Label("xxx"));
-
         mAdapter = new DaraAdapter(getContext(), mList);
+        mRecyclerView.setItemAnimator(null);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void setupRxBus() {
+        RxBus.getInstance().toObservable(ResponseNotificationListEvent.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ResponseNotificationListEvent>() {
+                    @Override
+                    public void call(ResponseNotificationListEvent event) {
+
+                    }
+                });
     }
 }

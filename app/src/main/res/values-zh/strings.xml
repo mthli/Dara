@@ -9,4 +9,8 @@
     <string name="permission_cancel">取消</string>
     <string name="permission_detail">详情</string>
 
+    <string name="label_current_notifications">
+        当前通知栏
+    </string>
+
 </resources>

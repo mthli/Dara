@@ -14,7 +14,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:singleLine="true"
             android:ellipsize="none">
     </android.support.v7.widget.AppCompatTextView>

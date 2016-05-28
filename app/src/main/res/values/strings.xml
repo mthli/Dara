@@ -10,4 +10,9 @@
     <string name="permission_cancel">Cancel</string>
     <string name="permission_detail">Detail</string>
 
+    <!-- Label -->
+    <string name="label_current_notifications">
+        Current notifications
+    </string>
+
 </resources>
