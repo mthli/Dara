@@ -8,12 +8,12 @@ import android.view.View;
 
 import io.github.mthli.dara.R;
 
-public class PackageHolder extends RecyclerView.ViewHolder {
+public class PkgHolder extends RecyclerView.ViewHolder {
 
     private AppCompatTextView mPkg;
     private AppCompatImageButton mAction;
 
-    public PackageHolder(View view) {
+    public PkgHolder(View view) {
         super(view);
         mPkg = (AppCompatTextView) view.findViewById(R.id.pkg);
         mAction = (AppCompatImageButton) view.findViewById(R.id.action);
