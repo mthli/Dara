@@ -38,5 +38,11 @@ public class PagerLayout extends LinearLayout {
         mTabWidget = (TabWidget) findViewById(android.R.id.tabs);
         mTabContent = (FrameLayout) findViewById(android.R.id.tabcontent);
         mViewPager = (ViewPager) findViewById(R.id.pager);
+
+        setupTabHost();
+    }
+
+    private void setupTabHost() {
+
     }
 }
