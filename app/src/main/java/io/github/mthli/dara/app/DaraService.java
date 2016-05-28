@@ -6,6 +6,7 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.github.mthli.dara.event.NotificationEvent;
@@ -48,20 +49,13 @@ public class DaraService extends NotificationListenerService {
 
     private void onRequestActiveNotificationsEvent() {
         List<StatusBarNotification> list = new ArrayList<>();
-        for (StatusBarNotification notification : getActiveNotifications()) {
-            if (!notification.isOngoing()) {
-                list.add(notification);
-            }
-        }
-
+        list.addAll(Arrays.asList(getActiveNotifications()));
         RxBus.getInstance().post(new NotificationListEvent(list));
     }
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        if (!sbn.isOngoing()) {
-            RxBus.getInstance().post(new NotificationEvent(sbn));
-        }
+        RxBus.getInstance().post(new NotificationEvent(sbn));
     }
 
     @Override
