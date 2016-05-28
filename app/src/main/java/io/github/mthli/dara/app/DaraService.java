@@ -12,6 +12,7 @@ import java.util.List;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.util.RxBus;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class DaraService extends NotificationListenerService {
@@ -19,13 +20,8 @@ public class DaraService extends NotificationListenerService {
     public static boolean sIsAlive = false;
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        setupRxBus();
-        return super.onStartCommand(intent, flags, startId);
-    }
-
-    @Override
     public IBinder onBind(Intent intent) {
+        setupRxBus();
         sIsAlive = true;
         return super.onBind(intent);
     }
@@ -38,6 +34,7 @@ public class DaraService extends NotificationListenerService {
 
     private void setupRxBus() {
         RxBus.getInstance().toObservable(RequestNotificationListEvent.class)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<RequestNotificationListEvent>() {
                     @Override
                     public void call(RequestNotificationListEvent event) {
