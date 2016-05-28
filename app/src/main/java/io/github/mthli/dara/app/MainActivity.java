@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
 import io.github.mthli.dara.R;
-import io.github.mthli.dara.util.ConstantUtils;
 import io.github.mthli.dara.widget.RecyclerLayout;
 import io.github.mthli.dara.widget.PermissionLayout;
 
@@ -61,7 +60,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPositionClick() {
-        Intent intent = new Intent(ConstantUtils.PERMISSION_NAME);
+        Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
         startActivity(intent);
     }
 
@@ -74,7 +73,8 @@ public class MainActivity extends AppCompatActivity
     public void onNeutralClick() {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         builder.setToolbarColor(ContextCompat.getColor(this, R.color.blue_grey_900));
-        builder.build().launchUrl(this, Uri.parse(ConstantUtils.PERMISSION_DETAIL_URL));
+        builder.build().launchUrl(this,
+                Uri.parse("https://support.google.com/nexus/answer/6111294"));
     }
 
     private void setupWhenPermissionGrant() {
