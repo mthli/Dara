@@ -3,9 +3,9 @@ package io.github.mthli.dara.widget.holder;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public class NotificationHolder extends RecyclerView.ViewHolder {
+public class NotifiHolder extends RecyclerView.ViewHolder {
 
-    public NotificationHolder(View view) {
+    public NotifiHolder(View view) {
         super(view);
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.widget.holder.LabelHolder;
-import io.github.mthli.dara.widget.holder.NotificationHolder;
+import io.github.mthli.dara.widget.holder.NotifiHolder;
 import io.github.mthli.dara.widget.holder.PkgHolder;
 import io.github.mthli.dara.widget.item.Label;
 import io.github.mthli.dara.widget.item.Pkg;
@@ -55,7 +55,7 @@ public class DaraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case VIEW_TYPE_PACKAGE:
                 return onCreatePkgHolder(parent);
             default:
-                return onCreateNotificationHolder(parent);
+                return onCreateNotifiHolder(parent);
         }
     }
 
@@ -69,9 +69,9 @@ public class DaraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return new PkgHolder(view);
     }
 
-    private RecyclerView.ViewHolder onCreateNotificationHolder(ViewGroup parent) {
+    private RecyclerView.ViewHolder onCreateNotifiHolder(ViewGroup parent) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_notification, parent, false);
-        return new NotificationHolder(view);
+        return new NotifiHolder(view);
     }
 
     @Override
