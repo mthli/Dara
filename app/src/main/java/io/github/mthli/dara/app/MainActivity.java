@@ -14,6 +14,8 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.event.NotificationEvent;
+import io.github.mthli.dara.event.NotificationListEvent;
+import io.github.mthli.dara.event.RequestActiveNotificationsEvent;
 import io.github.mthli.dara.util.ConstantUtils;
 import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.util.RxBus;
@@ -45,6 +47,10 @@ public class MainActivity extends RxAppCompatActivity implements PermissionLayou
             setupWhenPermissionGrant();
             setupRxBus();
             isFirstResume = false;
+        }
+
+        if (DaraService.sIsAlive) {
+            RxBus.getInstance().post(new RequestActiveNotificationsEvent());
         }
     }
 
@@ -88,6 +94,16 @@ public class MainActivity extends RxAppCompatActivity implements PermissionLayou
                         onNotificationEvent(event);
                     }
                 });
+
+        RxBus.getInstance().toObservable(NotificationListEvent.class)
+                .compose(this.<NotificationListEvent>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<NotificationListEvent>() {
+                    @Override
+                    public void call(NotificationListEvent event) {
+                        onNotificationListEvent(event);
+                    }
+                });
     }
 
     private void onNotificationEvent(NotificationEvent event) {
@@ -95,6 +111,10 @@ public class MainActivity extends RxAppCompatActivity implements PermissionLayou
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         mContainer.removeAllViews();
         mContainer.addView(getNotificationView(event.getNotification()), params);
+    }
+
+    private void onNotificationListEvent(NotificationListEvent event) {
+        // TODO
     }
 
     private View getNotificationView(StatusBarNotification sbn) {

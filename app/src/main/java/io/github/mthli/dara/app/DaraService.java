@@ -41,12 +41,12 @@ public class DaraService extends NotificationListenerService {
                 .subscribe(new Action1<RequestActiveNotificationsEvent>() {
                     @Override
                     public void call(RequestActiveNotificationsEvent event) {
-                        onRequestActiveNotificationsEvent(event);
+                        onRequestActiveNotificationsEvent();
                     }
                 });
     }
 
-    private void onRequestActiveNotificationsEvent(RequestActiveNotificationsEvent event) {
+    private void onRequestActiveNotificationsEvent() {
         List<StatusBarNotification> list = new ArrayList<>();
         for (StatusBarNotification notification : getActiveNotifications()) {
             if (!notification.isOngoing()) {
