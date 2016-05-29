@@ -21,8 +21,6 @@
           app:showAsAction="never">
     </item>
 
-    <!-- TODO more functions -->
-
     <item android:id="@+id/space"
           android:title="@null"
           app:showAsAction="never">
