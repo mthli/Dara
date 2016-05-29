@@ -17,6 +17,7 @@ import io.github.mthli.dara.R;
 import io.github.mthli.dara.event.ClickNoticeEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
+import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.adapter.DaraAdapter;
 import io.github.mthli.dara.widget.item.Label;
@@ -73,6 +74,9 @@ public class RecyclerLayout extends BottomSheetLayout
     private void setupBottomSheet() {
         mMenuSheetView = new MenuSheetView(getContext(), MenuSheetView.MenuType.LIST, null, this);
         mMenuSheetView.inflateMenu(R.menu.filter);
+        mMenuSheetView.getMenu().findItem(R.id.space)
+                .setVisible(DisplayUtils.hasNavigationBar(getContext()));
+        mMenuSheetView.updateMenu();
     }
 
     @Override
@@ -106,7 +110,7 @@ public class RecyclerLayout extends BottomSheetLayout
                 .subscribe(new Action1<ClickNoticeEvent>() {
                     @Override
                     public void call(ClickNoticeEvent event) {
-                        onClickNotifiHolderEvent(event);
+                        onClickNoticeHolderEvent(event);
                     }
                 });
     }
@@ -137,7 +141,7 @@ public class RecyclerLayout extends BottomSheetLayout
         mAdapter.notifyDataSetChanged();
     }
 
-    private void onClickNotifiHolderEvent(ClickNoticeEvent event) {
+    private void onClickNoticeHolderEvent(ClickNoticeEvent event) {
         showWithSheetView(mMenuSheetView);
     }
 }

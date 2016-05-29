@@ -18,4 +18,9 @@
           app:showAsAction="never">
     </item>
 
+    <item android:id="@+id/space"
+          android:title="@null"
+          app:showAsAction="never">
+    </item>
+
 </menu>
