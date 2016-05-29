@@ -5,22 +5,32 @@
 
     <item android:id="@+id/keywords"
           android:title="@string/menu_filter_with_keywords"
+          android:icon="@drawable/ic_keywords"
           app:showAsAction="never">
     </item>
 
     <item android:id="@+id/time"
           android:title="@string/menu_filter_with_time"
+          android:icon="@drawable/ic_time"
           app:showAsAction="never">
     </item>
 
-    <item android:id="@+id/system"
-          android:title="@string/menu_use_system_settings"
-          app:showAsAction="never">
-    </item>
+    <item android:id="@+id/wrapper"
+          android:title="@null">
+        <menu>
 
-    <item android:id="@+id/space"
-          android:title="@null"
-          app:showAsAction="never">
+            <item android:id="@+id/system"
+                  android:title="@string/menu_app_notifications"
+                  android:icon="@drawable/ic_settings"
+                  app:showAsAction="never">
+            </item>
+
+            <item android:id="@+id/space"
+                  android:title="@null"
+                  app:showAsAction="never">
+            </item>
+
+        </menu>
     </item>
 
 </menu>
