@@ -15,6 +15,12 @@
           app:showAsAction="never">
     </item>
 
+    <item android:id="@+id/priority"
+          android:title="@string/menu_set_priority"
+          android:icon="@drawable/ic_sort"
+          app:showAsAction="never">
+    </item>
+
     <item android:id="@+id/wrapper"
           android:title="@null">
         <menu>
