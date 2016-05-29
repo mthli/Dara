@@ -81,8 +81,39 @@ public class RecyclerLayout extends BottomSheetLayout
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        // TODO
+        switch (item.getItemId()) {
+            case R.id.keywords:
+                onClickFilterByKeywordsItem();
+                break;
+            case R.id.time:
+                onClickFilterByTimeItem();
+                break;
+            case R.id.priority:
+                onClickSetPriorityItem();
+                break;
+            default:
+                onClickAppNotificationsItem();
+                break;
+        }
+
+        // Don't dismiss when click
         return false;
+    }
+
+    private void onClickFilterByKeywordsItem() {
+        // TODO
+    }
+
+    private void onClickFilterByTimeItem() {
+        // TODO
+    }
+
+    private void onClickSetPriorityItem() {
+        // TODO
+    }
+
+    private void onClickAppNotificationsItem() {
+        // TODO
     }
 
     private void setupRecyclerView() {
