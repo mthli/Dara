@@ -9,8 +9,10 @@
     <string name="permission_cancel">取消</string>
     <string name="permission_detail">详情</string>
 
-    <string name="label_notification_center">
-        通知中心
-    </string>
+    <string name="label_notification_center">通知中心</string>
+
+    <string name="menu_filter_by_keywords">按关键字过滤</string>
+    <string name="menu_filter_by_time">按时间过滤</string>
+    <string name="menu_system_settings">使用系统设置</string>
 
 </resources>

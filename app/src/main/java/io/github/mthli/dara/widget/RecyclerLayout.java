@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.MenuItem;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
-import com.flipboard.bottomsheet.commons.MenuSheetView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +72,7 @@ public class RecyclerLayout extends BottomSheetLayout
 
     private void setupBottomSheet() {
         mMenuSheetView = new MenuSheetView(getContext(), MenuSheetView.MenuType.LIST, null, this);
-        mMenuSheetView.inflateMenu(R.menu.bottom_sheet);
+        mMenuSheetView.inflateMenu(R.menu.filter);
     }
 
     @Override
