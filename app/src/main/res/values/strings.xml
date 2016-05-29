@@ -14,8 +14,8 @@
     <string name="label_notification_center">Notification center</string>
 
     <!-- Menu -->
-    <string name="menu_filter_by_keywords">Filter by keywords</string>
-    <string name="menu_filter_by_time">Filter by time</string>
-    <string name="menu_system_settings">System settings</string>
+    <string name="menu_filter_with_keywords">Filter with keywords</string>
+    <string name="menu_filter_with_time">Filter with time</string>
+    <string name="menu_use_system_settings">Use system settings</string>
 
 </resources>
