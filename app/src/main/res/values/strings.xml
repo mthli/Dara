@@ -16,6 +16,6 @@
     <!-- Menu -->
     <string name="menu_filter_with_keywords">Filter with keywords</string>
     <string name="menu_filter_with_time">Filter with time</string>
-    <string name="menu_set_priority">Set priority</string>
+    <string name="menu_custom_reminder">Custom reminder</string>
 
 </resources>

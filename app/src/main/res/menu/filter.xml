@@ -15,11 +15,13 @@
           app:showAsAction="never">
     </item>
 
-    <item android:id="@+id/priority"
-          android:title="@string/menu_set_priority"
-          android:icon="@drawable/ic_sort"
+    <item android:id="@+id/custom"
+          android:title="@string/menu_custom_reminder"
+          android:icon="@drawable/ic_palette"
           app:showAsAction="never">
     </item>
+
+    <!-- TODO more functions -->
 
     <item android:id="@+id/space"
           android:title="@null"

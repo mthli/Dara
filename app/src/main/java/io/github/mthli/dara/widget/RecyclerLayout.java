@@ -88,8 +88,8 @@ public class RecyclerLayout extends BottomSheetLayout
             case R.id.time:
                 onClickFilterByTimeItem();
                 break;
-            case R.id.priority:
-                onClickSetPriorityItem();
+            case R.id.custom:
+                onClickCustomReminderItem();
                 break;
             default:
                 break;
@@ -107,7 +107,7 @@ public class RecyclerLayout extends BottomSheetLayout
         // TODO
     }
 
-    private void onClickSetPriorityItem() {
+    private void onClickCustomReminderItem() {
         // TODO
     }
 
