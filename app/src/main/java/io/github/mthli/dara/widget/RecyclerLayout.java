@@ -92,7 +92,6 @@ public class RecyclerLayout extends BottomSheetLayout
                 onClickSetPriorityItem();
                 break;
             default:
-                onClickAppNotificationsItem();
                 break;
         }
 
@@ -109,10 +108,6 @@ public class RecyclerLayout extends BottomSheetLayout
     }
 
     private void onClickSetPriorityItem() {
-        // TODO
-    }
-
-    private void onClickAppNotificationsItem() {
         // TODO
     }
 

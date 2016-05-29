@@ -21,22 +21,9 @@
           app:showAsAction="never">
     </item>
 
-    <item android:id="@+id/wrapper"
-          android:title="@null">
-        <menu>
-
-            <item android:id="@+id/system"
-                  android:title="@string/menu_app_notifications"
-                  android:icon="@drawable/ic_settings"
-                  app:showAsAction="never">
-            </item>
-
-            <item android:id="@+id/space"
-                  android:title="@null"
-                  app:showAsAction="never">
-            </item>
-
-        </menu>
+    <item android:id="@+id/space"
+          android:title="@null"
+          app:showAsAction="never">
     </item>
 
 </menu>

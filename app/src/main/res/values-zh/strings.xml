@@ -14,6 +14,5 @@
     <string name="menu_filter_with_keywords">添加关键字过滤</string>
     <string name="menu_filter_with_time">设置免打扰时段</string>
     <string name="menu_set_priority">设置通知优先级</string>
-    <string name="menu_app_notifications">应用通知</string>
 
 </resources>
