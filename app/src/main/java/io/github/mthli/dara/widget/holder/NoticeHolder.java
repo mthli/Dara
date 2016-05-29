@@ -6,16 +6,16 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import io.github.mthli.dara.R;
-import io.github.mthli.dara.event.ClickNotifiHolderEvent;
+import io.github.mthli.dara.event.ClickNoticeEvent;
 import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.util.RxBus;
-import io.github.mthli.dara.widget.item.Notifi;
+import io.github.mthli.dara.widget.item.Notice;
 
-public class NotifiHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class NoticeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private FrameLayout mWrapperView;
-    private Notifi mNotifi;
+    private Notice mNotice;
 
-    public NotifiHolder(View view) {
+    public NoticeHolder(View view) {
         super(view);
         view.setOnClickListener(this);
 
@@ -25,16 +25,16 @@ public class NotifiHolder extends RecyclerView.ViewHolder implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        if (mNotifi != null) {
-            RxBus.getInstance().post(new ClickNotifiHolderEvent(mNotifi));
+        if (mNotice != null) {
+            RxBus.getInstance().post(new ClickNoticeEvent(mNotice));
         }
     }
 
-    public void setNotifi(Notifi notifi) {
-        mNotifi = notifi;
+    public void setNotice(Notice notice) {
+        mNotice = notice;
 
         mWrapperView.removeAllViews();
-        View view = notifi.getNotification().getNotification().contentView
+        View view = notice.getNotification().getNotification().contentView
                 .apply(mWrapperView.getContext().getApplicationContext(), mWrapperView);
         mWrapperView.addView(view);
     }

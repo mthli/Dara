@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.mthli.dara.R;
-import io.github.mthli.dara.event.ClickNotifiHolderEvent;
+import io.github.mthli.dara.event.ClickNoticeEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.adapter.DaraAdapter;
 import io.github.mthli.dara.widget.item.Label;
-import io.github.mthli.dara.widget.item.Notifi;
+import io.github.mthli.dara.widget.item.Notice;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -102,11 +102,11 @@ public class RecyclerLayout extends BottomSheetLayout
                     }
                 });
 
-        mClickSubscription = RxBus.getInstance().toObservable(ClickNotifiHolderEvent.class)
+        mClickSubscription = RxBus.getInstance().toObservable(ClickNoticeEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ClickNotifiHolderEvent>() {
+                .subscribe(new Action1<ClickNoticeEvent>() {
                     @Override
-                    public void call(ClickNotifiHolderEvent event) {
+                    public void call(ClickNoticeEvent event) {
                         onClickNotifiHolderEvent(event);
                     }
                 });
@@ -115,18 +115,18 @@ public class RecyclerLayout extends BottomSheetLayout
     private void onResponseNotificationListEvent(ResponseNotificationListEvent event) {
         List<String> group = new ArrayList<>();
 
-        List<Notifi> list = new ArrayList<>();
+        List<Notice> list = new ArrayList<>();
         for (StatusBarNotification notification : event.getList()) {
             if (!notification.isOngoing() && !group.contains(notification.getGroupKey())) {
                 group.add(notification.getGroupKey());
-                list.add(new Notifi(notification, 0));
+                list.add(new Notice(notification));
             }
         }
 
         buildRecyclerList(list);
     }
 
-    private void buildRecyclerList(List<Notifi> list) {
+    private void buildRecyclerList(List<Notice> list) {
         mList.clear();
 
         if (list != null && list.size() > 0) {
@@ -138,7 +138,7 @@ public class RecyclerLayout extends BottomSheetLayout
         mAdapter.notifyDataSetChanged();
     }
 
-    private void onClickNotifiHolderEvent(ClickNotifiHolderEvent event) {
+    private void onClickNotifiHolderEvent(ClickNoticeEvent event) {
         showWithSheetView(mMenuSheetView);
     }
 }
