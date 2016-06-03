@@ -11,8 +11,4 @@
 
     <string name="label_notification_center">通知中心</string>
 
-    <string name="menu_filter_with_keywords">添加关键字过滤</string>
-    <string name="menu_filter_with_time">设置免打扰时段</string>
-    <string name="menu_custom_reminder">自定义通知提醒</string>
-
 </resources>
