@@ -51,13 +51,13 @@ public class DaraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (viewType) {
             case VIEW_TYPE_FILTER:
                 return new FilterHolder(LayoutInflater.from(mContext)
-                        .inflate(R.layout.layout_filter, parent, false));
+                        .inflate(R.layout.recycler_item_filter, parent, false));
             case VIEW_TYPE_LABEL:
                 return new LabelHolder(LayoutInflater.from(mContext)
-                        .inflate(R.layout.layout_label, parent, false));
+                        .inflate(R.layout.recycler_item_label, parent, false));
             default:
                 return new NoticeHolder(LayoutInflater.from(mContext)
-                        .inflate(R.layout.layout_notice, parent, false));
+                        .inflate(R.layout.reccyler_item_notice, parent, false));
         }
     }
 
