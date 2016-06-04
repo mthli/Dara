@@ -17,4 +17,7 @@
     <string name="subtitle_rules_default">缺损规则</string>
     <string name="subtitle_rules_custom">自定义规则</string>
 
+    <!-- Title -->
+    <string name="title_regular_expressions">正则表达式</string>
+
 </resources>
