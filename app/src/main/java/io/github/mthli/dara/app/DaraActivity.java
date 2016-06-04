@@ -1,6 +1,7 @@
 package io.github.mthli.dara.app;
 
 import android.app.ActivityManager;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 
 import io.github.mthli.dara.R;
@@ -23,7 +25,7 @@ import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.widget.RuleContentLayout;
 
 public class DaraActivity extends AppCompatActivity
-        implements CompoundButton.OnCheckedChangeListener {
+        implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     public static final String EXTRA = "EXTRA";
 
     private StatusBarNotification mNotification;
@@ -83,6 +85,7 @@ public class DaraActivity extends AppCompatActivity
             Bitmap resize = Bitmap.createScaledBitmap(bitmap, dp30, dp30, false);
             appIcon = new BitmapDrawable(getResources(), resize);
             mToolbar.setNavigationIcon(appIcon);
+            mToolbar.setNavigationOnClickListener(this);
         }
     }
 
@@ -110,6 +113,22 @@ public class DaraActivity extends AppCompatActivity
         }
 
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        ApplicationInfo info;
+        try {
+            info = getPackageManager().getApplicationInfo(mNotification.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        Intent intent = new Intent("android.settings.APP_NOTIFICATION_SETTINGS");
+        intent.putExtra("app_package", mNotification.getPackageName());
+        intent.putExtra("app_uid", info.uid);
+        startActivity(intent);
     }
 
     @Override
