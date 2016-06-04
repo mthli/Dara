@@ -6,4 +6,9 @@
         <item name="android:windowBackground">@color/blue_grey_900</item>
     </style>
 
+    <style name="DaraActivityTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>

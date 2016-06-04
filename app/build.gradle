@@ -25,7 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:customtabs:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
-    compile 'com.flipboard:bottomsheet-core:1.5.1'
-    compile 'com.flipboard:bottomsheet-commons:1.5.1'
     compile 'io.reactivex:rxandroid:1.2.0'
 }

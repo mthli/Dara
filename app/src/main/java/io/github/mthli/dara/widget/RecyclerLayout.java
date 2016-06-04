@@ -1,6 +1,7 @@
 package io.github.mthli.dara.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.app.DaraActivity;
 import io.github.mthli.dara.event.ClickNoticeEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
@@ -123,5 +125,7 @@ public class RecyclerLayout extends FrameLayout {
 
     private void onClickNoticeHolderEvent(ClickNoticeEvent event) {
         // TODO
+        Intent intent = new Intent(getContext(), DaraActivity.class);
+        getContext().startActivity(intent);
     }
 }

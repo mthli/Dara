@@ -1,0 +1,6 @@
+package io.github.mthli.dara.app;
+
+import android.support.v7.app.AppCompatActivity;
+
+public class DaraActivity extends AppCompatActivity {
+}
