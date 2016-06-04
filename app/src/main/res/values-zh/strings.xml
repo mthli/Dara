@@ -2,6 +2,7 @@
 
 <resources>
 
+    <!-- Permission -->
     <string name="permission_message">
         为了隐藏你不希望看到的通知，请授予允许访问通知的权限。
     </string>
@@ -9,6 +10,11 @@
     <string name="permission_cancel">取消</string>
     <string name="permission_detail">详情</string>
 
+    <!-- Label -->
     <string name="label_notification_center">通知中心</string>
+
+    <!-- Toast -->
+    <string name="toast_enable_regular_expression">支持正则表达式</string>
+    <string name="toast_disable_regular_expression">禁用正则表达式</string>
 
 </resources>

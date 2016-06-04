@@ -9,10 +9,13 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import io.github.mthli.dara.R;
 
-public class DaraActivity extends AppCompatActivity {
+public class DaraActivity extends AppCompatActivity
+        implements CompoundButton.OnCheckedChangeListener {
     private Toolbar mToolbar;
     private SwitchCompat mSwitzh;
 
@@ -46,6 +49,14 @@ public class DaraActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        mSwitzh = (SwitchCompat) menu.findItem(R.id.menu_switzh)
+                .getActionView().findViewById(R.id.switzh);
+        mSwitzh.setOnCheckedChangeListener(this);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -55,5 +66,11 @@ public class DaraActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        Toast.makeText(this, isChecked ? R.string.toast_enable_regular_expression
+                : R.string.toast_disable_regular_expression, Toast.LENGTH_SHORT).show();
     }
 }
