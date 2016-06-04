@@ -9,7 +9,7 @@ public class ClickNoticeEvent {
         mNotice = notice;
     }
 
-    public Notice getNotifi() {
+    public Notice getNotice() {
         return mNotice;
     }
 }

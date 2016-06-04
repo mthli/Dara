@@ -14,7 +14,7 @@
     <string name="label_notification_center">通知中心</string>
 
     <!-- Toast -->
-    <string name="toast_enable_regular_expression">支持正则表达式</string>
-    <string name="toast_disable_regular_expression">禁用正则表达式</string>
+    <string name="toast_acting_on_application">作用于整个应用</string>
+    <string name="toast_acting_on_custom">使用自定义策略</string>
 
 </resources>

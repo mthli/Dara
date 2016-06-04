@@ -124,8 +124,8 @@ public class RecyclerLayout extends FrameLayout {
     }
 
     private void onClickNoticeHolderEvent(ClickNoticeEvent event) {
-        // TODO
         Intent intent = new Intent(getContext(), DaraActivity.class);
+        intent.putExtra(DaraActivity.EXTRA, event.getNotice().getNotification());
         getContext().startActivity(intent);
     }
 }

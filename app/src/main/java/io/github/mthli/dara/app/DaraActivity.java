@@ -1,8 +1,13 @@
 package io.github.mthli.dara.app;
 
 import android.app.ActivityManager;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
@@ -13,9 +18,13 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.util.DisplayUtils;
 
 public class DaraActivity extends AppCompatActivity
         implements CompoundButton.OnCheckedChangeListener {
+    public static final String EXTRA = "EXTRA";
+
+    private StatusBarNotification mNotification;
     private Toolbar mToolbar;
     private SwitchCompat mSwitzh;
 
@@ -25,6 +34,7 @@ public class DaraActivity extends AppCompatActivity
         setContentView(R.layout.activity_dara);
         setupTaskDescription();
 
+        mNotification = getIntent().getParcelableExtra(EXTRA);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setupToolbar();
     }
@@ -39,7 +49,21 @@ public class DaraActivity extends AppCompatActivity
 
     private void setupToolbar() {
         setSupportActionBar(mToolbar);
-        // TODO
+
+        Drawable drawable = null;
+        try {
+            drawable = getPackageManager().getApplicationIcon(mNotification.getPackageName());
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (drawable != null && drawable instanceof BitmapDrawable) {
+            int dp30 = (int) DisplayUtils.dp2px(this, 30.0f);
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            Bitmap resize = Bitmap.createScaledBitmap(bitmap, dp30, dp30, false);
+            drawable = new BitmapDrawable(getResources(), resize);
+            mToolbar.setNavigationIcon(drawable);
+        }
     }
 
     @Override
@@ -70,7 +94,7 @@ public class DaraActivity extends AppCompatActivity
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Toast.makeText(this, isChecked ? R.string.toast_enable_regular_expression
-                : R.string.toast_disable_regular_expression, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, isChecked ? R.string.toast_acting_on_application
+                : R.string.toast_acting_on_custom, Toast.LENGTH_SHORT).show();
     }
 }

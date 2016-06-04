@@ -14,7 +14,7 @@
     <string name="label_notification_center">Notification center</string>
     
     <!-- Toast -->
-    <string name="toast_enable_regular_expression">Enable regular expression</string>
-    <string name="toast_disable_regular_expression">Disable regular expression</string>
+    <string name="toast_acting_on_application">Acting on application</string>
+    <string name="toast_acting_on_custom">Acting on custom</string>
 
 </resources>
