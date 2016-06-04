@@ -13,6 +13,8 @@
     </android.support.v7.widget.Toolbar>
 
     <!-- TODO -->
-    <include layout="@layout/layout_rule_content" />
+    <include android:id="@+id/rule_content"
+            layout="@layout/layout_rule_content">
+    </include>
 
 </LinearLayout>

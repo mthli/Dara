@@ -125,10 +125,11 @@ public class RecyclerLayout extends FrameLayout {
 
     private void onClickNoticeHolderEvent(ClickNoticeEvent event) {
         // Caused by: java.lang.RuntimeException: Not allowed to write file descriptors here
-        event.getNotice().getNotification().getNotification().extras = null;
+        StatusBarNotification notification = event.getNotice().getNotification().clone();
+        notification.getNotification().extras = null;
 
         Intent intent = new Intent(getContext(), DaraActivity.class);
-        intent.putExtra(DaraActivity.EXTRA, event.getNotice().getNotification());
+        intent.putExtra(DaraActivity.EXTRA, notification);
         getContext().startActivity(intent);
     }
 }

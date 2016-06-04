@@ -26,6 +26,12 @@ public class RuleContentLayout extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
+    public void setCustomEnable(boolean enabled) {
+        mSwitchRegular.setEnabled(enabled);
+        mTitleView.setEnabled(enabled);
+        mContentView.setEnabled(enabled);
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -33,6 +39,6 @@ public class RuleContentLayout extends LinearLayout {
         mSwitchRegular = (SwitchCompat) findViewById(R.id.switch_regular);
         mTitleView = (AppCompatEditText) findViewById(R.id.title);
         mContentView = (AppCompatEditText) findViewById(R.id.content);
-        // TODO
+        setCustomEnable(false);
     }
 }
