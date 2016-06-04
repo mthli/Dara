@@ -1,6 +1,10 @@
 <resources>
 
+    <!-- Application -->
     <string name="app_name">Dara</string>
+
+    <!-- Label -->
+    <string name="label_notification_center">Notification center</string>
 
     <!-- Permission -->
     <string name="permission_message">
@@ -9,12 +13,9 @@
     <string name="permission_access">Access</string>
     <string name="permission_cancel">Cancel</string>
     <string name="permission_detail">Detail</string>
-
-    <!-- Label -->
-    <string name="label_notification_center">Notification center</string>
     
-    <!-- Toast -->
-    <string name="toast_acting_on_application">Acting on application</string>
-    <string name="toast_acting_on_custom">Acting on custom</string>
+    <!-- Subtitle -->
+    <string name="subtitle_rules_default">Default rules</string>
+    <string name="subtitle_rules_custom">Custom rules</string>
 
 </resources>

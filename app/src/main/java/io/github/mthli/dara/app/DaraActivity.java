@@ -1,6 +1,7 @@
 package io.github.mthli.dara.app;
 
 import android.app.ActivityManager;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.util.DisplayUtils;
@@ -49,20 +49,33 @@ public class DaraActivity extends AppCompatActivity
 
     private void setupToolbar() {
         setSupportActionBar(mToolbar);
+        mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.text_primary));
+        mToolbar.setSubtitleTextColor(ContextCompat.getColor(this, R.color.text_secondary));
 
-        Drawable drawable = null;
+        CharSequence appName = null;
         try {
-            drawable = getPackageManager().getApplicationIcon(mNotification.getPackageName());
+            ApplicationInfo info = getPackageManager()
+                    .getApplicationInfo(mNotification.getPackageName(), 0);
+            appName = info != null ? getPackageManager().getApplicationLabel(info) : null;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setSubtitle(getString(R.string.subtitle_rules_default));
+
+        Drawable appIcon = null;
+        try {
+            appIcon = getPackageManager().getApplicationIcon(mNotification.getPackageName());
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
-        if (drawable != null && drawable instanceof BitmapDrawable) {
+        if (appIcon != null && appIcon instanceof BitmapDrawable) {
             int dp30 = (int) DisplayUtils.dp2px(this, 30.0f);
-            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            Bitmap bitmap = ((BitmapDrawable) appIcon).getBitmap();
             Bitmap resize = Bitmap.createScaledBitmap(bitmap, dp30, dp30, false);
-            drawable = new BitmapDrawable(getResources(), resize);
-            mToolbar.setNavigationIcon(drawable);
+            appIcon = new BitmapDrawable(getResources(), resize);
+            mToolbar.setNavigationIcon(appIcon);
         }
     }
 
@@ -94,7 +107,7 @@ public class DaraActivity extends AppCompatActivity
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Toast.makeText(this, isChecked ? R.string.toast_acting_on_application
-                : R.string.toast_acting_on_custom, Toast.LENGTH_SHORT).show();
+        getSupportActionBar().setSubtitle(isChecked
+                ? R.string.subtitle_rules_custom : R.string.subtitle_rules_default);
     }
 }

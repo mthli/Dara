@@ -2,6 +2,9 @@
 
 <resources>
 
+    <!-- Label -->
+    <string name="label_notification_center">通知中心</string>
+
     <!-- Permission -->
     <string name="permission_message">
         为了隐藏你不希望看到的通知，请授予允许访问通知的权限。
@@ -10,11 +13,8 @@
     <string name="permission_cancel">取消</string>
     <string name="permission_detail">详情</string>
 
-    <!-- Label -->
-    <string name="label_notification_center">通知中心</string>
-
-    <!-- Toast -->
-    <string name="toast_acting_on_application">作用于整个应用</string>
-    <string name="toast_acting_on_custom">使用自定义策略</string>
+    <!-- Subtitle -->
+    <string name="subtitle_rules_default">缺损规则</string>
+    <string name="subtitle_rules_custom">自定义规则</string>
 
 </resources>
