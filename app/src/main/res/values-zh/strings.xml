@@ -2,6 +2,12 @@
 
 <resources>
 
+    <!-- Hint -->
+    <string name="hint_title_separator">#标题 #关键字</string>
+    <string name="hint_title_regular">标题</string>
+    <string name="hint_content_separator">#内容 #关键字</string>
+    <string name="hint_content_regular">内容</string>
+
     <!-- Label -->
     <string name="label_notification_center">通知中心</string>
 
@@ -14,7 +20,7 @@
     <string name="permission_detail">详情</string>
 
     <!-- Subtitle -->
-    <string name="subtitle_rules_default">缺损规则</string>
+    <string name="subtitle_rules_default">默认规则</string>
     <string name="subtitle_rules_custom">自定义规则</string>
 
     <!-- Title -->

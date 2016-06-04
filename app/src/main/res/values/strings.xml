@@ -2,6 +2,12 @@
 
     <!-- Application -->
     <string name="app_name">Dara</string>
+    
+    <!-- Hint -->
+    <string name="hint_title_separator">#Title #keywords</string>
+    <string name="hint_title_regular">Title</string>
+    <string name="hint_content_separator">#Content #keywords</string>
+    <string name="hint_content_regular">Content</string>
 
     <!-- Label -->
     <string name="label_notification_center">Notification center</string>
