@@ -49,8 +49,8 @@ public class DaraActivity extends AppCompatActivity
 
     private void setupToolbar() {
         setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.text_primary));
-        mToolbar.setSubtitleTextColor(ContextCompat.getColor(this, R.color.text_secondary));
+        mToolbar.setTitleTextAppearance(this, R.style.ToolbarTitleAppearance);
+        mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitleAppearance);
 
         CharSequence appName = null;
         try {
