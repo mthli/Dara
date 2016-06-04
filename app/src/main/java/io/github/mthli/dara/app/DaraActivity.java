@@ -129,6 +129,7 @@ public class DaraActivity extends AppCompatActivity
         intent.putExtra("app_package", mNotification.getPackageName());
         intent.putExtra("app_uid", info.uid);
         startActivity(intent);
+        // TODO finish();
     }
 
     @Override
