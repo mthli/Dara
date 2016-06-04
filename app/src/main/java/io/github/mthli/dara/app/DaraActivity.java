@@ -26,7 +26,7 @@ public class DaraActivity extends AppCompatActivity
 
     private StatusBarNotification mNotification;
     private Toolbar mToolbar;
-    private SwitchCompat mSwitzh;
+    private SwitchCompat mSwitchRules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +49,8 @@ public class DaraActivity extends AppCompatActivity
 
     private void setupToolbar() {
         setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextAppearance(this, R.style.ToolbarTitleAppearance);
-        mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitleAppearance);
+        mToolbar.setTitleTextAppearance(this, R.style.TitleAppearance);
+        mToolbar.setSubtitleTextAppearance(this, R.style.SubtitleAppearance);
 
         CharSequence appName = null;
         try {
@@ -87,9 +87,9 @@ public class DaraActivity extends AppCompatActivity
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        mSwitzh = (SwitchCompat) menu.findItem(R.id.menu_switzh)
-                .getActionView().findViewById(R.id.switzh);
-        mSwitzh.setOnCheckedChangeListener(this);
+        mSwitchRules = (SwitchCompat) menu.findItem(R.id.menu_switzh)
+                .getActionView().findViewById(R.id.switch_rules);
+        mSwitchRules.setOnCheckedChangeListener(this);
         return super.onPrepareOptionsMenu(menu);
     }
 
