@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
@@ -51,6 +52,7 @@ public class DaraActivity extends AppCompatActivity
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextAppearance(this, R.style.ToolbarTitleAppearance);
         mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitleAppearance);
+        ViewCompat.setElevation(mToolbar, 0.0f);
 
         CharSequence appName = null;
         try {
