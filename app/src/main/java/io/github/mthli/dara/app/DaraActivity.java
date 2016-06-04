@@ -49,8 +49,8 @@ public class DaraActivity extends AppCompatActivity
 
     private void setupToolbar() {
         setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextAppearance(this, R.style.TitleAppearance);
-        mToolbar.setSubtitleTextAppearance(this, R.style.SubtitleAppearance);
+        mToolbar.setTitleTextAppearance(this, R.style.ToolbarTitleAppearance);
+        mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitleAppearance);
 
         CharSequence appName = null;
         try {
@@ -87,7 +87,7 @@ public class DaraActivity extends AppCompatActivity
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        mSwitchRules = (SwitchCompat) menu.findItem(R.id.menu_switzh)
+        mSwitchRules = (SwitchCompat) menu.findItem(R.id.menu_switch)
                 .getActionView().findViewById(R.id.switch_rules);
         mSwitchRules.setOnCheckedChangeListener(this);
         return super.onPrepareOptionsMenu(menu);
