@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.util.KeyboardUtils;
 
 public class RuleContentLayout extends LinearLayout
         implements CompoundButton.OnCheckedChangeListener {
@@ -32,6 +33,12 @@ public class RuleContentLayout extends LinearLayout
         mSwitchRegular.setEnabled(enabled);
         mTitleView.setEnabled(enabled);
         mContentView.setEnabled(enabled);
+
+        if (enabled) {
+            KeyboardUtils.showKeyboard(getContext(), mTitleView);
+        } else {
+            KeyboardUtils.hideKeyboard(getContext(), mTitleView);
+        }
     }
 
     @Override
