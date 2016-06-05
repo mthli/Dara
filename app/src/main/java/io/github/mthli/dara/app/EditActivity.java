@@ -159,9 +159,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("app_package", mNotification.getPackageName());
         intent.putExtra("app_uid", info.uid);
         startActivity(intent);
-
-        setResult(RESPONSE_CANCEL);
-        finish();
+        onBackPressed();
     }
 
     @Override
