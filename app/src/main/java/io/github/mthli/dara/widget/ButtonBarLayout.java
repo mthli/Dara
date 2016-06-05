@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import io.github.mthli.dara.R;
+
 public class ButtonBarLayout extends RelativeLayout implements View.OnClickListener {
     public interface ButtonBarLayoutListener {
         void onPositiveButtonClick();
@@ -17,7 +19,7 @@ public class ButtonBarLayout extends RelativeLayout implements View.OnClickListe
     private ButtonBarLayoutListener mButtonBarLayoutListener;
 
     private AppCompatButton mPositiveButton;
-    private AppCompatButton mNegivateButton;
+    private AppCompatButton mNegativeButton;
     private AppCompatButton mNeutralButton;
 
     public ButtonBarLayout(Context context) {
@@ -40,10 +42,12 @@ public class ButtonBarLayout extends RelativeLayout implements View.OnClickListe
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        // TODO
+        mPositiveButton = (AppCompatButton) findViewById(R.id.positive);
+        mNegativeButton = (AppCompatButton) findViewById(R.id.negative);
+        mNeutralButton = (AppCompatButton) findViewById(R.id.neutral);
 
         mPositiveButton.setOnClickListener(this);
-        mNegivateButton.setOnClickListener(this);
+        mNegativeButton.setOnClickListener(this);
         mNeutralButton.setOnClickListener(this);
     }
 
@@ -53,7 +57,7 @@ public class ButtonBarLayout extends RelativeLayout implements View.OnClickListe
             if (mButtonBarLayoutListener != null) {
                 mButtonBarLayoutListener.onPositiveButtonClick();
             }
-        } else if (view == mNegivateButton) {
+        } else if (view == mNegativeButton) {
             if (mButtonBarLayoutListener != null) {
                 mButtonBarLayoutListener.onNegativeButtonClick();
             }

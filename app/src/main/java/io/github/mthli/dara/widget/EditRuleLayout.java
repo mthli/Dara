@@ -11,22 +11,22 @@ import android.widget.LinearLayout;
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.util.KeyboardUtils;
 
-public class DaraLayout extends LinearLayout implements CompoundButton.OnCheckedChangeListener,
+public class EditRuleLayout extends LinearLayout implements CompoundButton.OnCheckedChangeListener,
         ButtonBarLayout.ButtonBarLayoutListener {
     private SwitchCompat mSwitchRegular;
     private AppCompatEditText mTitleView;
     private AppCompatEditText mContentView;
     private ButtonBarLayout mButtonBarLayout;
 
-    public DaraLayout(Context context) {
+    public EditRuleLayout(Context context) {
         super(context);
     }
 
-    public DaraLayout(Context context, @Nullable AttributeSet attrs) {
+    public EditRuleLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public DaraLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public EditRuleLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -68,16 +68,16 @@ public class DaraLayout extends LinearLayout implements CompoundButton.OnChecked
 
     @Override
     public void onPositiveButtonClick() {
-        
+        // TODO
     }
     
     @Override
     public void onNegativeButtonClick() {
-        
+        // TODO
     }
     
     @Override
     public void onNeutralButtonClick() {
-        
+        // TODO
     }
 }

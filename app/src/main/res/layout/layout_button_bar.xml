@@ -5,4 +5,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <android.support.v7.widget.AppCompatButton
+            android:id="@+id/neutral"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+    </android.support.v7.widget.AppCompatButton>
+
+    <android.support.v7.widget.AppCompatButton
+            android:id="@+id/negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+    </android.support.v7.widget.AppCompatButton>
+
+    <android.support.v7.widget.AppCompatButton
+            android:id="@+id/positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+    </android.support.v7.widget.AppCompatButton>
+
 </io.github.mthli.dara.widget.ButtonBarLayout>
