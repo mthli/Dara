@@ -33,6 +33,17 @@
     <string name="subtitle_user_app">User app</string>
     
     <!-- Title -->
-    <string name="title_regular_expressions">Regular expressions</string>
+    <string name="title_regex">RegEx</string>
+
+    <!-- Toast -->
+    <string name="toast_rule_title_error">
+        Please input valid title rule
+    </string>
+    <string name="toast_rule_content_error">
+        Please input valid content rule
+    </string>
+    <string name="toast_rule_title_content_error">
+        Please input valid title and content rule
+    </string>
 
 </resources>

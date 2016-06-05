@@ -32,6 +32,17 @@
     <string name="subtitle_user_app">用户应用</string>
 
     <!-- Title -->
-    <string name="title_regular_expressions">正则表达式</string>
+    <string name="title_regex">正则表达式</string>
+
+    <!-- Toast -->
+    <string name="toast_rule_title_error">
+        请输入符合要求的标题规则
+    </string>
+    <string name="toast_rule_content_error">
+        请输入符合要求的内容规则
+    </string>
+    <string name="toast_rule_title_content_error">
+        请输入符合要求的标题和内容规则
+    </string>
 
 </resources>

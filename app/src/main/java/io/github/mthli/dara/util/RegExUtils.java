@@ -1,9 +1,12 @@
 package io.github.mthli.dara.util;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class RegExUtils {
     private static final String HASHTAG_LETTERS = "\\p{L}\\p{M}";
@@ -41,6 +44,10 @@ public class RegExUtils {
 
     public static List<String> getHashTags(String text) {
         List<String> list = new ArrayList<>();
+        if (TextUtils.isEmpty(text)) {
+            return list;
+        }
+
         if (sValidPattern == null) {
             sValidPattern = Pattern.compile("(^|[^&"
                     + HASHTAG_LETTERS_NUMERALS
@@ -64,5 +71,19 @@ public class RegExUtils {
         }
 
         return list;
+    }
+
+    public static boolean isRegEx(String text) {
+        if (TextUtils.isEmpty(text)) {
+            return false;
+        }
+
+        try {
+            Pattern.compile(text);
+            return true;
+        } catch (PatternSyntaxException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

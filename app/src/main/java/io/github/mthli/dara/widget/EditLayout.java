@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.app.EditActivity;
@@ -66,29 +67,58 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
 
     private void onHashTagsMode() {
         String title = mTitleView.getText().toString().trim();
-        if (!checkHashTags(title)) {
+        if (!TextUtils.isEmpty(title) && RegExUtils.getHashTags(title).isEmpty()) {
+            Toast.makeText(getContext(), R.string.toast_rule_title_error,
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
         String content = mContentView.getText().toString().trim();
-        if (!checkHashTags(title)) {
+        if (!TextUtils.isEmpty(content) && RegExUtils.getHashTags(content).isEmpty()) {
+            Toast.makeText(getContext(), R.string.toast_rule_content_error,
+                    Toast.LENGTH_SHORT).show();
             return;
         }
-    }
 
-    private boolean checkHashTags(String text) {
-        return !TextUtils.isEmpty(text) && !RegExUtils.getHashTags(text).isEmpty();
+        if (RegExUtils.getHashTags(title).isEmpty()
+                && RegExUtils.getHashTags(content).isEmpty()) {
+            Toast.makeText(getContext(), R.string.toast_rule_title_content_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // TODO
     }
 
     private void onRegExMode() {
+        String title = mTitleView.getText().toString().trim();
+        if (!TextUtils.isEmpty(title) && !RegExUtils.isRegEx(title)) {
+            Toast.makeText(getContext(), R.string.toast_rule_title_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        String content = mContentView.getText().toString().trim();
+        if (!TextUtils.isEmpty(content) && !RegExUtils.isRegEx(content)) {
+            Toast.makeText(getContext(), R.string.toast_rule_content_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!RegExUtils.isRegEx(title) && !RegExUtils.isRegEx(content)) {
+            Toast.makeText(getContext(), R.string.toast_rule_title_content_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // TODO
     }
-    
+
     @Override
     public void onNegativeButtonClick() {
         ((EditActivity) getContext()).onBackPressed();
     }
-    
+
     @Override
     public void onNeutralButtonClick() {
         // TODO
