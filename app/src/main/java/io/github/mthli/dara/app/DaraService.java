@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.github.mthli.dara.event.NotificationRemovedEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.util.RxBus;
@@ -59,5 +60,6 @@ public class DaraService extends NotificationListenerService {
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
         onRequestActiveNotificationsEvent();
+        RxBus.getInstance().post(new NotificationRemovedEvent(sbn));
     }
 }

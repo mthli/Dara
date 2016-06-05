@@ -19,18 +19,23 @@ import android.view.MenuItem;
 import android.view.View;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.event.NotificationRemovedEvent;
 import io.github.mthli.dara.util.DisplayUtils;
+import io.github.mthli.dara.util.RxBus;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class EditActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST = 0x100;
     public static final int RESPONSE_CONFIRM = 0x101;
     public static final int RESPONSE_CANCEL = 0x102;
-    public static final int RESPONSE_DISMISS = 0x103;
-
     public static final String EXTRA = "EXTRA";
 
     private StatusBarNotification mNotification;
     private Toolbar mToolbar;
+
+    private Subscription mRemovedSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         mNotification = getIntent().getParcelableExtra(EXTRA);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setupToolbar();
+        setupRxBus();
     }
 
     private void setupTaskDescription() {
@@ -98,6 +104,28 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void setupRxBus() {
+        mRemovedSubscription = RxBus.getInstance()
+                .toObservable(NotificationRemovedEvent.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<NotificationRemovedEvent>() {
+                    @Override
+                    public void call(NotificationRemovedEvent event) {
+                        onNotificationRemovedEvent(event);
+                    }
+                });
+    }
+
+    private void onNotificationRemovedEvent(NotificationRemovedEvent event) {
+        if (event.getStatusBarNotification().getPackageName()
+                .equals(mNotification.getPackageName())) {
+            if (event.getStatusBarNotification().getId()
+                    == event.getStatusBarNotification().getId()) {
+                onBackPressed();
+            }
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_dara, menu);
@@ -138,5 +166,14 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
         setResult(RESPONSE_CANCEL, null);
         finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mRemovedSubscription != null) {
+            mRemovedSubscription.unsubscribe();
+        }
     }
 }

@@ -69,7 +69,8 @@ public class RecyclerLayout extends FrameLayout {
     }
 
     private void setupRxBus() {
-        mResponseSubscription = RxBus.getInstance().toObservable(ResponseNotificationListEvent.class)
+        mResponseSubscription = RxBus.getInstance()
+                .toObservable(ResponseNotificationListEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ResponseNotificationListEvent>() {
                     @Override
@@ -83,7 +84,7 @@ public class RecyclerLayout extends FrameLayout {
         List<String> group = new ArrayList<>();
 
         List<Notice> list = new ArrayList<>();
-        for (StatusBarNotification notification : event.getList()) {
+        for (StatusBarNotification notification : event.getStatusBarNotificationList()) {
             if (!notification.isOngoing() && !group.contains(notification.getGroupKey())) {
                 group.add(notification.getGroupKey());
                 list.add(new Notice(notification));

@@ -5,13 +5,13 @@ import android.service.notification.StatusBarNotification;
 import java.util.List;
 
 public class ResponseNotificationListEvent {
-    private List<StatusBarNotification> mList;
+    private List<StatusBarNotification> mStatusBarNotificationList;
 
-    public ResponseNotificationListEvent(List<StatusBarNotification> list) {
-        mList = list;
+    public ResponseNotificationListEvent(List<StatusBarNotification> statusBarNotificationList) {
+        mStatusBarNotificationList = statusBarNotificationList;
     }
 
-    public List<StatusBarNotification> getList() {
-        return mList;
+    public List<StatusBarNotification> getStatusBarNotificationList() {
+        return mStatusBarNotificationList;
     }
 }
