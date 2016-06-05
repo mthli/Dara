@@ -11,21 +11,22 @@ import android.widget.LinearLayout;
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.util.KeyboardUtils;
 
-public class RuleContentLayout extends LinearLayout
-        implements CompoundButton.OnCheckedChangeListener {
+public class DaraLayout extends LinearLayout implements CompoundButton.OnCheckedChangeListener,
+        ButtonBarLayout.ButtonBarLayoutListener {
     private SwitchCompat mSwitchRegular;
     private AppCompatEditText mTitleView;
     private AppCompatEditText mContentView;
+    private ButtonBarLayout mButtonBarLayout;
 
-    public RuleContentLayout(Context context) {
+    public DaraLayout(Context context) {
         super(context);
     }
 
-    public RuleContentLayout(Context context, @Nullable AttributeSet attrs) {
+    public DaraLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public RuleContentLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public DaraLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -48,10 +49,12 @@ public class RuleContentLayout extends LinearLayout
         mSwitchRegular = (SwitchCompat) findViewById(R.id.switch_regular);
         mTitleView = (AppCompatEditText) findViewById(R.id.title);
         mContentView = (AppCompatEditText) findViewById(R.id.content);
+        mButtonBarLayout = (ButtonBarLayout) findViewById(R.id.button_bar);
 
         mSwitchRegular.setOnCheckedChangeListener(this);
         mTitleView.setHint(R.string.hint_title_separator);
         mContentView.setHint(R.string.hint_content_separator);
+        mButtonBarLayout.setButtonBarLayoutListener(this);
         setCustomEnable(false);
     }
 
@@ -61,5 +64,20 @@ public class RuleContentLayout extends LinearLayout
                 : R.string.hint_title_separator);
         mContentView.setHint(isChecked ? R.string.hint_content_regular
                 : R.string.hint_content_separator);
+    }
+
+    @Override
+    public void onPositiveButtonClick() {
+        
+    }
+    
+    @Override
+    public void onNegativeButtonClick() {
+        
+    }
+    
+    @Override
+    public void onNeutralButtonClick() {
+        
     }
 }

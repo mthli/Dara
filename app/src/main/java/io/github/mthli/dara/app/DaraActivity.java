@@ -22,7 +22,8 @@ import android.widget.CompoundButton;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.util.DisplayUtils;
-import io.github.mthli.dara.widget.RuleContentLayout;
+import io.github.mthli.dara.widget.ButtonBarLayout;
+import io.github.mthli.dara.widget.DaraLayout;
 
 public class DaraActivity extends AppCompatActivity
         implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -32,7 +33,7 @@ public class DaraActivity extends AppCompatActivity
     private Toolbar mToolbar;
     private SwitchCompat mSwitchRules;
 
-    private RuleContentLayout mRuleContentLayout;
+    private DaraLayout mDaraLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class DaraActivity extends AppCompatActivity
         setupTaskDescription();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mRuleContentLayout = (RuleContentLayout) findViewById(R.id.rule_content);
+        mDaraLayout = (DaraLayout) findViewById(R.id.dara);
 
         mNotification = getIntent().getParcelableExtra(EXTRA);
         setupToolbar();
@@ -137,6 +138,6 @@ public class DaraActivity extends AppCompatActivity
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         getSupportActionBar().setSubtitle(isChecked
                 ? R.string.subtitle_rules_custom : R.string.subtitle_rules_default);
-        mRuleContentLayout.setCustomEnable(isChecked);
+        mDaraLayout.setCustomEnable(isChecked);
     }
 }

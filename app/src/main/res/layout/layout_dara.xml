@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<io.github.mthli.dara.widget.RuleContentLayout
+<io.github.mthli.dara.widget.DaraLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -79,4 +79,15 @@
             android:background="@color/transparent">
     </android.support.v7.widget.AppCompatEditText>
 
-</io.github.mthli.dara.widget.RuleContentLayout>
+    <View android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginEnd="8dp"
+          android:background="@drawable/divider">
+    </View>
+
+    <include android:id="@+id/button_bar"
+             layout="@layout/layout_button_bar">
+    </include>
+
+</io.github.mthli.dara.widget.DaraLayout>
