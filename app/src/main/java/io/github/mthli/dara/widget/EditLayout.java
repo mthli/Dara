@@ -4,12 +4,18 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.SwitchCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.app.EditActivity;
+import io.github.mthli.dara.util.RegExUtils;
 
 public class EditLayout extends LinearLayout implements CompoundButton.OnCheckedChangeListener,
         ButtonBarLayout.ButtonBarLayoutListener {
@@ -53,7 +59,7 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
 
     @Override
     public void onPositiveButtonClick() {
-        // TODO
+        Log.e("tag", "-> " + checkTitle());
     }
     
     @Override
@@ -64,5 +70,20 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
     @Override
     public void onNeutralButtonClick() {
         // TODO
+    }
+
+    private boolean checkTitle() {
+        String title = mTitleView.getText().toString().trim();
+        if (TextUtils.isEmpty(title)) {
+            return false;
+        }
+
+        Pattern pattern = RegExUtils.getPattern();
+        Matcher matcher = pattern.matcher(title);
+        return matcher.matches();
+    }
+
+    private boolean checkContent() {
+        return false;
     }
 }
