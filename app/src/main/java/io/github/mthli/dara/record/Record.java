@@ -1,25 +1,21 @@
 package io.github.mthli.dara.record;
 
-import android.graphics.Bitmap;
-
 import com.orm.SugarRecord;
 import com.orm.dsl.Table;
 
 @Table
 public class Record extends SugarRecord {
     private String mPackageName;
-    private Bitmap mSmallIcon;
-    private Boolean mIsRegularExpression;
+    private Boolean mIsRegEx;
     private String mTitle;
     private String mContent;
 
     public Record() {}
 
-    public Record(String packageName, Bitmap smallIcon, Boolean isRegularExpression,
+    public Record(String packageName, Boolean isRegEx,
                   String title, String content) {
         mPackageName = packageName;
-        mSmallIcon = smallIcon;
-        mIsRegularExpression = isRegularExpression;
+        mIsRegEx = isRegEx;
         mTitle = title;
         mContent = content;
     }
@@ -32,20 +28,12 @@ public class Record extends SugarRecord {
         mPackageName = packageName;
     }
 
-    public Bitmap getSmallIcon() {
-        return mSmallIcon;
-    }
-
-    public void setSmallIcon(Bitmap smallIcon) {
-        mSmallIcon = smallIcon;
-    }
-
     public Boolean getRegularExpression() {
-        return mIsRegularExpression;
+        return mIsRegEx;
     }
 
-    public void setRegularExpression(Boolean regularExpression) {
-        mIsRegularExpression = regularExpression;
+    public void setRegEx(Boolean regularExpression) {
+        mIsRegEx = regularExpression;
     }
 
     public String getTitle() {

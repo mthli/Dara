@@ -14,20 +14,28 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.orm.SugarRecord;
 
 import java.util.List;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.event.NotificationRemovedEvent;
+import io.github.mthli.dara.event.UpdateRecordEvent;
+import io.github.mthli.dara.record.Record;
 import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.EditLayout;
+import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class EditActivity extends AppCompatActivity
         implements View.OnClickListener, EditLayout.EditLayoutListener {
@@ -168,13 +176,35 @@ public class EditActivity extends AppCompatActivity
     }
 
     @Override
-    public void onHashTagsReady(List<String> titleTags, List<String> contentTags) {
-        // TODO
+    public void onHashTagsReady(final List<String> titleTags, final List<String> contentTags) {
+        Observable.create(new Observable.OnSubscribe<Void>() {
+            @Override
+            public void call(Subscriber<? super Void> subscriber) {
+                Record record = new Record();
+                record.setPackageName(mStatusBarNotification.getPackageName());
+                record.setRegEx(false);
+                record.setTitle(TextUtils.join(" ", titleTags));
+                record.setContent(TextUtils.join(" ", contentTags));
+                SugarRecord.save(record);
+                RxBus.getInstance().post(new UpdateRecordEvent());
+            }
+        }).subscribeOn(Schedulers.newThread());
     }
 
     @Override
-    public void onRegExReady(String titleRegEx, String contentRegEx) {
-        // TODO
+    public void onRegExReady(final String titleRegEx, final String contentRegEx) {
+        Observable.create(new Observable.OnSubscribe<Void>() {
+            @Override
+            public void call(Subscriber<? super Void> subscriber) {
+                Record record = new Record();
+                record.setPackageName(mStatusBarNotification.getPackageName());
+                record.setRegEx(true);
+                record.setTitle(titleRegEx);
+                record.setContent(contentRegEx);
+                SugarRecord.save(record);
+                RxBus.getInstance().post(new UpdateRecordEvent());
+            }
+        }).subscribeOn(Schedulers.newThread());
     }
 
     @Override
