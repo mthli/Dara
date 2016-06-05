@@ -1,5 +1,8 @@
 package io.github.mthli.dara.util;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegExUtils {
@@ -33,11 +36,13 @@ public class RegExUtils {
             + HASHTAG_LETTERS_NUMERALS
             + "]";
 
-    private static Pattern sPattern;
+    private static Pattern sValidPattern;
+    private static Pattern sInvalidPattern;
 
-    public static Pattern getPattern() {
-        if (sPattern == null) {
-            sPattern = Pattern.compile("(^|[^&"
+    public static List<String> getHashTags(String text) {
+        List<String> list = new ArrayList<>();
+        if (sValidPattern == null) {
+            sValidPattern = Pattern.compile("(^|[^&"
                     + HASHTAG_LETTERS_NUMERALS
                     + "])(#|\uFF03)(?!\uFE0F|\u20E3)("
                     + HASHTAG_LETTERS_NUMERALS_SET
@@ -46,7 +51,18 @@ public class RegExUtils {
                     + HASHTAG_LETTERS_NUMERALS_SET
                     + "*)", Pattern.CASE_INSENSITIVE);
         }
+        if (sInvalidPattern == null) {
+            sInvalidPattern = Pattern.compile("^(?:[#＃]|://)");
+        }
 
-        return sPattern;
+        Matcher matcher = sValidPattern.matcher(text);
+        while (matcher.find()) {
+            String after = text.substring(matcher.end());
+            if (!sInvalidPattern.matcher(after).find()) {
+                list.add(matcher.group());
+            }
+        }
+
+        return list;
     }
 }

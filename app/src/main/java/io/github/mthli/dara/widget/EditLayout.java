@@ -6,12 +6,8 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.app.EditActivity;
@@ -21,6 +17,7 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
         ButtonBarLayout.ButtonBarLayoutListener {
     private AppCompatEditText mTitleView;
     private AppCompatEditText mContentView;
+    private boolean mIsRegExMode;
 
     public EditLayout(Context context) {
         super(context);
@@ -55,11 +52,36 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
                 : R.string.hint_title_separator);
         mContentView.setHint(isChecked ? R.string.hint_content_regular
                 : R.string.hint_content_separator);
+        mIsRegExMode = isChecked;
     }
 
     @Override
     public void onPositiveButtonClick() {
-        Log.e("tag", "-> " + checkTitle());
+        if (mIsRegExMode) {
+            onRegExMode();
+        } else {
+            onHashTagsMode();
+        }
+    }
+
+    private void onHashTagsMode() {
+        String title = mTitleView.getText().toString().trim();
+        if (!checkHashTags(title)) {
+            return;
+        }
+
+        String content = mContentView.getText().toString().trim();
+        if (!checkHashTags(title)) {
+            return;
+        }
+    }
+
+    private boolean checkHashTags(String text) {
+        return !TextUtils.isEmpty(text) && !RegExUtils.getHashTags(text).isEmpty();
+    }
+
+    private void onRegExMode() {
+
     }
     
     @Override
@@ -70,20 +92,5 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
     @Override
     public void onNeutralButtonClick() {
         // TODO
-    }
-
-    private boolean checkTitle() {
-        String title = mTitleView.getText().toString().trim();
-        if (TextUtils.isEmpty(title)) {
-            return false;
-        }
-
-        Pattern pattern = RegExUtils.getPattern();
-        Matcher matcher = pattern.matcher(title);
-        return matcher.matches();
-    }
-
-    private boolean checkContent() {
-        return false;
     }
 }
