@@ -186,9 +186,14 @@ public class EditActivity extends AppCompatActivity
                 record.setTitle(TextUtils.join(" ", titleTags));
                 record.setContent(TextUtils.join(" ", contentTags));
                 SugarRecord.save(record);
-                RxBus.getInstance().post(new UpdateRecordEvent());
             }
-        }).subscribeOn(Schedulers.newThread());
+        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+                RxBus.getInstance().post(new UpdateRecordEvent());
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -202,9 +207,14 @@ public class EditActivity extends AppCompatActivity
                 record.setTitle(titleRegEx);
                 record.setContent(contentRegEx);
                 SugarRecord.save(record);
-                RxBus.getInstance().post(new UpdateRecordEvent());
             }
-        }).subscribeOn(Schedulers.newThread());
+        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+                RxBus.getInstance().post(new UpdateRecordEvent());
+                onBackPressed();
+            }
+        });
     }
 
     @Override
