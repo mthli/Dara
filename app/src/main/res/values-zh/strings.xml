@@ -36,13 +36,13 @@
 
     <!-- Toast -->
     <string name="toast_rule_title_error">
-        请输入符合要求的标题规则
+        请输入满足要求的标题规则
     </string>
     <string name="toast_rule_content_error">
-        请输入符合要求的内容规则
+        请输入满足要求的内容规则
     </string>
     <string name="toast_rule_title_content_error">
-        请输入符合要求的标题和内容规则
+        请输入满足要求的标题或内容规则
     </string>
 
 </resources>

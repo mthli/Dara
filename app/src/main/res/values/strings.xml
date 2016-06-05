@@ -37,13 +37,13 @@
 
     <!-- Toast -->
     <string name="toast_rule_title_error">
-        Please input valid title rule
+        Please input meet title rule
     </string>
     <string name="toast_rule_content_error">
-        Please input valid content rule
+        Please input meet content rule
     </string>
     <string name="toast_rule_title_content_error">
-        Please input valid title and content rule
+        Please input meet title or content rule
     </string>
 
 </resources>

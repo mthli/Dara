@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -88,6 +89,7 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
         }
 
         // TODO
+        Log.e("tag", "valid");
     }
 
     private void onRegExMode() {
@@ -112,6 +114,7 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
         }
 
         // TODO
+        Log.e("tag", "valid");
     }
 
     @Override
