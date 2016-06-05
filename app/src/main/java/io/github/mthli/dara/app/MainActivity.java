@@ -130,17 +130,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != EditActivity.REQUEST
+                || resultCode != EditActivity.RESPONSE_BLOCK
+                || data == null) {
+            return;
+        }
+
+        // TODO
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
 
         if (mClickSubscription != null) {
             mClickSubscription.unsubscribe();
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // TODO
     }
 }

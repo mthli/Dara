@@ -3,7 +3,7 @@
 <resources>
 
     <!-- Button -->
-    <string name="button_bar_positive">确定</string>
+    <string name="button_bar_positive">屏蔽</string>
     <string name="button_bar_negative">取消</string>
     <string name="button_bar_neutral">详情</string>
 

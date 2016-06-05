@@ -4,7 +4,7 @@
     <string name="app_name">Dara</string>
 
     <!-- Button -->
-    <string name="button_bar_positive">Confirm</string>
+    <string name="button_bar_positive">Block</string>
     <string name="button_bar_negative">Cancel</string>
     <string name="button_bar_neutral">Detail</string>
     

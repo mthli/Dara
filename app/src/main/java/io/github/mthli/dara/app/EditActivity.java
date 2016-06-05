@@ -28,7 +28,7 @@ import rx.functions.Action1;
 
 public class EditActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST = 0x100;
-    public static final int RESPONSE_CONFIRM = 0x101;
+    public static final int RESPONSE_BLOCK = 0x101;
     public static final int RESPONSE_CANCEL = 0x102;
     public static final String EXTRA = "EXTRA";
 
