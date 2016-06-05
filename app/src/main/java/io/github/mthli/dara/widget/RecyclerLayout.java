@@ -1,7 +1,6 @@
 package io.github.mthli.dara.widget;
 
 import android.content.Context;
-import android.content.Intent;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.mthli.dara.R;
-import io.github.mthli.dara.app.EditActivity;
-import io.github.mthli.dara.event.ClickNoticeEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.util.RxBus;
@@ -26,12 +23,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class RecyclerLayout extends FrameLayout {
-    private RecyclerView mRecyclerView;
     private DaraAdapter mAdapter;
     private List<Object> mList;
 
     private Subscription mResponseSubscription;
-    private Subscription mClickSubscription;
 
     public RecyclerLayout(Context context) {
         super(context);
@@ -61,20 +56,16 @@ public class RecyclerLayout extends FrameLayout {
         if (mResponseSubscription != null) {
             mResponseSubscription.unsubscribe();
         }
-
-        if (mClickSubscription != null) {
-            mClickSubscription.unsubscribe();
-        }
     }
 
     private void setupRecyclerView() {
         mList = new ArrayList<>();
         mAdapter = new DaraAdapter(getContext(), mList);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
-        mRecyclerView.addItemDecoration(new DaraItemDecoration(getContext()));
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mAdapter);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        recyclerView.addItemDecoration(new DaraItemDecoration(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mAdapter);
     }
 
     private void setupRxBus() {
@@ -84,15 +75,6 @@ public class RecyclerLayout extends FrameLayout {
                     @Override
                     public void call(ResponseNotificationListEvent event) {
                         onResponseNotificationListEvent(event);
-                    }
-                });
-
-        mClickSubscription = RxBus.getInstance().toObservable(ClickNoticeEvent.class)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ClickNoticeEvent>() {
-                    @Override
-                    public void call(ClickNoticeEvent event) {
-                        onClickNoticeHolderEvent(event);
                     }
                 });
     }
@@ -121,15 +103,5 @@ public class RecyclerLayout extends FrameLayout {
 
         // TODO
         mAdapter.notifyDataSetChanged();
-    }
-
-    private void onClickNoticeHolderEvent(ClickNoticeEvent event) {
-        // Caused by: java.lang.RuntimeException: Not allowed to write file descriptors here
-        StatusBarNotification notification = event.getNotice().getNotification().clone();
-        notification.getNotification().extras = null;
-
-        Intent intent = new Intent(getContext(), EditActivity.class);
-        intent.putExtra(EditActivity.EXTRA, notification);
-        getContext().startActivity(intent);
     }
 }

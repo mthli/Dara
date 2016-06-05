@@ -22,6 +22,11 @@ import io.github.mthli.dara.R;
 import io.github.mthli.dara.util.DisplayUtils;
 
 public class EditActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final int REQUEST = 0x100;
+    public static final int RESPONSE_CONFIRM = 0x101;
+    public static final int RESPONSE_CANCEL = 0x102;
+    public static final int RESPONSE_DISMISS = 0x103;
+
     public static final String EXTRA = "EXTRA";
 
     private StatusBarNotification mNotification;
@@ -113,12 +118,6 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        // TODO
-    }
-
-    @Override
     public void onClick(View view) {
         ApplicationInfo info;
         try {
@@ -133,5 +132,11 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("app_uid", info.uid);
         startActivity(intent);
         // TODO finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESPONSE_CANCEL, null);
+        finish();
     }
 }

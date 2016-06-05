@@ -9,13 +9,12 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.app.EditActivity;
 
 public class EditLayout extends LinearLayout implements CompoundButton.OnCheckedChangeListener,
         ButtonBarLayout.ButtonBarLayoutListener {
-    private SwitchCompat mSwitchRegular;
     private AppCompatEditText mTitleView;
     private AppCompatEditText mContentView;
-    private ButtonBarLayout mButtonBarLayout;
 
     public EditLayout(Context context) {
         super(context);
@@ -33,15 +32,15 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mSwitchRegular = (SwitchCompat) findViewById(R.id.switch_regular);
         mTitleView = (AppCompatEditText) findViewById(R.id.title);
         mContentView = (AppCompatEditText) findViewById(R.id.content);
-        mButtonBarLayout = (ButtonBarLayout) findViewById(R.id.button_bar);
+        SwitchCompat switchRegular = (SwitchCompat) findViewById(R.id.switch_regular);
+        ButtonBarLayout buttonBarLayout = (ButtonBarLayout) findViewById(R.id.button_bar);
 
-        mSwitchRegular.setOnCheckedChangeListener(this);
         mTitleView.setHint(R.string.hint_title_separator);
         mContentView.setHint(R.string.hint_content_separator);
-        mButtonBarLayout.setButtonBarLayoutListener(this);
+        switchRegular.setOnCheckedChangeListener(this);
+        buttonBarLayout.setButtonBarLayoutListener(this);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
     
     @Override
     public void onNegativeButtonClick() {
-        // TODO
+        ((EditActivity) getContext()).onBackPressed();
     }
     
     @Override
