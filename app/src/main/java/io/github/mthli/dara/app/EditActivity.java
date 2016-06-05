@@ -1,4 +1,4 @@
-package io.github.mthli.dara.app;
+    package io.github.mthli.dara.app;
 
 import android.app.ActivityManager;
 import android.content.Intent;
@@ -13,25 +13,20 @@ import android.service.notification.StatusBarNotification;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.widget.EditLayout;
 
-public class EditActivity extends AppCompatActivity
-        implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class EditActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String EXTRA = "EXTRA";
 
     private StatusBarNotification mNotification;
     private Toolbar mToolbar;
-    private SwitchCompat mSwitchRules;
-
     private EditLayout mEditLayout;
 
     @Override
@@ -97,17 +92,10 @@ public class EditActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        mSwitchRules = (SwitchCompat) menu.findItem(R.id.menu_switch)
-                .getActionView().findViewById(R.id.switch_rules);
-        mSwitchRules.setOnCheckedChangeListener(this);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case R.id.menu_settings:
+                onClick(null);
                 break;
             default:
                 break;
@@ -131,12 +119,5 @@ public class EditActivity extends AppCompatActivity
         intent.putExtra("app_uid", info.uid);
         startActivity(intent);
         // TODO finish();
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        getSupportActionBar().setSubtitle(isChecked
-                ? R.string.subtitle_rules_custom : R.string.subtitle_rules_default);
-        mEditLayout.setCustomEnable(isChecked);
     }
 }

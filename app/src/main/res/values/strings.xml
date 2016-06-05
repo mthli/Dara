@@ -17,6 +17,9 @@
     <!-- Label -->
     <string name="label_notification_center">Notification center</string>
 
+    <!-- Menu -->
+    <string name="menu_settings">Open app notification</string>
+
     <!-- Permission -->
     <string name="permission_message">
         Grant permission to shield notifications that you don\'t want to see.

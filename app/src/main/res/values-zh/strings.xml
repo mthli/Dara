@@ -16,6 +16,9 @@
     <!-- Label -->
     <string name="label_notification_center">通知中心</string>
 
+    <!-- Menu -->
+    <string name="menu_settings">打开应用通知设置</string>
+
     <!-- Permission -->
     <string name="permission_message">
         为了隐藏你不希望看到的通知，请授予允许访问通知的权限。
