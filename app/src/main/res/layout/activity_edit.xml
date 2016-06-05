@@ -12,8 +12,8 @@
             android:minHeight="?attr/actionBarSize">
     </android.support.v7.widget.Toolbar>
 
-    <include android:id="@+id/edit_rule"
-            layout="@layout/layout_edit_rule">
+    <include android:id="@+id/edit"
+            layout="@layout/layout_edit">
     </include>
 
 </LinearLayout>

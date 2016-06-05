@@ -11,22 +11,22 @@ import android.widget.LinearLayout;
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.util.KeyboardUtils;
 
-public class EditRuleLayout extends LinearLayout implements CompoundButton.OnCheckedChangeListener,
+public class EditLayout extends LinearLayout implements CompoundButton.OnCheckedChangeListener,
         ButtonBarLayout.ButtonBarLayoutListener {
     private SwitchCompat mSwitchRegular;
     private AppCompatEditText mTitleView;
     private AppCompatEditText mContentView;
     private ButtonBarLayout mButtonBarLayout;
 
-    public EditRuleLayout(Context context) {
+    public EditLayout(Context context) {
         super(context);
     }
 
-    public EditRuleLayout(Context context, @Nullable AttributeSet attrs) {
+    public EditLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public EditRuleLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public EditLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

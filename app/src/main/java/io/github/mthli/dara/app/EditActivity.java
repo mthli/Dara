@@ -22,9 +22,9 @@ import android.widget.CompoundButton;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.util.DisplayUtils;
-import io.github.mthli.dara.widget.EditRuleLayout;
+import io.github.mthli.dara.widget.EditLayout;
 
-public class DaraActivity extends AppCompatActivity
+public class EditActivity extends AppCompatActivity
         implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     public static final String EXTRA = "EXTRA";
 
@@ -32,17 +32,17 @@ public class DaraActivity extends AppCompatActivity
     private Toolbar mToolbar;
     private SwitchCompat mSwitchRules;
 
-    private EditRuleLayout mEditRuleLayout;
+    private EditLayout mEditLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dara);
+        setContentView(R.layout.activity_edit);
         setFinishOnTouchOutside(false);
         setupTaskDescription();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mEditRuleLayout = (EditRuleLayout) findViewById(R.id.edit_rule);
+        mEditLayout = (EditLayout) findViewById(R.id.edit);
 
         mNotification = getIntent().getParcelableExtra(EXTRA);
         setupToolbar();
@@ -52,7 +52,7 @@ public class DaraActivity extends AppCompatActivity
         setTaskDescription(new ActivityManager.TaskDescription(
                 getString(R.string.app_name),
                 BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
-                ContextCompat.getColor(DaraActivity.this, R.color.blue_grey_900)
+                ContextCompat.getColor(EditActivity.this, R.color.blue_grey_900)
         ));
     }
 
@@ -137,6 +137,6 @@ public class DaraActivity extends AppCompatActivity
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         getSupportActionBar().setSubtitle(isChecked
                 ? R.string.subtitle_rules_custom : R.string.subtitle_rules_default);
-        mEditRuleLayout.setCustomEnable(isChecked);
+        mEditLayout.setCustomEnable(isChecked);
     }
 }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.mthli.dara.R;
-import io.github.mthli.dara.app.DaraActivity;
+import io.github.mthli.dara.app.EditActivity;
 import io.github.mthli.dara.event.ClickNoticeEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
@@ -128,8 +128,8 @@ public class RecyclerLayout extends FrameLayout {
         StatusBarNotification notification = event.getNotice().getNotification().clone();
         notification.getNotification().extras = null;
 
-        Intent intent = new Intent(getContext(), DaraActivity.class);
-        intent.putExtra(DaraActivity.EXTRA, notification);
+        Intent intent = new Intent(getContext(), EditActivity.class);
+        intent.putExtra(EditActivity.EXTRA, notification);
         getContext().startActivity(intent);
     }
 }

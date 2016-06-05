@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<io.github.mthli.dara.widget.EditRuleLayout
+<io.github.mthli.dara.widget.EditLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -90,4 +90,4 @@
              layout="@layout/layout_button_bar">
     </include>
 
-</io.github.mthli.dara.widget.EditRuleLayout>
+</io.github.mthli.dara.widget.EditLayout>
