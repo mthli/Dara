@@ -28,8 +28,8 @@
     <string name="permission_detail">详情</string>
 
     <!-- Subtitle -->
-    <string name="subtitle_rules_default">默认规则</string>
-    <string name="subtitle_rules_custom">自定义规则</string>
+    <string name="subtitle_system_app">系统应用</string>
+    <string name="subtitle_user_app">用户应用</string>
 
     <!-- Title -->
     <string name="title_regular_expressions">正则表达式</string>

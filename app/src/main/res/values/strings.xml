@@ -29,8 +29,8 @@
     <string name="permission_detail">Detail</string>
     
     <!-- Subtitle -->
-    <string name="subtitle_rules_default">Default rules</string>
-    <string name="subtitle_rules_custom">Custom rules</string>
+    <string name="subtitle_system_app">System app</string>
+    <string name="subtitle_user_app">User app</string>
     
     <!-- Title -->
     <string name="title_regular_expressions">Regular expressions</string>

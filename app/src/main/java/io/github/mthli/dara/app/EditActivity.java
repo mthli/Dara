@@ -1,4 +1,4 @@
-    package io.github.mthli.dara.app;
+package io.github.mthli.dara.app;
 
 import android.app.ActivityManager;
 import android.content.Intent;
@@ -20,14 +20,12 @@ import android.view.View;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.util.DisplayUtils;
-import io.github.mthli.dara.widget.EditLayout;
 
 public class EditActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String EXTRA = "EXTRA";
 
     private StatusBarNotification mNotification;
     private Toolbar mToolbar;
-    private EditLayout mEditLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +34,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         setFinishOnTouchOutside(false);
         setupTaskDescription();
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mEditLayout = (EditLayout) findViewById(R.id.edit);
-
         mNotification = getIntent().getParcelableExtra(EXTRA);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setupToolbar();
     }
 
@@ -66,7 +62,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
         getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setSubtitle(getString(R.string.subtitle_rules_default));
+        getSupportActionBar().setSubtitle(isSystemApp()
+                ? R.string.subtitle_system_app : R.string.subtitle_user_app);
 
         Drawable appIcon = null;
         try {
@@ -82,6 +79,17 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             appIcon = new BitmapDrawable(getResources(), resize);
             mToolbar.setNavigationIcon(appIcon);
             mToolbar.setNavigationOnClickListener(this);
+        }
+    }
+
+    private boolean isSystemApp() {
+        try {
+            ApplicationInfo info = getPackageManager()
+                    .getApplicationInfo(mNotification.getPackageName(), 0);
+            return (info.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -102,6 +110,12 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // TODO
     }
 
     @Override
