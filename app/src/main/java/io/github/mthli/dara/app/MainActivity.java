@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity
 
         Intent intent = new Intent(this, EditActivity.class);
         intent.putExtra(EditActivity.EXTRA, notification);
-        startActivityForResult(intent, EditActivity.REQUEST);
+        startActivity(intent);
     }
 
     @Override
@@ -127,18 +127,6 @@ public class MainActivity extends AppCompatActivity
             mContainer.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
             mContainer.requestLayout();
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != EditActivity.REQUEST
-                || resultCode != EditActivity.RESPONSE_BLOCK
-                || data == null) {
-            return;
-        }
-
-        // TODO
     }
 
     @Override
