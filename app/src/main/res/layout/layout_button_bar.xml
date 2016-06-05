@@ -3,24 +3,40 @@
 <io.github.mthli.dara.widget.ButtonBarLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
     <android.support.v7.widget.AppCompatButton
             android:id="@+id/neutral"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-    </android.support.v7.widget.AppCompatButton>
-
-    <android.support.v7.widget.AppCompatButton
-            android:id="@+id/negative"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="0dp"
+            android:text="@string/button_bar_neutral"
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
     </android.support.v7.widget.AppCompatButton>
 
     <android.support.v7.widget.AppCompatButton
             android:id="@+id/positive"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="12dp"
+            android:text="@string/button_bar_positive"
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
+    </android.support.v7.widget.AppCompatButton>
+
+    <android.support.v7.widget.AppCompatButton
+            android:id="@+id/negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toStartOf="@id/positive"
+            android:text="@string/button_bar_negative"
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
     </android.support.v7.widget.AppCompatButton>
 
 </io.github.mthli.dara.widget.ButtonBarLayout>
