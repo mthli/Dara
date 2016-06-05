@@ -6,10 +6,11 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import java.util.List;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.app.EditActivity;
@@ -17,8 +18,15 @@ import io.github.mthli.dara.util.RegExUtils;
 
 public class EditLayout extends LinearLayout implements CompoundButton.OnCheckedChangeListener,
         ButtonBarLayout.ButtonBarLayoutListener {
+    public interface EditLayoutListener {
+        void onHashTagsReady(List<String> titleTags, List<String> contentTags);
+        void onRegExReady(String titleRegEx, String contentRegEx);
+    }
+
     private AppCompatEditText mTitleView;
     private AppCompatEditText mContentView;
+
+    private EditLayoutListener mEditLayoutListener;
     private boolean mIsRegExMode;
 
     public EditLayout(Context context) {
@@ -31,6 +39,10 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
 
     public EditLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    public void setEditLayoutListener(EditLayoutListener editLayoutListener) {
+        mEditLayoutListener = editLayoutListener;
     }
 
     @Override
@@ -88,8 +100,10 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
             return;
         }
 
-        // TODO
-        Log.e("tag", "valid");
+        if (mEditLayoutListener != null) {
+            mEditLayoutListener.onHashTagsReady(RegExUtils.getHashTags(title),
+                    RegExUtils.getHashTags(content));
+        }
     }
 
     private void onRegExMode() {
@@ -113,8 +127,9 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
             return;
         }
 
-        // TODO
-        Log.e("tag", "valid");
+        if (mEditLayoutListener != null) {
+            mEditLayoutListener.onRegExReady(title, content);
+        }
     }
 
     @Override

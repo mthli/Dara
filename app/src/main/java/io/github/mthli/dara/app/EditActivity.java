@@ -18,21 +18,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.List;
+
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.event.NotificationRemovedEvent;
 import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.util.RxBus;
+import io.github.mthli.dara.widget.EditLayout;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class EditActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditActivity extends AppCompatActivity
+        implements View.OnClickListener, EditLayout.EditLayoutListener {
     public static final int REQUEST = 0x100;
     public static final int RESPONSE_BLOCK = 0x101;
     public static final int RESPONSE_CANCEL = 0x102;
     public static final String EXTRA = "EXTRA";
 
-    private StatusBarNotification mNotification;
+    private StatusBarNotification mStatusBarNotification;
     private Toolbar mToolbar;
 
     private Subscription mRemovedSubscription;
@@ -44,8 +48,9 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         setFinishOnTouchOutside(false);
         setupTaskDescription();
 
-        mNotification = getIntent().getParcelableExtra(EXTRA);
+        mStatusBarNotification = getIntent().getParcelableExtra(EXTRA);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        ((EditLayout) findViewById(R.id.edit)).setEditLayoutListener(this);
         setupToolbar();
         setupRxBus();
     }
@@ -67,7 +72,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         CharSequence appName = null;
         try {
             ApplicationInfo info = getPackageManager()
-                    .getApplicationInfo(mNotification.getPackageName(), 0);
+                    .getApplicationInfo(mStatusBarNotification.getPackageName(), 0);
             appName = info != null ? getPackageManager().getApplicationLabel(info) : null;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -78,7 +83,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
         Drawable appIcon = null;
         try {
-            appIcon = getPackageManager().getApplicationIcon(mNotification.getPackageName());
+            appIcon = getPackageManager().getApplicationIcon(mStatusBarNotification.getPackageName());
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -96,7 +101,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private boolean isSystemApp() {
         try {
             ApplicationInfo info = getPackageManager()
-                    .getApplicationInfo(mNotification.getPackageName(), 0);
+                    .getApplicationInfo(mStatusBarNotification.getPackageName(), 0);
             return (info.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -118,7 +123,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
     private void onNotificationRemovedEvent(NotificationRemovedEvent event) {
         if (event.getStatusBarNotification().getPackageName()
-                .equals(mNotification.getPackageName())) {
+                .equals(mStatusBarNotification.getPackageName())) {
             if (event.getStatusBarNotification().getId()
                     == event.getStatusBarNotification().getId()) {
                 onBackPressed();
@@ -149,17 +154,27 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         ApplicationInfo info;
         try {
-            info = getPackageManager().getApplicationInfo(mNotification.getPackageName(), 0);
+            info = getPackageManager().getApplicationInfo(mStatusBarNotification.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
             return;
         }
 
         Intent intent = new Intent("android.settings.APP_NOTIFICATION_SETTINGS");
-        intent.putExtra("app_package", mNotification.getPackageName());
+        intent.putExtra("app_package", mStatusBarNotification.getPackageName());
         intent.putExtra("app_uid", info.uid);
         startActivity(intent);
         onBackPressed();
+    }
+
+    @Override
+    public void onHashTagsReady(List<String> titleTags, List<String> contentTags) {
+        // TODO
+    }
+
+    @Override
+    public void onRegExReady(String titleRegEx, String contentRegEx) {
+        // TODO
     }
 
     @Override
