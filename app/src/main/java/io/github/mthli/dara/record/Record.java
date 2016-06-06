@@ -28,12 +28,12 @@ public class Record extends SugarRecord {
         mPackageName = packageName;
     }
 
-    public Boolean getRegularExpression() {
+    public Boolean getRegEx() {
         return mIsRegEx;
     }
 
-    public void setRegEx(Boolean regularExpression) {
-        mIsRegEx = regularExpression;
+    public void setRegEx(Boolean regEx) {
+        mIsRegEx = regEx;
     }
 
     public String getTitle() {

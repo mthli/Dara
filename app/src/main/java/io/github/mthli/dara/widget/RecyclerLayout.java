@@ -8,21 +8,27 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
+import com.orm.query.Select;
+import com.orm.util.NamingHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
+import io.github.mthli.dara.record.Record;
 import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.adapter.DaraAdapter;
+import io.github.mthli.dara.widget.item.Filter;
 import io.github.mthli.dara.widget.item.Label;
 import io.github.mthli.dara.widget.item.Notice;
 import io.github.mthli.dara.widget.item.Space;
+import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 public class RecyclerLayout extends FrameLayout {
     private DaraAdapter mAdapter;
@@ -73,19 +79,74 @@ public class RecyclerLayout extends FrameLayout {
     private void setupRxBus() {
         mResponseSubscription = RxBus.getInstance()
                 .toObservable(ResponseNotificationListEvent.class)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ResponseNotificationListEvent>() {
+                .lift(new Observable.Operator<List<Notice>, ResponseNotificationListEvent>() {
                     @Override
-                    public void call(ResponseNotificationListEvent event) {
-                        onResponseNotificationListEvent(event);
+                    public Subscriber<? super ResponseNotificationListEvent> call(final Subscriber<? super List<Notice>> subscriber) {
+                        return new Subscriber<ResponseNotificationListEvent>() {
+                            @Override
+                            public void onCompleted() {
+                                subscriber.onCompleted();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                subscriber.onError(e);
+                            }
+
+                            @Override
+                            public void onNext(ResponseNotificationListEvent event) {
+                                subscriber.onNext(buildNoticeList(event));
+                            }
+                        };
+                    }
+                })
+                .lift(new Observable.Operator<List<Object>, List<Notice>>() {
+                    @Override
+                    public Subscriber<? super List<Notice>> call(final Subscriber<? super List<Object>> subscriber) {
+                        return new Subscriber<List<Notice>>() {
+                            @Override
+                            public void onCompleted() {
+                                subscriber.onCompleted();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                subscriber.onError(e);
+                            }
+
+                            @Override
+                            public void onNext(List<Notice> list) {
+                                subscriber.onNext(buildObjectList(list));
+                            }
+                        };
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<Object>>() {
+                    @Override
+                    public void onCompleted() {
+                        // DO NOTHING
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(List<Object> list) {
+                        // Simple and crude
+                        mList.clear();
+                        mList.addAll(list);
+                        mAdapter.notifyDataSetChanged();
                     }
                 });
     }
 
-    private void onResponseNotificationListEvent(ResponseNotificationListEvent event) {
+    private List<Notice> buildNoticeList(ResponseNotificationListEvent event) {
         List<String> group = new ArrayList<>();
-
         List<Notice> list = new ArrayList<>();
+
         for (StatusBarNotification notification : event.getStatusBarNotificationList()) {
             if (!notification.isOngoing() && !group.contains(notification.getGroupKey())) {
                 group.add(notification.getGroupKey());
@@ -93,19 +154,28 @@ public class RecyclerLayout extends FrameLayout {
             }
         }
 
-        buildRecyclerList(list);
+        return list;
     }
 
-    private void buildRecyclerList(List<Notice> list) {
-        mList.clear();
-        mList.add(new Space(DisplayUtils.getStatusBarHeight(getContext())));
+    private List<Object> buildObjectList(List<Notice> noticeList) {
+        List<Object> objectList = new ArrayList<>();
+        objectList.add(new Space(DisplayUtils.getStatusBarHeight(getContext())));
 
-        if (list != null && list.size() > 0) {
-            mList.add(new Label(getResources().getString(R.string.label_notification_center)));
-            mList.addAll(list);
+        if (noticeList.size() > 0) {
+            objectList.add(new Label(getResources().getString(R.string.label_notification_center)));
+            objectList.addAll(noticeList);
         }
 
-        // TODO
-        mAdapter.notifyDataSetChanged();
+        List<Record> recordList = Select.from(Record.class)
+                .orderBy(NamingHelper.toSQLNameDefault("mPackageName")).list();
+        for (Record record : recordList) {
+            Filter filter = new Filter();
+            filter.setRegEx(record.getRegEx());
+            filter.setTitle(record.getTitle());
+            filter.setContent(record.getContent());
+            objectList.add(filter);
+        }
+
+        return objectList;
     }
 }
