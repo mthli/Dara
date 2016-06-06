@@ -175,19 +175,20 @@ public class EditActivity extends AppCompatActivity
 
     @Override
     public void onHashTagsReady(final List<String> titleTags, final List<String> contentTags) {
-        Observable.create(new Observable.OnSubscribe<Void>() {
+        Observable.create(new Observable.OnSubscribe<Integer>() {
             @Override
-            public void call(Subscriber<? super Void> subscriber) {
+            public void call(Subscriber<? super Integer> subscriber) {
                 Record record = new Record();
                 record.setPackageName(mStatusBarNotification.getPackageName());
                 record.setRegEx(false);
                 record.setTitle(TextUtils.join(" ", titleTags));
                 record.setContent(TextUtils.join(" ", contentTags));
                 SugarRecord.save(record);
+                subscriber.onNext(0);
             }
-        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Void>() {
+        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
             @Override
-            public void call(Void aVoid) {
+            public void call(Integer integer) {
                 Toast.makeText(EditActivity.this, R.string.toast_rule_add_successful,
                         Toast.LENGTH_SHORT).show();
                 RxBus.getInstance().post(new UpdateRecordEvent());
@@ -198,19 +199,20 @@ public class EditActivity extends AppCompatActivity
 
     @Override
     public void onRegExReady(final String titleRegEx, final String contentRegEx) {
-        Observable.create(new Observable.OnSubscribe<Void>() {
+        Observable.create(new Observable.OnSubscribe<Integer>() {
             @Override
-            public void call(Subscriber<? super Void> subscriber) {
+            public void call(Subscriber<? super Integer> subscriber) {
                 Record record = new Record();
                 record.setPackageName(mStatusBarNotification.getPackageName());
                 record.setRegEx(true);
                 record.setTitle(titleRegEx);
                 record.setContent(contentRegEx);
                 SugarRecord.save(record);
+                subscriber.onNext(0);
             }
-        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Void>() {
+        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
             @Override
-            public void call(Void aVoid) {
+            public void call(Integer integer) {
                 Toast.makeText(EditActivity.this, R.string.toast_rule_add_successful,
                         Toast.LENGTH_SHORT).show();
                 RxBus.getInstance().post(new UpdateRecordEvent());
