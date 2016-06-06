@@ -19,10 +19,6 @@ public class DaraItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        int left = parent.getPaddingLeft()
-                + (int) DisplayUtils.dp2px(parent.getContext(), 64.0f);
-        int right = parent.getWidth() - parent.getPaddingRight();
-
         int count = parent.getChildCount();
         for (int i = 0; i < count; i++) {
             View child = parent.getChildAt(i);
@@ -32,7 +28,15 @@ public class DaraItemDecoration extends RecyclerView.ItemDecoration {
 
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             int top = child.getBottom() + params.bottomMargin;
+            int right = parent.getWidth() - parent.getPaddingRight();
             int bottom = top + mDivider.getIntrinsicHeight();
+
+            int left = parent.getPaddingLeft();
+            if (child.getId() == R.id.frame_filter) {
+                left += (int) DisplayUtils.dp2px(parent.getContext(), 4.0f);
+            } else {
+                left += (int) DisplayUtils.dp2px(parent.getContext(), 64.0f);
+            }
 
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);

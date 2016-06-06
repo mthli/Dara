@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -184,6 +185,9 @@ public class RecyclerLayout extends FrameLayout {
         packageList.addAll(labelSet);
 
         // TODO sort by label
+        int teal700 = ContextCompat.getColor(getContext(), R.color.teal_700);
+        int teal500 = ContextCompat.getColor(getContext(), R.color.teal_500);
+        int switzh = 0;
         for (String packageName : packageList) {
             String packageLabel = getPackageLabel(packageName);
             if (TextUtils.isEmpty(packageLabel)) {
@@ -194,6 +198,7 @@ public class RecyclerLayout extends FrameLayout {
             for (Record record : recordList) {
                 if (record.getPackageName().equals(packageName)) {
                     Filter filter = new Filter();
+                    filter.setColor(switzh++ % 2 == 0 ? teal700 : teal500);
                     filter.setRegEx(record.getRegEx());
                     filter.setTitle(record.getTitle());
                     filter.setContent(record.getContent());
