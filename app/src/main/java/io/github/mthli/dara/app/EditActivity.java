@@ -3,7 +3,6 @@ package io.github.mthli.dara.app;
 import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,6 +27,7 @@ import io.github.mthli.dara.R;
 import io.github.mthli.dara.event.NotificationRemovedEvent;
 import io.github.mthli.dara.event.UpdateRecordEvent;
 import io.github.mthli.dara.record.Record;
+import io.github.mthli.dara.util.AppInfoUtils;
 import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.EditLayout;
@@ -75,25 +75,13 @@ public class EditActivity extends AppCompatActivity
         mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitleAppearance);
         ViewCompat.setElevation(mToolbar, 0.0f);
 
-        CharSequence appName = null;
-        try {
-            ApplicationInfo info = getPackageManager()
-                    .getApplicationInfo(mStatusBarNotification.getPackageName(), 0);
-            appName = info != null ? getPackageManager().getApplicationLabel(info) : null;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        String packageName = mStatusBarNotification.getPackageName();
+        CharSequence appName = AppInfoUtils.getAppLabel(this, packageName);
         getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setSubtitle(isSystemApp()
+        getSupportActionBar().setSubtitle(AppInfoUtils.isSystemApp(this, packageName)
                 ? R.string.subtitle_system_app : R.string.subtitle_user_app);
 
-        Drawable appIcon = null;
-        try {
-            appIcon = getPackageManager().getApplicationIcon(mStatusBarNotification.getPackageName());
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        Drawable appIcon = AppInfoUtils.getAppIcon(this, packageName);
         if (appIcon != null && appIcon instanceof BitmapDrawable) {
             int dp30 = (int) DisplayUtils.dp2px(this, 30.0f);
             Bitmap bitmap = ((BitmapDrawable) appIcon).getBitmap();
@@ -101,17 +89,6 @@ public class EditActivity extends AppCompatActivity
             appIcon = new BitmapDrawable(getResources(), resize);
             mToolbar.setNavigationIcon(appIcon);
             mToolbar.setNavigationOnClickListener(this);
-        }
-    }
-
-    private boolean isSystemApp() {
-        try {
-            ApplicationInfo info = getPackageManager()
-                    .getApplicationInfo(mStatusBarNotification.getPackageName(), 0);
-            return (info.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
@@ -158,16 +135,14 @@ public class EditActivity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
-        ApplicationInfo info;
-        try {
-            info = getPackageManager().getApplicationInfo(mStatusBarNotification.getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        String packageName = mStatusBarNotification.getPackageName();
+        ApplicationInfo info = AppInfoUtils.getAppInfo(this, packageName);
+        if (info == null) {
             return;
         }
 
         Intent intent = new Intent("android.settings.APP_NOTIFICATION_SETTINGS");
-        intent.putExtra("app_package", mStatusBarNotification.getPackageName());
+        intent.putExtra("app_package", packageName);
         intent.putExtra("app_uid", info.uid);
         startActivity(intent);
         onBackPressed();

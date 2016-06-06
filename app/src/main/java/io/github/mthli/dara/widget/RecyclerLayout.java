@@ -1,8 +1,6 @@
 package io.github.mthli.dara.widget;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -23,6 +21,7 @@ import io.github.mthli.dara.R;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.record.Record;
+import io.github.mthli.dara.util.AppInfoUtils;
 import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.adapter.DaraAdapter;
@@ -189,7 +188,7 @@ public class RecyclerLayout extends FrameLayout {
         int teal = ContextCompat.getColor(getContext(), R.color.teal_500);
         int i = 0;
         for (String packageName : packageList) {
-            String packageLabel = getPackageLabel(packageName);
+            String packageLabel = AppInfoUtils.getAppLabel(getContext(), packageName);
             if (TextUtils.isEmpty(packageLabel)) {
                 continue;
             }
@@ -208,16 +207,5 @@ public class RecyclerLayout extends FrameLayout {
         }
 
         return objectList;
-    }
-
-    private String getPackageLabel(String packageName) {
-        try {
-            ApplicationInfo info = getContext().getPackageManager()
-                    .getApplicationInfo(packageName, 0);
-            return getContext().getPackageManager().getApplicationLabel(info).toString();
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }
