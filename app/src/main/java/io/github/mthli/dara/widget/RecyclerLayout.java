@@ -14,10 +14,12 @@ import java.util.List;
 import io.github.mthli.dara.R;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
+import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.adapter.DaraAdapter;
 import io.github.mthli.dara.widget.item.Label;
 import io.github.mthli.dara.widget.item.Notice;
+import io.github.mthli.dara.widget.item.Space;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -96,6 +98,7 @@ public class RecyclerLayout extends FrameLayout {
 
     private void buildRecyclerList(List<Notice> list) {
         mList.clear();
+        mList.add(new Space(DisplayUtils.getStatusBarHeight(getContext())));
 
         if (list != null && list.size() > 0) {
             mList.add(new Label(getResources().getString(R.string.label_notification_center)));

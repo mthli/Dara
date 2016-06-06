@@ -11,14 +11,17 @@ import io.github.mthli.dara.R;
 import io.github.mthli.dara.widget.holder.FilterHolder;
 import io.github.mthli.dara.widget.holder.LabelHolder;
 import io.github.mthli.dara.widget.holder.NoticeHolder;
+import io.github.mthli.dara.widget.holder.SpaceHolder;
 import io.github.mthli.dara.widget.item.Filter;
 import io.github.mthli.dara.widget.item.Label;
 import io.github.mthli.dara.widget.item.Notice;
+import io.github.mthli.dara.widget.item.Space;
 
 public class DaraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_FILTER = 0x100;
     private static final int VIEW_TYPE_LABEL = 0x101;
     private static final int VIEW_TYPE_NOTICE = 0x102;
+    private static final int VIEW_TYPE_SPACE = 0x103;
 
     private Context mContext;
     private List<Object> mList;
@@ -41,8 +44,10 @@ public class DaraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return VIEW_TYPE_FILTER;
         } else if (object instanceof Label) {
             return VIEW_TYPE_LABEL;
-        } else {
+        } else if (object instanceof Notice) {
             return VIEW_TYPE_NOTICE;
+        } else {
+            return VIEW_TYPE_SPACE;
         }
     }
 
@@ -55,9 +60,12 @@ public class DaraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case VIEW_TYPE_LABEL:
                 return new LabelHolder(LayoutInflater.from(mContext)
                         .inflate(R.layout.recycler_item_label, parent, false));
-            default:
+            case VIEW_TYPE_NOTICE:
                 return new NoticeHolder(LayoutInflater.from(mContext)
                         .inflate(R.layout.reccyler_item_notice, parent, false));
+            default:
+                return new SpaceHolder(LayoutInflater.from(mContext)
+                        .inflate(R.layout.recycler_item_space, parent, false));
         }
     }
 
@@ -72,8 +80,11 @@ public class DaraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case VIEW_TYPE_LABEL:
                 ((LabelHolder) holder).setLabel((Label) object);
                 break;
-            default:
+            case VIEW_TYPE_NOTICE:
                 ((NoticeHolder) holder).setNotice((Notice) object);
+                break;
+            case VIEW_TYPE_SPACE:
+                ((SpaceHolder) holder).setSpace((Space) object);
                 break;
         }
     }
