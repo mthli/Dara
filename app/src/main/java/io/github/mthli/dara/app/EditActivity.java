@@ -65,7 +65,7 @@ public class EditActivity extends AppCompatActivity
         setTaskDescription(new ActivityManager.TaskDescription(
                 getString(R.string.app_name),
                 BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
-                ContextCompat.getColor(EditActivity.this, R.color.blue_grey_900)
+                ContextCompat.getColor(EditActivity.this, R.color.white)
         ));
     }
 

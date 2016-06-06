@@ -185,7 +185,7 @@ public class RecyclerLayout extends FrameLayout {
         packageList.addAll(labelSet);
 
         // TODO sort by label
-        int gray = ContextCompat.getColor(getContext(), R.color.blue_grey_500);
+        int hint = ContextCompat.getColor(getContext(), R.color.text_hint);
         int teal = ContextCompat.getColor(getContext(), R.color.teal_500);
         int i = 0;
         for (String packageName : packageList) {
@@ -198,7 +198,7 @@ public class RecyclerLayout extends FrameLayout {
             for (Record record : recordList) {
                 if (record.getPackageName().equals(packageName)) {
                     Filter filter = new Filter();
-                    filter.setColor(i++ % 2 == 0 ? gray : teal);
+                    filter.setColor(i++ % 2 == 0 ? hint : teal);
                     filter.setRegEx(record.getRegEx());
                     filter.setTitle(record.getTitle());
                     filter.setContent(record.getContent());

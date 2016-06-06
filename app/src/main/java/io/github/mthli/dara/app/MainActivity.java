@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         setTaskDescription(new ActivityManager.TaskDescription(
                 getString(R.string.app_name),
                 BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
-                ContextCompat.getColor(MainActivity.this, R.color.blue_grey_900)
+                ContextCompat.getColor(MainActivity.this, R.color.white)
         ));
     }
 
