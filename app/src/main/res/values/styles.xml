@@ -3,7 +3,7 @@
     <style name="MainActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:windowBackground">@color/blue_grey_900</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="DaraActivityTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
