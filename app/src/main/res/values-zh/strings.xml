@@ -3,7 +3,7 @@
 <resources>
 
     <!-- Button -->
-    <string name="button_bar_positive">屏蔽</string>
+    <string name="button_bar_positive">添加</string>
     <string name="button_bar_negative">取消</string>
     <string name="button_bar_neutral">详情</string>
 
@@ -35,6 +35,9 @@
     <string name="title_regex">正则表达式</string>
 
     <!-- Toast -->
+    <string name="toast_rule_add_successful">
+        添加成功
+    </string>
     <string name="toast_rule_title_error">
         请输入满足要求的标题规则
     </string>

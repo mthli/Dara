@@ -2,9 +2,13 @@ package io.github.mthli.dara.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -23,8 +27,17 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
         void onRegExReady(String titleRegEx, String contentRegEx);
     }
 
+    private static final int TITLE_COUNT_MAX = 20;
+    private static final int TITLE_COUNT_MIN = 0;
+    private static final int TITLE_COUNT_LIMIT = 5;
+    private static final int CONTENT_COUNT_MAX = 20;
+    private static final int CONTENT_COUNT_MIN = 0;
+    private static final int CONTENT_COUNT_LIMIT = 5;
+
     private AppCompatEditText mTitleView;
+    private AppCompatTextView mTitleCount;
     private AppCompatEditText mContentView;
+    private AppCompatTextView mContentCount;
 
     private EditLayoutListener mEditLayoutListener;
     private boolean mIsRegExMode;
@@ -50,14 +63,74 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
         super.onFinishInflate();
 
         mTitleView = (AppCompatEditText) findViewById(R.id.title);
+        mTitleCount = (AppCompatTextView) findViewById(R.id.title_count);
         mContentView = (AppCompatEditText) findViewById(R.id.content);
+        mContentCount = (AppCompatTextView) findViewById(R.id.content_count);
         SwitchCompat switchRegular = (SwitchCompat) findViewById(R.id.switch_regular);
         ButtonBarLayout buttonBarLayout = (ButtonBarLayout) findViewById(R.id.button_bar);
 
-        mTitleView.setHint(R.string.hint_title_separator);
-        mContentView.setHint(R.string.hint_content_separator);
+        setupTitleView();
+        setupContentView();
         switchRegular.setOnCheckedChangeListener(this);
         buttonBarLayout.setButtonBarLayoutListener(this);
+    }
+
+    private void setupTitleView() {
+        mTitleView.setHint(R.string.hint_title_separator);
+        mTitleCount.setText(String.valueOf(TITLE_COUNT_MAX));
+        mTitleView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // DO NOTHING
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // DO NOTHING
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int count = TITLE_COUNT_MAX - s.length();
+                if (count <= TITLE_COUNT_LIMIT) {
+                    mTitleCount.setTextColor(ContextCompat
+                            .getColor(getContext(), R.color.red_500));
+                } else {
+                    mTitleCount.setTextColor(ContextCompat
+                            .getColor(getContext(), R.color.text_hint));
+                }
+                mTitleCount.setText(String.valueOf(count));
+            }
+        });
+    }
+
+    private void setupContentView() {
+        mContentView.setHint(R.string.hint_content_separator);
+        mContentCount.setText(String.valueOf(CONTENT_COUNT_MAX));
+        mContentView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // DO NOTHING
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // DO NOTHING
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int count = CONTENT_COUNT_MAX - s.length();
+                if (count <= CONTENT_COUNT_LIMIT) {
+                    mContentCount.setTextColor(ContextCompat
+                            .getColor(getContext(), R.color.red_500));
+                } else {
+                    mContentCount.setTextColor(ContextCompat
+                            .getColor(getContext(), R.color.text_hint));
+                }
+                mContentCount.setText(String.valueOf(count));
+            }
+        });
     }
 
     @Override

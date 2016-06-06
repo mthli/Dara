@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.orm.SugarRecord;
 
@@ -187,6 +188,8 @@ public class EditActivity extends AppCompatActivity
         }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
+                Toast.makeText(EditActivity.this, R.string.toast_rule_add_successful,
+                        Toast.LENGTH_SHORT).show();
                 RxBus.getInstance().post(new UpdateRecordEvent());
                 finish();
             }
@@ -208,6 +211,8 @@ public class EditActivity extends AppCompatActivity
         }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
+                Toast.makeText(EditActivity.this, R.string.toast_rule_add_successful,
+                        Toast.LENGTH_SHORT).show();
                 RxBus.getInstance().post(new UpdateRecordEvent());
                 finish();
             }

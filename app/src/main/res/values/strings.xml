@@ -4,7 +4,7 @@
     <string name="app_name">Dara</string>
 
     <!-- Button -->
-    <string name="button_bar_positive">Block</string>
+    <string name="button_bar_positive">Add</string>
     <string name="button_bar_negative">Cancel</string>
     <string name="button_bar_neutral">Detail</string>
     
@@ -36,6 +36,9 @@
     <string name="title_regex">RegEx</string>
 
     <!-- Toast -->
+    <string name="toast_rule_add_successful">
+        Add successful
+    </string>
     <string name="toast_rule_title_error">
         Please input meet title rule
     </string>
