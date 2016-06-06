@@ -1,10 +1,13 @@
 package io.github.mthli.dara.widget;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -12,6 +15,7 @@ import com.orm.query.Select;
 import com.orm.util.NamingHelper;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import io.github.mthli.dara.R;
@@ -29,6 +33,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class RecyclerLayout extends FrameLayout {
     private DaraAdapter mAdapter;
@@ -79,6 +84,7 @@ public class RecyclerLayout extends FrameLayout {
     private void setupRxBus() {
         mResponseSubscription = RxBus.getInstance()
                 .toObservable(ResponseNotificationListEvent.class)
+                .subscribeOn(Schedulers.newThread())
                 .lift(new Observable.Operator<List<Notice>, ResponseNotificationListEvent>() {
                     @Override
                     public Subscriber<? super ResponseNotificationListEvent> call(final Subscriber<? super List<Notice>> subscriber) {
@@ -168,14 +174,44 @@ public class RecyclerLayout extends FrameLayout {
 
         List<Record> recordList = Select.from(Record.class)
                 .orderBy(NamingHelper.toSQLNameDefault("mPackageName")).list();
+
+        List<String> packageList = new ArrayList<>();
         for (Record record : recordList) {
-            Filter filter = new Filter();
-            filter.setRegEx(record.getRegEx());
-            filter.setTitle(record.getTitle());
-            filter.setContent(record.getContent());
-            objectList.add(filter);
+            packageList.add(record.getPackageName());
+        }
+        HashSet<String> labelSet = new HashSet<>(packageList);
+        packageList.clear();
+        packageList.addAll(labelSet);
+
+        for (String packageName : packageList) {
+            String packageLabel = getPackageLabel(packageName);
+            if (TextUtils.isEmpty(packageLabel)) {
+                continue;
+            }
+
+            objectList.add(new Label(packageLabel));
+            for (Record record : recordList) {
+                if (record.getPackageName().equals(packageName)) {
+                    Filter filter = new Filter();
+                    filter.setRegEx(record.getRegEx());
+                    filter.setTitle(record.getTitle());
+                    filter.setContent(record.getContent());
+                    objectList.add(filter);
+                }
+            }
         }
 
         return objectList;
+    }
+
+    private String getPackageLabel(String packageName) {
+        try {
+            ApplicationInfo info = getContext().getPackageManager()
+                    .getApplicationInfo(packageName, 0);
+            return getContext().getPackageManager().getApplicationLabel(info).toString();
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
