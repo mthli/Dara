@@ -183,6 +183,7 @@ public class RecyclerLayout extends FrameLayout {
         packageList.clear();
         packageList.addAll(labelSet);
 
+        // TODO sort by label
         for (String packageName : packageList) {
             String packageLabel = getPackageLabel(packageName);
             if (TextUtils.isEmpty(packageLabel)) {

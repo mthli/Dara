@@ -75,7 +75,7 @@ public class DaraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         switch (getItemViewType(position)) {
             case VIEW_TYPE_FILTER:
-                // TODO
+                ((FilterHolder) holder).setFilter((Filter) object);
                 break;
             case VIEW_TYPE_LABEL:
                 ((LabelHolder) holder).setLabel((Label) object);
