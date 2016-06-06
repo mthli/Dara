@@ -7,6 +7,15 @@
     <string name="button_bar_positive">Add</string>
     <string name="button_bar_negative">Cancel</string>
     <string name="button_bar_neutral">Detail</string>
+
+    <!-- Filter -->
+    <string name="filter_title">
+        TITLE:&#160;&#160;
+    </string>
+    <string name="filter_content">
+        CONTENT:
+    </string>
+    <string name="filter_empty">-</string>
     
     <!-- Hint -->
     <string name="hint_title_separator">#Title #keywords</string>

@@ -7,6 +7,14 @@
     <string name="button_bar_negative">取消</string>
     <string name="button_bar_neutral">详情</string>
 
+    <!-- Filter -->
+    <string name="filter_title">
+        标题：
+    </string>
+    <string name="filter_content">
+        内容：
+    </string>
+
     <!-- Hint -->
     <string name="hint_title_separator">#标题 #关键字</string>
     <string name="hint_title_regular">标题</string>
