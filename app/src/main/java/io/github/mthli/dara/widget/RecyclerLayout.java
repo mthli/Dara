@@ -14,6 +14,8 @@ import com.orm.query.Select;
 import com.orm.util.NamingHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -174,7 +176,6 @@ public class RecyclerLayout extends FrameLayout {
 
         List<Record> recordList = Select.from(Record.class)
                 .orderBy(NamingHelper.toSQLNameDefault("mPackageName")).list();
-
         List<String> packageList = new ArrayList<>();
         for (Record record : recordList) {
             packageList.add(record.getPackageName());
@@ -182,8 +183,19 @@ public class RecyclerLayout extends FrameLayout {
         HashSet<String> labelSet = new HashSet<>(packageList);
         packageList.clear();
         packageList.addAll(labelSet);
+        Collections.sort(packageList, new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                lhs = AppInfoUtils.getAppLabel(getContext(), lhs);
+                rhs = AppInfoUtils.getAppLabel(getContext(), rhs);
+                if (TextUtils.isEmpty(lhs) || TextUtils.isEmpty(rhs)) {
+                    return 0;
+                } else {
+                    return lhs.compareTo(rhs);
+                }
+            }
+        });
 
-        // TODO sort by label
         int hint = ContextCompat.getColor(getContext(), R.color.text_hint);
         int teal = ContextCompat.getColor(getContext(), R.color.teal_500);
         int i = 0;
