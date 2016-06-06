@@ -12,11 +12,16 @@ import java.util.List;
 import io.github.mthli.dara.event.NotificationRemovedEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
+import io.github.mthli.dara.event.UpdateRecordEvent;
 import io.github.mthli.dara.util.RxBus;
+import rx.Subscription;
 import rx.functions.Action1;
 
 public class DaraService extends NotificationListenerService {
     public static boolean sIsAlive = false;
+
+    private Subscription mRequestSubscription;
+    private Subscription mUpdateSubscription;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -28,14 +33,33 @@ public class DaraService extends NotificationListenerService {
     @Override
     public boolean onUnbind(Intent intent) {
         sIsAlive = false;
+
+        if (mRequestSubscription != null) {
+            mRequestSubscription.unsubscribe();
+        }
+
+        if (mUpdateSubscription != null) {
+            mUpdateSubscription.unsubscribe();
+        }
+
         return super.onUnbind(intent);
     }
 
     private void setupRxBus() {
-        RxBus.getInstance().toObservable(RequestNotificationListEvent.class)
+        mRequestSubscription = RxBus.getInstance()
+                .toObservable(RequestNotificationListEvent.class)
                 .subscribe(new Action1<RequestNotificationListEvent>() {
                     @Override
                     public void call(RequestNotificationListEvent event) {
+                        onRequestActiveNotificationsEvent();
+                    }
+                });
+
+        mUpdateSubscription = RxBus.getInstance()
+                .toObservable(UpdateRecordEvent.class)
+                .subscribe(new Action1<UpdateRecordEvent>() {
+                    @Override
+                    public void call(UpdateRecordEvent updateRecordEvent) {
                         onRequestActiveNotificationsEvent();
                     }
                 });
