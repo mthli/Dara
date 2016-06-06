@@ -157,11 +157,19 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
             Toast.makeText(getContext(), R.string.toast_rule_title_error,
                     Toast.LENGTH_SHORT).show();
             return;
+        } else if (TITLE_COUNT_MAX - title.length() < TITLE_COUNT_MIN) {
+            Toast.makeText(getContext(), R.string.toast_rule_title_count,
+                    Toast.LENGTH_SHORT).show();
+            return;
         }
 
         String content = mContentView.getText().toString().trim();
         if (!TextUtils.isEmpty(content) && RegExUtils.getHashTags(content).isEmpty()) {
             Toast.makeText(getContext(), R.string.toast_rule_content_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        } else if (CONTENT_COUNT_MAX - content.length() < CONTENT_COUNT_MIN) {
+            Toast.makeText(getContext(), R.string.toast_rule_content_count,
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -185,11 +193,19 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
             Toast.makeText(getContext(), R.string.toast_rule_title_error,
                     Toast.LENGTH_SHORT).show();
             return;
+        } else if (TITLE_COUNT_MAX - title.length() < TITLE_COUNT_MIN) {
+            Toast.makeText(getContext(), R.string.toast_rule_title_count,
+                    Toast.LENGTH_SHORT).show();
+            return;
         }
 
         String content = mContentView.getText().toString().trim();
         if (!TextUtils.isEmpty(content) && !RegExUtils.isRegEx(content)) {
             Toast.makeText(getContext(), R.string.toast_rule_content_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        } else if (CONTENT_COUNT_MAX - content.length() < CONTENT_COUNT_MIN) {
+            Toast.makeText(getContext(), R.string.toast_rule_content_count,
                     Toast.LENGTH_SHORT).show();
             return;
         }

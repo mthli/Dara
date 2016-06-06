@@ -38,8 +38,14 @@
     <string name="toast_rule_add_successful">
         添加成功
     </string>
+    <string name="toast_rule_title_count">
+        标题规则过长
+    </string>
     <string name="toast_rule_title_error">
         请输入满足要求的标题规则
+    </string>
+    <string name="toast_rule_content_count">
+        内容规则过长
     </string>
     <string name="toast_rule_content_error">
         请输入满足要求的内容规则

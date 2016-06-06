@@ -39,8 +39,14 @@
     <string name="toast_rule_add_successful">
         Add successful
     </string>
+    <string name="toast_rule_title_count">
+        Title rule too long
+    </string>
     <string name="toast_rule_title_error">
         Please input meet title rule
+    </string>
+    <string name="toast_rule_content_count">
+        Content rule too long
     </string>
     <string name="toast_rule_content_error">
         Please input meet content rule
