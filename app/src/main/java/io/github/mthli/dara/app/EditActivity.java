@@ -61,7 +61,7 @@ public class EditActivity extends AppCompatActivity
         mIsRegEx = getIntent().getBooleanExtra(EXTRA_IS_REG_EX, false);
         mTitle = getIntent().getStringExtra(EXTRA_TITLE);
         mContent = getIntent().getStringExtra(EXTRA_CONTENT);
-        mRecordId = getIntent().getLongExtra(EXTRA_RECORD_ID, -1);
+        mRecordId = getIntent().getLongExtra(EXTRA_RECORD_ID, -1L);
 
         setupToolbar();
         setupEditLayout();
@@ -177,6 +177,9 @@ public class EditActivity extends AppCompatActivity
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
                         Record record = new Record();
+                        if (mRecordId >= 0) {
+                            record.setId(mRecordId);
+                        }
                         record.packageName = mPackageName;
                         record.isRegEx = false;
                         record.title = TextUtils.join(" ", titleTags);
@@ -218,6 +221,9 @@ public class EditActivity extends AppCompatActivity
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
                         Record record = new Record();
+                        if (mRecordId >= 0) {
+                            record.setId(mRecordId);
+                        }
                         record.packageName = mPackageName;
                         record.isRegEx = true;
                         record.title = titleRegEx;
