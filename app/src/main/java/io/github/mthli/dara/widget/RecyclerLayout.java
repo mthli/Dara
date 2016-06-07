@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
+import com.orm.SugarRecord;
 import com.orm.query.Select;
 import com.orm.util.NamingHelper;
 
@@ -28,6 +29,7 @@ import io.github.mthli.dara.event.ClickFilterEvent;
 import io.github.mthli.dara.event.ClickNoticeEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
+import io.github.mthli.dara.event.UpdateRecordEvent;
 import io.github.mthli.dara.record.Record;
 import io.github.mthli.dara.util.AppInfoUtils;
 import io.github.mthli.dara.util.DisplayUtils;
@@ -43,6 +45,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class RecyclerLayout extends BottomSheetLayout
         implements CustomMenuSheetView.OnMenuItemClickListener {
@@ -53,9 +56,7 @@ public class RecyclerLayout extends BottomSheetLayout
     private DaraAdapter mAdapter;
     private List<Object> mList;
 
-    private Subscription mFilterSubscription;
-    private Subscription mNoticeSubscription;
-    private Subscription mResponseSubscription;
+    private CompositeSubscription mSubscription;
 
     public RecyclerLayout(Context context) {
         super(context);
@@ -88,16 +89,8 @@ public class RecyclerLayout extends BottomSheetLayout
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
-        if (mFilterSubscription != null) {
-            mFilterSubscription.unsubscribe();
-        }
-
-        if (mNoticeSubscription != null) {
-            mNoticeSubscription.unsubscribe();
-        }
-
-        if (mResponseSubscription != null) {
-            mResponseSubscription.unsubscribe();
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
         }
     }
 
@@ -111,16 +104,58 @@ public class RecyclerLayout extends BottomSheetLayout
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit:
-                // TODO
+                onClickEdit();
                 break;
             case R.id.delete:
-                // TODO
+                onClickDelete();
                 break;
             default:
                 break;
         }
 
         return true;
+    }
+
+    private void onClickEdit() {
+        if (mRecord == null) {
+            return;
+        }
+
+        // TODO
+    }
+
+    private void onClickDelete() {
+        if (mRecord == null) {
+            return;
+        }
+
+        Observable.create(
+                new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+                        SugarRecord.delete(mRecord);
+                        subscriber.onNext(0);
+                        subscriber.onCompleted();
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        // DO NOTHING
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        RxBus.getInstance().post(new UpdateRecordEvent());
+                    }
+                });
     }
 
     private void setupRecyclerView() {
@@ -135,7 +170,9 @@ public class RecyclerLayout extends BottomSheetLayout
     }
 
     private void setupRxBus() {
-        mFilterSubscription = RxBus.getInstance()
+        mSubscription = new CompositeSubscription();
+
+        Subscription subscription = RxBus.getInstance()
                 .toObservable(ClickFilterEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ClickFilterEvent>() {
@@ -144,8 +181,9 @@ public class RecyclerLayout extends BottomSheetLayout
                         onClickFilterEvent(event);
                     }
                 });
+        mSubscription.add(subscription);
 
-        mNoticeSubscription = RxBus.getInstance().toObservable(ClickNoticeEvent.class)
+        subscription = RxBus.getInstance().toObservable(ClickNoticeEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ClickNoticeEvent>() {
                     @Override
@@ -153,8 +191,9 @@ public class RecyclerLayout extends BottomSheetLayout
                         onClickNoticeEvent(event);
                     }
                 });
+        mSubscription.add(subscription);
 
-        mResponseSubscription = RxBus.getInstance()
+        subscription = RxBus.getInstance()
                 .toObservable(ResponseNotificationListEvent.class)
                 .subscribeOn(Schedulers.newThread())
                 .lift(new Observable.Operator<List<Notice>, ResponseNotificationListEvent>() {
@@ -219,6 +258,7 @@ public class RecyclerLayout extends BottomSheetLayout
                         mAdapter.notifyDataSetChanged();
                     }
                 });
+        mSubscription.add(subscription);
     }
 
     private void onClickFilterEvent(ClickFilterEvent event) {
