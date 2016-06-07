@@ -7,9 +7,9 @@ import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
@@ -126,7 +126,9 @@ public class RecyclerLayout extends BottomSheetLayout
     private void setupRecyclerView() {
         mList = new ArrayList<>();
         mAdapter = new DaraAdapter(getContext(), mList);
+
         mRecyclerView = (CustomRecyclerView) findViewById(R.id.recycler);
+        ((LayoutParams) mRecyclerView.getLayoutParams()).gravity = Gravity.CENTER;
         mRecyclerView.addItemDecoration(new DaraItemDecoration(getContext()));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
@@ -228,7 +230,6 @@ public class RecyclerLayout extends BottomSheetLayout
         // Caused by: java.lang.RuntimeException: Not allowed to write file descriptors here
         StatusBarNotification notification = event.getNotice().getNotification().clone();
         notification.getNotification().extras = null;
-
         Intent intent = new Intent(getContext(), EditActivity.class);
         intent.putExtra(EditActivity.EXTRA, notification);
         getContext().startActivity(intent);
