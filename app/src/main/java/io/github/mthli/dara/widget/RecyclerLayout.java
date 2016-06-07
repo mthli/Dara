@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
-import com.orm.SugarRecord;
+import com.flipboard.bottomsheet.OnSheetDismissedListener;
 import com.orm.query.Select;
 import com.orm.util.NamingHelper;
 
@@ -49,7 +49,14 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 public class RecyclerLayout extends BottomSheetLayout
-        implements CustomMenuSheetView.OnMenuItemClickListener {
+        implements CustomMenuSheetView.OnMenuItemClickListener, OnSheetDismissedListener {
+    private enum ClickType {
+        EDIT,
+        DELETE,
+        NONE
+    }
+    private ClickType mClickType;
+
     private CustomMenuSheetView mMenuSheetView;
     private Record mRecord;
 
@@ -82,6 +89,7 @@ public class RecyclerLayout extends BottomSheetLayout
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        mClickType = ClickType.NONE;
         dismissSheet();
     }
 
@@ -89,6 +97,7 @@ public class RecyclerLayout extends BottomSheetLayout
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
+        removeOnSheetDismissedListener(this);
         if (mSubscription != null) {
             mSubscription.unsubscribe();
         }
@@ -98,22 +107,30 @@ public class RecyclerLayout extends BottomSheetLayout
         mMenuSheetView = new CustomMenuSheetView(getContext(),
                 CustomMenuSheetView.MenuType.LIST, null, this);
         mMenuSheetView.inflateMenu(R.menu.menu_sheet);
+        addOnSheetDismissedListener(this);
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.edit:
-                onClickEdit();
-                break;
-            case R.id.delete:
-                onClickDelete();
-                break;
-            default:
-                break;
+        if (item.getItemId() == R.id.edit) {
+            mClickType = ClickType.EDIT;
+        } else if (item.getItemId() == R.id.delete) {
+            mClickType = ClickType.DELETE;
+        } else {
+            mClickType = ClickType.NONE;
         }
 
+        dismissSheet();
         return true;
+    }
+
+    @Override
+    public void onDismissed(BottomSheetLayout layout) {
+        if (mClickType == ClickType.EDIT) {
+            onClickEdit();
+        } else if (mClickType == ClickType.DELETE) {
+            onClickDelete();
+        }
     }
 
     private void onClickEdit() {
@@ -132,7 +149,6 @@ public class RecyclerLayout extends BottomSheetLayout
         }
         intent.putExtra(EditActivity.EXTRA_RECORD_ID, mRecord.getId());
         getContext().startActivity(intent);
-        dismissSheet();
     }
 
     private void onClickDelete() {
@@ -140,7 +156,7 @@ public class RecyclerLayout extends BottomSheetLayout
                 new Observable.OnSubscribe<Integer>() {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
-                        SugarRecord.delete(mRecord);
+                        mRecord.delete();
                         subscriber.onNext(0);
                         subscriber.onCompleted();
                     }
@@ -165,7 +181,6 @@ public class RecyclerLayout extends BottomSheetLayout
                         RxBus.getInstance().post(new UpdateRecordEvent());
                         Toast.makeText(getContext(), R.string.toast_rule_delete_successful,
                                 Toast.LENGTH_SHORT).show();
-                        dismissSheet();
                     }
                 });
     }
