@@ -33,7 +33,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class EditActivity extends AppCompatActivity
@@ -174,9 +173,21 @@ public class EditActivity extends AppCompatActivity
                 })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Integer>() {
+                .subscribe(new Subscriber<Integer>() {
                     @Override
-                    public void call(Integer integer) {
+                    public void onCompleted() {
+                        // DO NOTHING
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Toast.makeText(EditActivity.this, R.string.toast_rule_add_failed,
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
                         Toast.makeText(EditActivity.this, R.string.toast_rule_add_successful,
                                 Toast.LENGTH_SHORT).show();
                         RxBus.getInstance().post(new UpdateRecordEvent());
@@ -203,9 +214,21 @@ public class EditActivity extends AppCompatActivity
                 })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Integer>() {
+                .subscribe(new Subscriber<Integer>() {
                     @Override
-                    public void call(Integer integer) {
+                    public void onCompleted() {
+                        // DO NOTHING
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Toast.makeText(EditActivity.this, R.string.toast_rule_add_failed,
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
                         Toast.makeText(EditActivity.this, R.string.toast_rule_add_successful,
                                 Toast.LENGTH_SHORT).show();
                         RxBus.getInstance().post(new UpdateRecordEvent());

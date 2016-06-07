@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.orm.SugarRecord;
@@ -147,11 +148,16 @@ public class RecyclerLayout extends BottomSheetLayout
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        Toast.makeText(getContext(), R.string.toast_rule_delete_failed,
+                                Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onNext(Integer integer) {
                         RxBus.getInstance().post(new UpdateRecordEvent());
+                        Toast.makeText(getContext(), R.string.toast_rule_delete_successful,
+                                Toast.LENGTH_SHORT).show();
+                        dismissSheet();
                     }
                 });
     }
