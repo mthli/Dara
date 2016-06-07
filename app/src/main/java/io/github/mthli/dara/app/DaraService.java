@@ -14,8 +14,8 @@ import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.UpdateRecordEvent;
 import io.github.mthli.dara.util.RxBus;
+import rx.Subscriber;
 import rx.Subscription;
-import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 public class DaraService extends NotificationListenerService {
@@ -46,9 +46,19 @@ public class DaraService extends NotificationListenerService {
 
         Subscription subscription = RxBus.getInstance()
                 .toObservable(RequestNotificationListEvent.class)
-                .subscribe(new Action1<RequestNotificationListEvent>() {
+                .subscribe(new Subscriber<RequestNotificationListEvent>() {
                     @Override
-                    public void call(RequestNotificationListEvent event) {
+                    public void onCompleted() {
+                        // DO NOTHING
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(RequestNotificationListEvent event) {
                         onRequestActiveNotificationsEvent();
                     }
                 });
@@ -56,9 +66,19 @@ public class DaraService extends NotificationListenerService {
 
         subscription = RxBus.getInstance()
                 .toObservable(UpdateRecordEvent.class)
-                .subscribe(new Action1<UpdateRecordEvent>() {
+                .subscribe(new Subscriber<UpdateRecordEvent>() {
                     @Override
-                    public void call(UpdateRecordEvent updateRecordEvent) {
+                    public void onCompleted() {
+                        // DO NOTHING
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(UpdateRecordEvent event) {
                         onRequestActiveNotificationsEvent();
                     }
                 });

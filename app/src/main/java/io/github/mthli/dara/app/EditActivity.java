@@ -96,9 +96,19 @@ public class EditActivity extends AppCompatActivity
         mRemovedSubscription = RxBus.getInstance()
                 .toObservable(NotificationRemovedEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<NotificationRemovedEvent>() {
+                .subscribe(new Subscriber<NotificationRemovedEvent>() {
                     @Override
-                    public void call(NotificationRemovedEvent event) {
+                    public void onCompleted() {
+                        // DO NOTHING
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(NotificationRemovedEvent event) {
                         onNotificationRemovedEvent(event);
                     }
                 });

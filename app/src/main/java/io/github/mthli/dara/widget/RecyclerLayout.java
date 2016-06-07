@@ -43,7 +43,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -177,19 +176,40 @@ public class RecyclerLayout extends BottomSheetLayout
         Subscription subscription = RxBus.getInstance()
                 .toObservable(ClickFilterEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ClickFilterEvent>() {
+                .subscribe(new Subscriber<ClickFilterEvent>() {
                     @Override
-                    public void call(ClickFilterEvent event) {
+                    public void onCompleted() {
+                        // DO NOTHING
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(ClickFilterEvent event) {
                         onClickFilterEvent(event);
                     }
                 });
         mSubscription.add(subscription);
 
-        subscription = RxBus.getInstance().toObservable(ClickNoticeEvent.class)
+        subscription = RxBus.getInstance()
+                .toObservable(ClickNoticeEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ClickNoticeEvent>() {
+                .subscribe(new Subscriber<ClickNoticeEvent>() {
                     @Override
-                    public void call(ClickNoticeEvent event) {
+                    public void onCompleted() {
+                        // DO NOTHING
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(ClickNoticeEvent event) {
                         onClickNoticeEvent(event);
                     }
                 });
