@@ -52,7 +52,6 @@ public class RecyclerLayout extends BottomSheetLayout
     private CustomMenuSheetView mMenuSheetView;
     private Record mRecord;
 
-    private CustomRecyclerView mRecyclerView;
     private DaraAdapter mAdapter;
     private List<Object> mList;
 
@@ -162,11 +161,11 @@ public class RecyclerLayout extends BottomSheetLayout
         mList = new ArrayList<>();
         mAdapter = new DaraAdapter(getContext(), mList);
 
-        mRecyclerView = (CustomRecyclerView) findViewById(R.id.recycler);
-        ((LayoutParams) mRecyclerView.getLayoutParams()).gravity = Gravity.CENTER;
-        mRecyclerView.addItemDecoration(new DaraItemDecoration(getContext()));
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mAdapter);
+        CustomRecyclerView recyclerView = (CustomRecyclerView) findViewById(R.id.recycler);
+        ((LayoutParams) recyclerView.getLayoutParams()).gravity = Gravity.CENTER;
+        recyclerView.addItemDecoration(new DaraItemDecoration(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mAdapter);
     }
 
     private void setupRxBus() {
