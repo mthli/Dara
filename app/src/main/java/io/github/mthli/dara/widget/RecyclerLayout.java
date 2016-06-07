@@ -301,16 +301,10 @@ public class RecyclerLayout extends BottomSheetLayout
     }
 
     private List<Notice> buildNoticeList(ResponseNotificationListEvent event) {
-        List<String> group = new ArrayList<>();
         List<Notice> list = new ArrayList<>();
-
         for (StatusBarNotification notification : event.getStatusBarNotificationList()) {
-            if (!notification.isOngoing() && !group.contains(notification.getGroupKey())) {
-                group.add(notification.getGroupKey());
-                list.add(new Notice(notification));
-            }
+            list.add(new Notice(notification));
         }
-
         return list;
     }
 

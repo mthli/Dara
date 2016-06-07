@@ -6,7 +6,6 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.github.mthli.dara.event.NotificationRemovedEvent;
@@ -85,9 +84,16 @@ public class DaraService extends NotificationListenerService {
         mSubscription.add(subscription);
     }
 
+    // Filter isOngoing()
     private void onRequestActiveNotificationsEvent() {
         List<StatusBarNotification> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getActiveNotifications()));
+        List<String> group = new ArrayList<>();
+        for (StatusBarNotification notification : getActiveNotifications()) {
+            if (!notification.isOngoing() && !group.contains(notification.getGroupKey())) {
+                group.add(notification.getGroupKey());
+                list.add(notification);
+            }
+        }
         RxBus.getInstance().post(new ResponseNotificationListEvent(list));
     }
 
