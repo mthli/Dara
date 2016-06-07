@@ -174,14 +174,14 @@ public class RecyclerLayout extends BottomSheetLayout
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        Toast.makeText(getContext(), R.string.toast_rule_delete_failed,
+                        Toast.makeText(getContext(), R.string.toast_action_failed,
                                 Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onNext(Integer integer) {
                         RxBus.getInstance().post(new UpdateRecordEvent());
-                        Toast.makeText(getContext(), R.string.toast_rule_delete_successful,
+                        Toast.makeText(getContext(), R.string.toast_action_successful,
                                 Toast.LENGTH_SHORT).show();
                     }
                 });

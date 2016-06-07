@@ -4,7 +4,7 @@
     <string name="app_name">Dara</string>
 
     <!-- Button -->
-    <string name="button_bar_positive">Add</string>
+    <string name="button_bar_positive">Confirm</string>
     <string name="button_bar_negative">Cancel</string>
     <string name="button_bar_neutral">Detail</string>
 
@@ -47,10 +47,8 @@
     <string name="title_regex">RegEx</string>
 
     <!-- Toast -->
-    <string name="toast_rule_add_successful">Add successful</string>
-    <string name="toast_rule_add_failed">Add failed</string>
-    <string name="toast_rule_delete_successful">Delete successful</string>
-    <string name="toast_rule_delete_failed">Delete failed</string>
+    <string name="toast_action_successful">Action successful</string>
+    <string name="toast_action_failed">Action failed</string>
     <string name="toast_rule_title_count">
         Title rule too long
     </string>

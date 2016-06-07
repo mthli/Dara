@@ -197,13 +197,13 @@ public class EditActivity extends AppCompatActivity
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        Toast.makeText(EditActivity.this, R.string.toast_rule_add_failed,
+                        Toast.makeText(EditActivity.this, R.string.toast_action_failed,
                                 Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onNext(Integer integer) {
-                        Toast.makeText(EditActivity.this, R.string.toast_rule_add_successful,
+                        Toast.makeText(EditActivity.this, R.string.toast_action_successful,
                                 Toast.LENGTH_SHORT).show();
                         RxBus.getInstance().post(new UpdateRecordEvent());
                         finish();
@@ -238,13 +238,13 @@ public class EditActivity extends AppCompatActivity
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        Toast.makeText(EditActivity.this, R.string.toast_rule_add_failed,
+                        Toast.makeText(EditActivity.this, R.string.toast_action_failed,
                                 Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onNext(Integer integer) {
-                        Toast.makeText(EditActivity.this, R.string.toast_rule_add_successful,
+                        Toast.makeText(EditActivity.this, R.string.toast_action_successful,
                                 Toast.LENGTH_SHORT).show();
                         RxBus.getInstance().post(new UpdateRecordEvent());
                         finish();
