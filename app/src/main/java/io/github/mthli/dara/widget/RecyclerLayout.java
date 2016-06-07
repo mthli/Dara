@@ -89,7 +89,9 @@ public class RecyclerLayout extends BottomSheetLayout
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+
         mClickType = ClickType.NONE;
+        removeOnSheetDismissedListener(this);
         dismissSheet();
     }
 
@@ -107,7 +109,6 @@ public class RecyclerLayout extends BottomSheetLayout
         mMenuSheetView = new CustomMenuSheetView(getContext(),
                 CustomMenuSheetView.MenuType.LIST, null, this);
         mMenuSheetView.inflateMenu(R.menu.menu_sheet);
-        addOnSheetDismissedListener(this);
     }
 
     @Override
@@ -120,6 +121,7 @@ public class RecyclerLayout extends BottomSheetLayout
             mClickType = ClickType.NONE;
         }
 
+        addOnSheetDismissedListener(this);
         dismissSheet();
         return true;
     }
