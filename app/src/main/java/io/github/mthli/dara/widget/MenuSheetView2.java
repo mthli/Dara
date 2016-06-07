@@ -125,11 +125,16 @@ public class MenuSheetView2 extends FrameLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = View.MeasureSpec.getSize(widthMeasureSpec);
+        int dp480 = (int) DisplayUtils.dp2px(getContext(), 480.0f);
+        width = width < dp480 ? width : dp480;
+
         if (menuType == MenuType.GRID) {
-            int width = View.MeasureSpec.getSize(widthMeasureSpec);
-            final float density = getResources().getDisplayMetrics().density;
+            float density = DisplayUtils.getDensity(getContext());
             ((GridView) absListView).setNumColumns((int) (width / (columnWidthDp * density)));
         }
+
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 

@@ -28,6 +28,10 @@ public class DisplayUtils {
         return context.getResources().getDisplayMetrics().density * dp;
     }
 
+    public static float getDensity(Context context) {
+        return context.getResources().getDisplayMetrics().density;
+    }
+
     public static int getStatusBarHeight(Context context) {
         int result = 0;
         int resourceId = context.getResources()

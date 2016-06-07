@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.widget.FrameLayout;
 
 import io.github.mthli.dara.R;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity
                 .inflate(R.layout.layout_permission, null, false);
         layout.setPermissionLayoutListener(this);
         mContainer.removeAllViews();
-        mContainer.addView(layout);
+        mContainer.addView(layout, buildLayoutParams());
     }
 
     @Override
@@ -80,6 +81,14 @@ public class MainActivity extends AppCompatActivity
         RecyclerLayout layout = (RecyclerLayout) getLayoutInflater()
                 .inflate(R.layout.layout_recycler, null, false);
         mContainer.removeAllViews();
-        mContainer.addView(layout);
+        mContainer.addView(layout, buildLayoutParams());
+    }
+
+    private FrameLayout.LayoutParams buildLayoutParams() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT);
+        params.gravity = Gravity.CENTER;
+        return params;
     }
 }

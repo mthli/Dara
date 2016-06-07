@@ -62,7 +62,6 @@ public class PermissionLayout extends FrameLayout implements View.OnClickListene
         }
     }
 
-    // TODO
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

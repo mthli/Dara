@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
@@ -299,20 +300,19 @@ public class RecyclerLayout extends BottomSheetLayout
         return objectList;
     }
 
-    // TODO
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        dismissSheet();
 
         int width = ViewGroup.LayoutParams.MATCH_PARENT;
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             width = (int) DisplayUtils.dp2px(getContext(), 480.0f);
         }
 
-        if (mMenuSheetView.getLayoutParams() != null) {
-            mMenuSheetView.getLayoutParams().width = width;
-        }
-        mRecyclerView.getLayoutParams().width = width;
+        LayoutParams params = (LayoutParams) mRecyclerView.getLayoutParams();
+        params.width = width;
+        params.gravity = Gravity.CENTER | Gravity.TOP;
         requestLayout();
     }
 }
