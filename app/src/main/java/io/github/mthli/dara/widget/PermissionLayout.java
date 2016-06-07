@@ -1,11 +1,9 @@
 package io.github.mthli.dara.widget;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import io.github.mthli.dara.R;
@@ -39,10 +37,18 @@ public class PermissionLayout extends FrameLayout implements View.OnClickListene
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
         findViewById(R.id.positive).setOnClickListener(this);
         findViewById(R.id.negative).setOnClickListener(this);
         findViewById(R.id.neutral).setOnClickListener(this);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = View.MeasureSpec.getSize(widthMeasureSpec);
+        int dp480 = (int) DisplayUtils.dp2px(getContext(), 480.0f);
+        width = width < dp480 ? width : dp480;
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
@@ -59,19 +65,6 @@ public class PermissionLayout extends FrameLayout implements View.OnClickListene
             if (mPermissionLayoutListener != null) {
                 mPermissionLayoutListener.onNeutralClick();
             }
-        }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getLayoutParams().width = (int) DisplayUtils.dp2px(getContext(), 480.0f);
-            requestLayout();
-        } else {
-            getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-            requestLayout();
         }
     }
 }

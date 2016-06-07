@@ -10,9 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.orm.query.Select;
@@ -47,11 +45,11 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class RecyclerLayout extends BottomSheetLayout
-        implements MenuSheetView2.OnMenuItemClickListener {
-    private MenuSheetView2 mMenuSheetView;
+        implements CustomMenuSheetView.OnMenuItemClickListener {
+    private CustomMenuSheetView mMenuSheetView;
     private Record mRecord;
 
-    private RecyclerView mRecyclerView;
+    private CustomRecyclerView mRecyclerView;
     private DaraAdapter mAdapter;
     private List<Object> mList;
 
@@ -74,11 +72,16 @@ public class RecyclerLayout extends BottomSheetLayout
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
         setupMenuSheetView();
         setupRecyclerView();
         setupRxBus();
         RxBus.getInstance().post(new RequestNotificationListEvent());
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        dismissSheet();
     }
 
     @Override
@@ -99,8 +102,8 @@ public class RecyclerLayout extends BottomSheetLayout
     }
 
     public void setupMenuSheetView() {
-        mMenuSheetView = new MenuSheetView2(getContext(),
-                MenuSheetView2.MenuType.LIST, null, this);
+        mMenuSheetView = new CustomMenuSheetView(getContext(),
+                CustomMenuSheetView.MenuType.LIST, null, this);
         mMenuSheetView.inflateMenu(R.menu.menu_sheet);
     }
 
@@ -123,8 +126,7 @@ public class RecyclerLayout extends BottomSheetLayout
     private void setupRecyclerView() {
         mList = new ArrayList<>();
         mAdapter = new DaraAdapter(getContext(), mList);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+        mRecyclerView = (CustomRecyclerView) findViewById(R.id.recycler);
         mRecyclerView.addItemDecoration(new DaraItemDecoration(getContext()));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
@@ -298,21 +300,5 @@ public class RecyclerLayout extends BottomSheetLayout
         }
 
         return objectList;
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        dismissSheet();
-
-        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            width = (int) DisplayUtils.dp2px(getContext(), 480.0f);
-        }
-
-        LayoutParams params = (LayoutParams) mRecyclerView.getLayoutParams();
-        params.width = width;
-        params.gravity = Gravity.CENTER | Gravity.TOP;
-        requestLayout();
     }
 }

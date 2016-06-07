@@ -37,7 +37,7 @@ import io.github.mthli.dara.util.DisplayUtils;
  * </p>
  */
 @SuppressLint("ViewConstructor")
-public class MenuSheetView2 extends FrameLayout {
+public class CustomMenuSheetView extends FrameLayout {
     /**
      * A listener for menu item clicks in the sheet
      */
@@ -65,7 +65,7 @@ public class MenuSheetView2 extends FrameLayout {
      * @param titleRes String resource ID for the title
      * @param listener Listener for menu item clicks in the sheet
      */
-    public MenuSheetView2(final Context context, final MenuType menuType, @StringRes final int titleRes, final OnMenuItemClickListener listener) {
+    public CustomMenuSheetView(final Context context, final MenuType menuType, @StringRes final int titleRes, final OnMenuItemClickListener listener) {
         this(context, menuType, context.getString(titleRes), listener);
     }
 
@@ -75,7 +75,7 @@ public class MenuSheetView2 extends FrameLayout {
      * @param title Title for the sheet. Can be null
      * @param listener Listener for menu item clicks in the sheet
      */
-    public MenuSheetView2(final Context context, final MenuType menuType, @Nullable final CharSequence title, final OnMenuItemClickListener listener) {
+    public CustomMenuSheetView(final Context context, final MenuType menuType, @Nullable final CharSequence title, final OnMenuItemClickListener listener) {
         super(context);
 
         // Set up the menu
