@@ -19,8 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.orm.SugarRecord;
-
 import java.util.List;
 
 import io.github.mthli.dara.R;
@@ -165,11 +163,11 @@ public class EditActivity extends AppCompatActivity
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
                         Record record = new Record();
-                        record.setPackageName(mStatusBarNotification.getPackageName());
-                        record.setRegEx(false);
-                        record.setTitle(TextUtils.join(" ", titleTags));
-                        record.setContent(TextUtils.join(" ", contentTags));
-                        SugarRecord.save(record);
+                        record.packageName = mStatusBarNotification.getPackageName();
+                        record.isRegEx = false;
+                        record.title = TextUtils.join(" ", titleTags);
+                        record.content = TextUtils.join(" ", contentTags);
+                        record.save();
                         subscriber.onNext(0);
                         subscriber.onCompleted();
                     }
@@ -194,11 +192,11 @@ public class EditActivity extends AppCompatActivity
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
                         Record record = new Record();
-                        record.setPackageName(mStatusBarNotification.getPackageName());
-                        record.setRegEx(true);
-                        record.setTitle(titleRegEx);
-                        record.setContent(contentRegEx);
-                        SugarRecord.save(record);
+                        record.packageName = mStatusBarNotification.getPackageName();
+                        record.isRegEx = true;
+                        record.title = titleRegEx;
+                        record.content = contentRegEx;
+                        record.save();
                         subscriber.onNext(0);
                         subscriber.onCompleted();
                     }

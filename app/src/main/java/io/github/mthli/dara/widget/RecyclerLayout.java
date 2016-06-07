@@ -318,10 +318,10 @@ public class RecyclerLayout extends BottomSheetLayout
         }
 
         List<Record> recordList = Select.from(Record.class)
-                .orderBy(NamingHelper.toSQLNameDefault("mPackageName")).list();
+                .orderBy(NamingHelper.toSQLNameDefault("packageName")).list();
         List<String> packageList = new ArrayList<>();
         for (Record record : recordList) {
-            packageList.add(record.getPackageName());
+            packageList.add(record.packageName);
         }
         HashSet<String> labelSet = new HashSet<>(packageList);
         packageList.clear();
@@ -350,7 +350,7 @@ public class RecyclerLayout extends BottomSheetLayout
 
             objectList.add(new Label(packageLabel));
             for (Record record : recordList) {
-                if (record.getPackageName().equals(packageName)) {
+                if (record.packageName.equals(packageName)) {
                     Filter filter = new Filter();
                     filter.setColor(i++ % 2 == 0 ? hint : teal);
                     filter.setRecord(record);

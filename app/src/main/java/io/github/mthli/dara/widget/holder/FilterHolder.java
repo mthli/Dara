@@ -51,10 +51,10 @@ public class FilterHolder extends RecyclerView.ViewHolder implements View.OnClic
         SpannableStringBuilder builder = new SpannableStringBuilder();
         String title = mContext.getString(R.string.filter_title);
         int next = title.length();
-        if (TextUtils.isEmpty(filter.getRecord().getTitle())) {
+        if (TextUtils.isEmpty(filter.getRecord().title)) {
             title += empty;
         } else {
-            title += filter.getRecord().getTitle();
+            title += filter.getRecord().title;
         }
         builder.append(title);
         builder.setSpan(primary, 0, next, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -64,10 +64,10 @@ public class FilterHolder extends RecyclerView.ViewHolder implements View.OnClic
         builder = new SpannableStringBuilder();
         String content = mContext.getString(R.string.filter_content);
         next = content.length();
-        if (TextUtils.isEmpty(filter.getRecord().getContent())) {
+        if (TextUtils.isEmpty(filter.getRecord().content)) {
             content += empty;
         } else {
-            content += filter.getRecord().getContent();
+            content += filter.getRecord().content;
         }
         builder.append(content);
         builder.setSpan(primary, 0, next, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
