@@ -2,18 +2,15 @@ package io.github.mthli.dara.app;
 
 import android.app.ActivityManager;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import io.github.mthli.dara.R;
-import io.github.mthli.dara.util.DisplayUtils;
 import io.github.mthli.dara.widget.RecyclerLayout;
 import io.github.mthli.dara.widget.PermissionLayout;
 
@@ -84,18 +81,5 @@ public class MainActivity extends AppCompatActivity
                 .inflate(R.layout.layout_recycler, null, false);
         mContainer.removeAllViews();
         mContainer.addView(layout);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mContainer.getLayoutParams().width = (int) DisplayUtils.dp2px(this, 480.0f);
-            mContainer.requestLayout();
-        } else {
-            mContainer.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-            mContainer.requestLayout();
-        }
     }
 }

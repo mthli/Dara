@@ -1,12 +1,15 @@
 package io.github.mthli.dara.widget;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.util.DisplayUtils;
 
 public class PermissionLayout extends FrameLayout implements View.OnClickListener {
     public interface PermissionLayoutListener {
@@ -56,6 +59,20 @@ public class PermissionLayout extends FrameLayout implements View.OnClickListene
             if (mPermissionLayoutListener != null) {
                 mPermissionLayoutListener.onNeutralClick();
             }
+        }
+    }
+
+    // TODO
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getLayoutParams().width = (int) DisplayUtils.dp2px(getContext(), 480.0f);
+            requestLayout();
+        } else {
+            getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+            requestLayout();
         }
     }
 }

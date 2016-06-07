@@ -2,6 +2,7 @@ package io.github.mthli.dara.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.orm.query.Select;
@@ -48,6 +50,7 @@ public class RecyclerLayout extends BottomSheetLayout
     private MenuSheetView2 mMenuSheetView;
     private Record mRecord;
 
+    private RecyclerView mRecyclerView;
     private DaraAdapter mAdapter;
     private List<Object> mList;
 
@@ -120,10 +123,10 @@ public class RecyclerLayout extends BottomSheetLayout
         mList = new ArrayList<>();
         mAdapter = new DaraAdapter(getContext(), mList);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.addItemDecoration(new DaraItemDecoration(getContext()));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+        mRecyclerView.addItemDecoration(new DaraItemDecoration(getContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void setupRxBus() {
@@ -294,5 +297,22 @@ public class RecyclerLayout extends BottomSheetLayout
         }
 
         return objectList;
+    }
+
+    // TODO
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            width = (int) DisplayUtils.dp2px(getContext(), 480.0f);
+        }
+
+        if (mMenuSheetView.getLayoutParams() != null) {
+            mMenuSheetView.getLayoutParams().width = width;
+        }
+        mRecyclerView.getLayoutParams().width = width;
+        requestLayout();
     }
 }
