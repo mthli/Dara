@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.service.notification.StatusBarNotification;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -37,10 +36,17 @@ import rx.schedulers.Schedulers;
 
 public class EditActivity extends AppCompatActivity
         implements View.OnClickListener, EditLayout.EditLayoutListener {
-    public static final String EXTRA = "EXTRA";
+    public static final String EXTRA_PACKAGE_NAME = "EXTRA_PACKAGE_NAME";
+    public static final String EXTRA_IS_REG_EX = "EXTRA_IS_REG_EX";
+    public static final String EXTRA_TITLE = "EXTRA_TITLE";
+    public static final String EXTRA_CONTENT = "EXTRA_CONTENT";
+    public static final String EXTRA_RECORD_ID = "EXTRA_RECORD_ID";
 
-    private StatusBarNotification mStatusBarNotification;
-    private Toolbar mToolbar;
+    private String mPackageName;
+    private boolean mIsRegEx;
+    private String mTitle;
+    private String mContent;
+    private long mRecordId;
 
     private Subscription mRemovedSubscription;
 
@@ -51,10 +57,14 @@ public class EditActivity extends AppCompatActivity
         setFinishOnTouchOutside(false);
         setupTaskDescription();
 
-        mStatusBarNotification = getIntent().getParcelableExtra(EXTRA);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        ((EditLayout) findViewById(R.id.edit)).setEditLayoutListener(this);
+        mPackageName = getIntent().getStringExtra(EXTRA_PACKAGE_NAME);
+        mIsRegEx = getIntent().getBooleanExtra(EXTRA_IS_REG_EX, false);
+        mTitle = getIntent().getStringExtra(EXTRA_TITLE);
+        mContent = getIntent().getStringExtra(EXTRA_CONTENT);
+        mRecordId = getIntent().getLongExtra(EXTRA_RECORD_ID, -1);
+
         setupToolbar();
+        setupEditLayout();
         setupRxBus();
     }
 
@@ -67,26 +77,33 @@ public class EditActivity extends AppCompatActivity
     }
 
     private void setupToolbar() {
-        setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextAppearance(this, R.style.ToolbarTitleAppearance);
-        mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitleAppearance);
-        ViewCompat.setElevation(mToolbar, 0.0f);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        String packageName = mStatusBarNotification.getPackageName();
-        CharSequence appName = AppInfoUtils.getAppLabel(this, packageName);
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleAppearance);
+        toolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitleAppearance);
+        ViewCompat.setElevation(toolbar, 0.0f);
+
+        CharSequence appName = AppInfoUtils.getAppLabel(this, mPackageName);
         getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setSubtitle(AppInfoUtils.isSystemApp(this, packageName)
+        getSupportActionBar().setSubtitle(AppInfoUtils.isSystemApp(this, mPackageName)
                 ? R.string.subtitle_system_app : R.string.subtitle_user_app);
 
-        Drawable appIcon = AppInfoUtils.getAppIcon(this, packageName);
+        Drawable appIcon = AppInfoUtils.getAppIcon(this, mPackageName);
         if (appIcon != null && appIcon instanceof BitmapDrawable) {
             int dp30 = (int) DisplayUtils.dp2px(this, 30.0f);
             Bitmap bitmap = ((BitmapDrawable) appIcon).getBitmap();
             Bitmap resize = Bitmap.createScaledBitmap(bitmap, dp30, dp30, false);
             appIcon = new BitmapDrawable(getResources(), resize);
-            mToolbar.setNavigationIcon(appIcon);
-            mToolbar.setNavigationOnClickListener(this);
+            toolbar.setNavigationIcon(appIcon);
+            toolbar.setNavigationOnClickListener(this);
         }
+    }
+
+    private void setupEditLayout() {
+        EditLayout layout = (EditLayout) findViewById(R.id.edit);
+        layout.setEditLayoutListener(this);
+        layout.setInfo(mIsRegEx, mTitle, mContent);
     }
 
     private void setupRxBus() {
@@ -112,8 +129,7 @@ public class EditActivity extends AppCompatActivity
     }
 
     private void onNotificationRemovedEvent(NotificationRemovedEvent event) {
-        if (event.getStatusBarNotification().getPackageName()
-                .equals(mStatusBarNotification.getPackageName())) {
+        if (event.getStatusBarNotification().getPackageName().equals(mPackageName)) {
             if (event.getStatusBarNotification().getId()
                     == event.getStatusBarNotification().getId()) {
                 onBackPressed();
@@ -142,14 +158,13 @@ public class EditActivity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
-        String packageName = mStatusBarNotification.getPackageName();
-        ApplicationInfo info = AppInfoUtils.getAppInfo(this, packageName);
+        ApplicationInfo info = AppInfoUtils.getAppInfo(this, mPackageName);
         if (info == null) {
             return;
         }
 
         Intent intent = new Intent("android.settings.APP_NOTIFICATION_SETTINGS");
-        intent.putExtra("app_package", packageName);
+        intent.putExtra("app_package", mPackageName);
         intent.putExtra("app_uid", info.uid);
         startActivity(intent);
         onBackPressed();
@@ -162,7 +177,7 @@ public class EditActivity extends AppCompatActivity
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
                         Record record = new Record();
-                        record.packageName = mStatusBarNotification.getPackageName();
+                        record.packageName = mPackageName;
                         record.isRegEx = false;
                         record.title = TextUtils.join(" ", titleTags);
                         record.content = TextUtils.join(" ", contentTags);
@@ -203,7 +218,7 @@ public class EditActivity extends AppCompatActivity
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
                         Record record = new Record();
-                        record.packageName = mStatusBarNotification.getPackageName();
+                        record.packageName = mPackageName;
                         record.isRegEx = true;
                         record.title = titleRegEx;
                         record.content = contentRegEx;

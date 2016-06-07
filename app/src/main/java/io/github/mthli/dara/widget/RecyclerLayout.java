@@ -3,6 +3,7 @@ package io.github.mthli.dara.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Parcelable;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -116,18 +117,25 @@ public class RecyclerLayout extends BottomSheetLayout
     }
 
     private void onClickEdit() {
-        if (mRecord == null) {
-            return;
+        Intent intent = new Intent(getContext(), EditActivity.class);
+        intent.putExtra(EditActivity.EXTRA_PACKAGE_NAME, mRecord.packageName);
+        intent.putExtra(EditActivity.EXTRA_IS_REG_EX, mRecord.isRegEx);
+        if (mRecord.title != null) {
+            intent.putExtra(EditActivity.EXTRA_TITLE, mRecord.title);
+        } else {
+            intent.putExtra(EditActivity.EXTRA_TITLE, (Parcelable[]) null);
         }
-
-        // TODO
+        if (mRecord.content != null) {
+            intent.putExtra(EditActivity.EXTRA_CONTENT, mRecord.content);
+        } else {
+            intent.putExtra(EditActivity.EXTRA_TITLE, (Parcelable[]) null);
+        }
+        intent.putExtra(EditActivity.EXTRA_RECORD_ID, mRecord.getId());
+        getContext().startActivity(intent);
+        dismissSheet();
     }
 
     private void onClickDelete() {
-        if (mRecord == null) {
-            return;
-        }
-
         Observable.create(
                 new Observable.OnSubscribe<Integer>() {
                     @Override
@@ -301,8 +309,13 @@ public class RecyclerLayout extends BottomSheetLayout
         // E/JavaBinder: !!! FAILED BINDER TRANSACTION !!!
         notification.getNotification().bigContentView = null;
         notification.getNotification().headsUpContentView = null;
+
         Intent intent = new Intent(getContext(), EditActivity.class);
-        intent.putExtra(EditActivity.EXTRA, notification);
+        intent.putExtra(EditActivity.EXTRA_PACKAGE_NAME, notification.getPackageName());
+        intent.putExtra(EditActivity.EXTRA_IS_REG_EX, false);
+        intent.putExtra(EditActivity.EXTRA_TITLE, (Parcelable[]) null);
+        intent.putExtra(EditActivity.EXTRA_CONTENT, (Parcelable[]) null);
+        intent.putExtra(EditActivity.EXTRA_RECORD_ID, -1L);
         getContext().startActivity(intent);
     }
 

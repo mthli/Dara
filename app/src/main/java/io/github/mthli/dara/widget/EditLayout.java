@@ -34,6 +34,7 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
     private static final int CONTENT_COUNT_MIN = 0;
     private static final int CONTENT_COUNT_LIMIT = 5;
 
+    private SwitchCompat mSwitchCompat;
     private AppCompatEditText mTitleView;
     private AppCompatTextView mTitleCount;
     private AppCompatEditText mContentView;
@@ -58,6 +59,14 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
         mEditLayoutListener = editLayoutListener;
     }
 
+    public void setInfo(boolean isRegEx, String title, String content) {
+        mSwitchCompat.setChecked(isRegEx);
+        mTitleView.setText(title);
+        mTitleView.setSelection(mTitleView.length());
+        mContentView.setText(content);
+        mContentView.setSelection(mContentView.length());
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -66,12 +75,12 @@ public class EditLayout extends LinearLayout implements CompoundButton.OnChecked
         mTitleCount = (AppCompatTextView) findViewById(R.id.title_count);
         mContentView = (AppCompatEditText) findViewById(R.id.content);
         mContentCount = (AppCompatTextView) findViewById(R.id.content_count);
-        SwitchCompat switchRegular = (SwitchCompat) findViewById(R.id.switch_regular);
+        mSwitchCompat = (SwitchCompat) findViewById(R.id.switch_regular);
         ButtonBarLayout buttonBarLayout = (ButtonBarLayout) findViewById(R.id.button_bar);
 
         setupTitleView();
         setupContentView();
-        switchRegular.setOnCheckedChangeListener(this);
+        mSwitchCompat.setOnCheckedChangeListener(this);
         buttonBarLayout.setButtonBarLayoutListener(this);
     }
 
