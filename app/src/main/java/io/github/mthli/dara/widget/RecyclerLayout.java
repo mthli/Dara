@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
+import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.orm.query.Select;
 import com.orm.util.NamingHelper;
 
@@ -37,7 +38,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class RecyclerLayout extends FrameLayout {
+public class RecyclerLayout extends BottomSheetLayout {
     private DaraAdapter mAdapter;
     private List<Object> mList;
 
