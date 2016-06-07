@@ -27,6 +27,8 @@
     <string name="label_notification_center">Notification center</string>
 
     <!-- Menu -->
+    <string name="menu_edit">Edit</string>
+    <string name="menu_delete">Delete</string>
     <string name="menu_settings">Open app notification</string>
 
     <!-- Permission -->

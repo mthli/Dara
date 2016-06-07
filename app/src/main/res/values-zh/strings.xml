@@ -25,6 +25,8 @@
     <string name="label_notification_center">通知中心</string>
 
     <!-- Menu -->
+    <string name="menu_edit">编辑</string>
+    <string name="menu_delete">删除</string>
     <string name="menu_settings">打开应用通知设置</string>
 
     <!-- Permission -->

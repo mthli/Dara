@@ -103,7 +103,12 @@ public class RecyclerLayout extends BottomSheetLayout
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            // TODO
+            case R.id.edit:
+                // TODO
+                break;
+            case R.id.delete:
+                // TODO
+                break;
             default:
                 break;
         }
