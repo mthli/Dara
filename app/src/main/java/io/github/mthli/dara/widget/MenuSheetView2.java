@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import io.github.mthli.dara.R;
 import io.github.mthli.dara.util.DisplayUtils;
 
 /**
@@ -309,7 +310,7 @@ public class MenuSheetView2 extends FrameLayout {
                 case VIEW_TYPE_NORMAL:
                     NormalViewHolder holder;
                     if (convertView == null) {
-                        convertView = inflater.inflate(menuType == MenuType.GRID ? flipboard.bottomsheet.commons.R.layout.sheet_grid_item : flipboard.bottomsheet.commons.R.layout.sheet_list_item, parent, false);
+                        convertView = inflater.inflate(menuType == MenuType.GRID ? flipboard.bottomsheet.commons.R.layout.sheet_grid_item : R.layout.layout_item, parent, false);
                         holder = new NormalViewHolder(convertView);
                         convertView.setTag(holder);
                     } else {

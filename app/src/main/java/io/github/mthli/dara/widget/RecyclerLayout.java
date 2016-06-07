@@ -1,6 +1,7 @@
 package io.github.mthli.dara.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -8,7 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
+import android.view.MenuItem;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.orm.query.Select;
@@ -21,6 +22,9 @@ import java.util.HashSet;
 import java.util.List;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.app.EditActivity;
+import io.github.mthli.dara.event.ClickFilterEvent;
+import io.github.mthli.dara.event.ClickNoticeEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.record.Record;
@@ -36,12 +40,19 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class RecyclerLayout extends BottomSheetLayout {
+public class RecyclerLayout extends BottomSheetLayout
+        implements MenuSheetView2.OnMenuItemClickListener {
+    private MenuSheetView2 mMenuSheetView;
+    private Record mRecord;
+
     private DaraAdapter mAdapter;
     private List<Object> mList;
 
+    private Subscription mFilterSubscription;
+    private Subscription mNoticeSubscription;
     private Subscription mResponseSubscription;
 
     public RecyclerLayout(Context context) {
@@ -60,6 +71,7 @@ public class RecyclerLayout extends BottomSheetLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+        setupMenuSheetView();
         setupRecyclerView();
         setupRxBus();
         RxBus.getInstance().post(new RequestNotificationListEvent());
@@ -69,9 +81,34 @@ public class RecyclerLayout extends BottomSheetLayout {
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
+        if (mFilterSubscription != null) {
+            mFilterSubscription.unsubscribe();
+        }
+
+        if (mNoticeSubscription != null) {
+            mNoticeSubscription.unsubscribe();
+        }
+
         if (mResponseSubscription != null) {
             mResponseSubscription.unsubscribe();
         }
+    }
+
+    public void setupMenuSheetView() {
+        mMenuSheetView = new MenuSheetView2(getContext(),
+                MenuSheetView2.MenuType.LIST, null, this);
+        mMenuSheetView.inflateMenu(R.menu.menu_sheet);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            // TODO
+            default:
+                break;
+        }
+
+        return true;
     }
 
     private void setupRecyclerView() {
@@ -85,6 +122,25 @@ public class RecyclerLayout extends BottomSheetLayout {
     }
 
     private void setupRxBus() {
+        mFilterSubscription = RxBus.getInstance()
+                .toObservable(ClickFilterEvent.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ClickFilterEvent>() {
+                    @Override
+                    public void call(ClickFilterEvent event) {
+                        onClickFilterEvent(event);
+                    }
+                });
+
+        mNoticeSubscription = RxBus.getInstance().toObservable(ClickNoticeEvent.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ClickNoticeEvent>() {
+                    @Override
+                    public void call(ClickNoticeEvent event) {
+                        onClickNoticeEvent(event);
+                    }
+                });
+
         mResponseSubscription = RxBus.getInstance()
                 .toObservable(ResponseNotificationListEvent.class)
                 .subscribeOn(Schedulers.newThread())
@@ -150,6 +206,21 @@ public class RecyclerLayout extends BottomSheetLayout {
                         mAdapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    private void onClickFilterEvent(ClickFilterEvent event) {
+        mRecord = event.getFilter().getRecord();
+        showWithSheetView(mMenuSheetView);
+    }
+
+    private void onClickNoticeEvent(ClickNoticeEvent event) {
+        // Caused by: java.lang.RuntimeException: Not allowed to write file descriptors here
+        StatusBarNotification notification = event.getNotice().getNotification().clone();
+        notification.getNotification().extras = null;
+
+        Intent intent = new Intent(getContext(), EditActivity.class);
+        intent.putExtra(EditActivity.EXTRA, notification);
+        getContext().startActivity(intent);
     }
 
     private List<Notice> buildNoticeList(ResponseNotificationListEvent event) {
