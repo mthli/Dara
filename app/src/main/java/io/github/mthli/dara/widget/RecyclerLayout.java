@@ -292,6 +292,9 @@ public class RecyclerLayout extends BottomSheetLayout
         // Caused by: java.lang.RuntimeException: Not allowed to write file descriptors here
         StatusBarNotification notification = event.getNotice().getNotification().clone();
         notification.getNotification().extras = null;
+        // E/JavaBinder: !!! FAILED BINDER TRANSACTION !!!
+        notification.getNotification().bigContentView = null;
+        notification.getNotification().headsUpContentView = null;
         Intent intent = new Intent(getContext(), EditActivity.class);
         intent.putExtra(EditActivity.EXTRA, notification);
         getContext().startActivity(intent);
