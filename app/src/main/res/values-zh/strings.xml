@@ -9,10 +9,10 @@
 
     <!-- Filter -->
     <string name="filter_title">
-        标题：
+        标题&#160;
     </string>
     <string name="filter_content">
-        内容：
+        内容&#160;
     </string>
 
     <!-- Hint -->

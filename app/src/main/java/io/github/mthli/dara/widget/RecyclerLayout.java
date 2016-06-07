@@ -210,8 +210,7 @@ public class RecyclerLayout extends FrameLayout {
                 if (record.getPackageName().equals(packageName)) {
                     Filter filter = new Filter();
                     filter.setColor(i++ % 2 == 0 ? hint : teal);
-                    filter.setTitle(record.getTitle());
-                    filter.setContent(record.getContent());
+                    filter.setRecord(record);
                     objectList.add(filter);
                 }
             }

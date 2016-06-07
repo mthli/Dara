@@ -1,20 +1,19 @@
 package io.github.mthli.dara.widget.item;
 
+import io.github.mthli.dara.record.Record;
+
 public class Filter {
     private int mColor;
-    private String mTitle;
-    private String mContent;
+    private Record mRecord;
 
     public Filter() {
         mColor = 0;
-        mTitle = null;
-        mContent = null;
+        mRecord = null;
     }
 
-    public Filter(int color, String title, String content) {
+    public Filter(int color, Record record) {
         mColor = color;
-        mTitle = title;
-        mContent = content;
+        mRecord = record;
     }
 
     public int getColor() {
@@ -25,19 +24,11 @@ public class Filter {
         mColor = color;
     }
 
-    public String getTitle() {
-        return mTitle;
+    public Record getRecord() {
+        return mRecord;
     }
 
-    public void setTitle(String title) {
-        mTitle = title;
-    }
-
-    public String getContent() {
-        return mContent;
-    }
-
-    public void setContent(String content) {
-        mContent = content;
+    public void setRecord(Record record) {
+        mRecord = record;
     }
 }

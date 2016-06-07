@@ -39,10 +39,10 @@ public class FilterHolder extends RecyclerView.ViewHolder {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         String title = mContext.getString(R.string.filter_title);
         int next = title.length();
-        if (TextUtils.isEmpty(filter.getTitle())) {
+        if (TextUtils.isEmpty(filter.getRecord().getTitle())) {
             title += empty;
         } else {
-            title += filter.getTitle();
+            title += filter.getRecord().getTitle();
         }
         builder.append(title);
         builder.setSpan(primary, 0, next, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -52,10 +52,10 @@ public class FilterHolder extends RecyclerView.ViewHolder {
         builder = new SpannableStringBuilder();
         String content = mContext.getString(R.string.filter_content);
         next = content.length();
-        if (TextUtils.isEmpty(filter.getContent())) {
+        if (TextUtils.isEmpty(filter.getRecord().getContent())) {
             content += empty;
         } else {
-            content += filter.getContent();
+            content += filter.getRecord().getContent();
         }
         builder.append(content);
         builder.setSpan(primary, 0, next, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

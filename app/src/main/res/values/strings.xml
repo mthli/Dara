@@ -10,10 +10,10 @@
 
     <!-- Filter -->
     <string name="filter_title">
-        TITLE:&#160;&#160;
+        TITLE&#160;&#160;&#160;
     </string>
     <string name="filter_content">
-        CONTENT:
+        CONTENT&#160;
     </string>
     <string name="filter_empty">-</string>
     
