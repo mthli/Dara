@@ -170,6 +170,9 @@ public class RecyclerLayout extends BottomSheetLayout
     }
 
     private void setupRxBus() {
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+        }
         mSubscription = new CompositeSubscription();
 
         Subscription subscription = RxBus.getInstance()

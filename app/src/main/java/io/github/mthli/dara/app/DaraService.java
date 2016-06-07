@@ -16,12 +16,11 @@ import io.github.mthli.dara.event.UpdateRecordEvent;
 import io.github.mthli.dara.util.RxBus;
 import rx.Subscription;
 import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 public class DaraService extends NotificationListenerService {
     public static boolean sIsAlive = false;
-
-    private Subscription mRequestSubscription;
-    private Subscription mUpdateSubscription;
+    private CompositeSubscription mSubscription;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -33,20 +32,19 @@ public class DaraService extends NotificationListenerService {
     @Override
     public boolean onUnbind(Intent intent) {
         sIsAlive = false;
-
-        if (mRequestSubscription != null) {
-            mRequestSubscription.unsubscribe();
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
         }
-
-        if (mUpdateSubscription != null) {
-            mUpdateSubscription.unsubscribe();
-        }
-
         return super.onUnbind(intent);
     }
 
     private void setupRxBus() {
-        mRequestSubscription = RxBus.getInstance()
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+        }
+        mSubscription = new CompositeSubscription();
+
+        Subscription subscription = RxBus.getInstance()
                 .toObservable(RequestNotificationListEvent.class)
                 .subscribe(new Action1<RequestNotificationListEvent>() {
                     @Override
@@ -54,8 +52,9 @@ public class DaraService extends NotificationListenerService {
                         onRequestActiveNotificationsEvent();
                     }
                 });
+        mSubscription.add(subscription);
 
-        mUpdateSubscription = RxBus.getInstance()
+        subscription = RxBus.getInstance()
                 .toObservable(UpdateRecordEvent.class)
                 .subscribe(new Action1<UpdateRecordEvent>() {
                     @Override
@@ -63,6 +62,7 @@ public class DaraService extends NotificationListenerService {
                         onRequestActiveNotificationsEvent();
                     }
                 });
+        mSubscription.add(subscription);
     }
 
     private void onRequestActiveNotificationsEvent() {
