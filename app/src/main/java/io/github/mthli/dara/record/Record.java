@@ -5,6 +5,7 @@ import com.orm.dsl.Table;
 
 @Table
 public class Record extends SugarRecord {
+    private Long mId;
     private String mPackageName;
     private Boolean mIsRegEx;
     private String mTitle;
@@ -12,12 +13,14 @@ public class Record extends SugarRecord {
 
     public Record() {}
 
-    public Record(String packageName, Boolean isRegEx,
-                  String title, String content) {
-        mPackageName = packageName;
-        mIsRegEx = isRegEx;
-        mTitle = title;
-        mContent = content;
+    @Override
+    public Long getId() {
+        return mId;
+    }
+
+    @Override
+    public void setId(Long id) {
+        mId = id;
     }
 
     public String getPackageName() {
