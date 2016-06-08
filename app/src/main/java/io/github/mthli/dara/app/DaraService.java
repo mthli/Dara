@@ -1,14 +1,19 @@
 package io.github.mthli.dara.app;
 
+import android.app.Notification;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.text.TextUtils;
 
 import com.orm.query.Select;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.github.mthli.dara.event.NotificationRemovedEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
@@ -144,7 +149,30 @@ public class DaraService extends NotificationListenerService {
     }
 
     private void filterNotificationByRegEx(Record record, StatusBarNotification sbn) {
-        // TODO
+        Bundle bundle = sbn.getNotification().extras;
+
+        if (!TextUtils.isEmpty(record.title)) {
+            String title = bundle.getString(Notification.EXTRA_TITLE);
+            if (!TextUtils.isEmpty(title)) {
+                Pattern pattern = Pattern.compile(record.title);
+                Matcher matcher = pattern.matcher(title);
+                if (matcher.matches()) {
+                    cancelNotification(sbn.getKey());
+                    return;
+                }
+            }
+        }
+
+        if (!TextUtils.isEmpty(record.content)) {
+            String content = bundle.getString(Notification.EXTRA_TEXT);
+            if (!TextUtils.isEmpty(content)) {
+                Pattern pattern = Pattern.compile(record.title);
+                Matcher matcher = pattern.matcher(content);
+                if (matcher.matches()) {
+                    cancelNotification(sbn.getKey());
+                }
+            }
+        }
     }
 
     private void filterNotificationByHashTag(Record record, StatusBarNotification sbn) {
