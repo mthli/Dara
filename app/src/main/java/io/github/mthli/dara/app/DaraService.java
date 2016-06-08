@@ -78,7 +78,7 @@ public class DaraService extends NotificationListenerService {
 
                     @Override
                     public void onNext(UpdateRecordEvent event) {
-                        onRequestNotificationListEvent();
+                        onUpdateRecordEvent();
                     }
                 });
         mSubscription.add(subscription);
@@ -95,6 +95,11 @@ public class DaraService extends NotificationListenerService {
             }
         }
         RxBus.getInstance().post(new ResponseNotificationListEvent(list));
+    }
+
+    private void onUpdateRecordEvent() {
+        onRequestNotificationListEvent();
+        // TODO
     }
 
     @Override
