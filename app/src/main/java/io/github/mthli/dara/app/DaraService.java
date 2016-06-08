@@ -43,6 +43,7 @@ public class DaraService extends NotificationListenerService {
         mSubscription = new CompositeSubscription();
 
         setupRxBus();
+        requestListenerHints(HINT_HOST_DISABLE_EFFECTS);
         return super.onBind(intent);
     }
 
