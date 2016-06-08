@@ -58,6 +58,7 @@ public class RecyclerLayout extends BottomSheetLayout
     private ClickType mClickType;
 
     private CustomMenuSheetView mMenuSheetView;
+    private CustomViewTransformer mViewTransformer;
     private Record mRecord;
 
     private DaraAdapter mAdapter;
@@ -109,6 +110,7 @@ public class RecyclerLayout extends BottomSheetLayout
         mMenuSheetView = new CustomMenuSheetView(getContext(),
                 CustomMenuSheetView.MenuType.LIST, null, this);
         mMenuSheetView.inflateMenu(R.menu.menu_sheet);
+        mViewTransformer = new CustomViewTransformer();
     }
 
     @Override
@@ -316,7 +318,7 @@ public class RecyclerLayout extends BottomSheetLayout
 
     private void onClickFilterEvent(ClickFilterEvent event) {
         mRecord = event.getFilter().getRecord();
-        showWithSheetView(mMenuSheetView);
+        showWithSheetView(mMenuSheetView, mViewTransformer);
     }
 
     private void onClickNoticeEvent(ClickNoticeEvent event) {
