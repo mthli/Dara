@@ -20,6 +20,7 @@ import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.UpdateRecordEvent;
 import io.github.mthli.dara.record.Record;
+import io.github.mthli.dara.util.RegExUtils;
 import io.github.mthli.dara.util.RxBus;
 import rx.Subscriber;
 import rx.Subscription;
@@ -142,7 +143,7 @@ public class DaraService extends NotificationListenerService {
                 if (record.isRegEx) {
                     filterNotificationByRegEx(record, sbn);
                 } else {
-                    filterNotificationByHashTag(record, sbn);
+                    filterNotificationByHashTags(record, sbn);
                 }
             }
         }
@@ -154,8 +155,7 @@ public class DaraService extends NotificationListenerService {
         if (!TextUtils.isEmpty(record.title)) {
             String title = bundle.getString(Notification.EXTRA_TITLE);
             if (!TextUtils.isEmpty(title)) {
-                Pattern pattern = Pattern.compile(record.title);
-                Matcher matcher = pattern.matcher(title);
+                Matcher matcher = Pattern.compile(record.title).matcher(title);
                 if (matcher.matches()) {
                     cancelNotification(sbn.getKey());
                     return;
@@ -166,8 +166,7 @@ public class DaraService extends NotificationListenerService {
         if (!TextUtils.isEmpty(record.content)) {
             String content = bundle.getString(Notification.EXTRA_TEXT);
             if (!TextUtils.isEmpty(content)) {
-                Pattern pattern = Pattern.compile(record.title);
-                Matcher matcher = pattern.matcher(content);
+                Matcher matcher = Pattern.compile(record.content).matcher(content);
                 if (matcher.matches()) {
                     cancelNotification(sbn.getKey());
                 }
@@ -175,7 +174,33 @@ public class DaraService extends NotificationListenerService {
         }
     }
 
-    private void filterNotificationByHashTag(Record record, StatusBarNotification sbn) {
-        // TODO
+    private void filterNotificationByHashTags(Record record, StatusBarNotification sbn) {
+        Bundle bundle = sbn.getNotification().extras;
+
+        if (!TextUtils.isEmpty(record.title)) {
+            String title = bundle.getString(Notification.EXTRA_TITLE);
+            if (!TextUtils.isEmpty(title)) {
+                for (String tag : RegExUtils.getHashTags(record.title)) {
+                    tag = tag.substring("#".length());
+                    if (title.contains(tag)) {
+                        cancelNotification(sbn.getKey());
+                        return;
+                    }
+                }
+            }
+        }
+
+        if (!TextUtils.isEmpty(record.content)) {
+            String content = bundle.getString(Notification.EXTRA_TEXT);
+            if (!TextUtils.isEmpty(content)) {
+                for (String tag : RegExUtils.getHashTags(record.content)) {
+                    tag = tag.substring("#".length());
+                    if (content.contains(tag)) {
+                        cancelNotification(sbn.getKey());
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
