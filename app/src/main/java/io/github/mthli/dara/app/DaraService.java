@@ -126,17 +126,6 @@ public class DaraService extends NotificationListenerService {
         onRequestNotificationListEvent();
     }
 
-    @Override
-    public void onNotificationRankingUpdate(RankingMap rankingMap) {
-        onRequestNotificationListEvent();
-    }
-
-    @Override
-    public void onNotificationRemoved(StatusBarNotification sbn) {
-        onRequestNotificationListEvent();
-        RxBus.getInstance().post(new NotificationRemovedEvent(sbn));
-    }
-
     private void filterNotification(StatusBarNotification sbn) {
         for (Record record : mRecordList) {
             if (record.packageName.equals(sbn.getPackageName())) {
@@ -202,5 +191,16 @@ public class DaraService extends NotificationListenerService {
                 }
             }
         }
+    }
+
+    @Override
+    public void onNotificationRankingUpdate(RankingMap rankingMap) {
+        onRequestNotificationListEvent();
+    }
+
+    @Override
+    public void onNotificationRemoved(StatusBarNotification sbn) {
+        onRequestNotificationListEvent();
+        RxBus.getInstance().post(new NotificationRemovedEvent(sbn));
     }
 }
