@@ -99,7 +99,7 @@ public class DaraService extends NotificationListenerService {
 
     private void onUpdateRecordEvent() {
         onRequestNotificationListEvent();
-        // TODO
+        mRecordList = Select.from(Record.class).list();
     }
 
     @Override
