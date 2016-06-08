@@ -31,8 +31,6 @@ import io.github.mthli.dara.widget.EditLayout;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class EditActivity extends AppCompatActivity
         implements View.OnClickListener, EditLayout.EditLayoutListener {
@@ -109,7 +107,6 @@ public class EditActivity extends AppCompatActivity
     private void setupRxBus() {
         mRemovedSubscription = RxBus.getInstance()
                 .toObservable(NotificationRemovedEvent.class)
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<NotificationRemovedEvent>() {
                     @Override
                     public void onCompleted() {
@@ -189,8 +186,6 @@ public class EditActivity extends AppCompatActivity
                         subscriber.onCompleted();
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Integer>() {
                     @Override
                     public void onCompleted() {
@@ -233,8 +228,6 @@ public class EditActivity extends AppCompatActivity
                         subscriber.onCompleted();
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Integer>() {
                     @Override
                     public void onCompleted() {

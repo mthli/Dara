@@ -44,8 +44,6 @@ import io.github.mthli.dara.widget.item.Space;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 public class RecyclerLayout extends BottomSheetLayout
@@ -165,8 +163,6 @@ public class RecyclerLayout extends BottomSheetLayout
                         subscriber.onCompleted();
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Integer>() {
                     @Override
                     public void onCompleted() {
@@ -208,7 +204,6 @@ public class RecyclerLayout extends BottomSheetLayout
 
         Subscription subscription = RxBus.getInstance()
                 .toObservable(ClickFilterEvent.class)
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ClickFilterEvent>() {
                     @Override
                     public void onCompleted() {
@@ -229,7 +224,6 @@ public class RecyclerLayout extends BottomSheetLayout
 
         subscription = RxBus.getInstance()
                 .toObservable(ClickNoticeEvent.class)
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ClickNoticeEvent>() {
                     @Override
                     public void onCompleted() {
@@ -250,7 +244,6 @@ public class RecyclerLayout extends BottomSheetLayout
 
         subscription = RxBus.getInstance()
                 .toObservable(ResponseNotificationListEvent.class)
-                .subscribeOn(Schedulers.newThread())
                 .lift(new Observable.Operator<List<Notice>, ResponseNotificationListEvent>() {
                     @Override
                     public Subscriber<? super ResponseNotificationListEvent> call(final Subscriber<? super List<Notice>> subscriber) {
@@ -293,7 +286,6 @@ public class RecyclerLayout extends BottomSheetLayout
                         };
                     }
                 })
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Object>>() {
                     @Override
                     public void onCompleted() {
