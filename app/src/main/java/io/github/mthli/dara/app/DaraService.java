@@ -58,7 +58,7 @@ public class DaraService extends NotificationListenerService {
 
                     @Override
                     public void onNext(RequestNotificationListEvent event) {
-                        onRequestActiveNotificationsEvent();
+                        onRequestNotificationListEvent();
                     }
                 });
         mSubscription.add(subscription);
@@ -78,14 +78,14 @@ public class DaraService extends NotificationListenerService {
 
                     @Override
                     public void onNext(UpdateRecordEvent event) {
-                        onRequestActiveNotificationsEvent();
+                        onRequestNotificationListEvent();
                     }
                 });
         mSubscription.add(subscription);
     }
 
     // Filter isOngoing()
-    private void onRequestActiveNotificationsEvent() {
+    private void onRequestNotificationListEvent() {
         List<StatusBarNotification> list = new ArrayList<>();
         List<String> group = new ArrayList<>();
         for (StatusBarNotification notification : getActiveNotifications()) {
@@ -99,17 +99,17 @@ public class DaraService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        onRequestActiveNotificationsEvent();
+        onRequestNotificationListEvent();
     }
 
     @Override
     public void onNotificationRankingUpdate(RankingMap rankingMap) {
-        onRequestActiveNotificationsEvent();
+        onRequestNotificationListEvent();
     }
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-        onRequestActiveNotificationsEvent();
+        onRequestNotificationListEvent();
         RxBus.getInstance().post(new NotificationRemovedEvent(sbn));
     }
 }
