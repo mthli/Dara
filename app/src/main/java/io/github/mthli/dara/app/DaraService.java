@@ -116,6 +116,7 @@ public class DaraService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
+        filterNotification(sbn);
         onRequestNotificationListEvent();
     }
 
@@ -128,5 +129,25 @@ public class DaraService extends NotificationListenerService {
     public void onNotificationRemoved(StatusBarNotification sbn) {
         onRequestNotificationListEvent();
         RxBus.getInstance().post(new NotificationRemovedEvent(sbn));
+    }
+
+    private void filterNotification(StatusBarNotification sbn) {
+        for (Record record : mRecordList) {
+            if (record.packageName.equals(sbn.getPackageName())) {
+                if (record.isRegEx) {
+                    filterNotificationByRegEx(record, sbn);
+                } else {
+                    filterNotificationByHashTag(record, sbn);
+                }
+            }
+        }
+    }
+
+    private void filterNotificationByRegEx(Record record, StatusBarNotification sbn) {
+        // TODO
+    }
+
+    private void filterNotificationByHashTag(Record record, StatusBarNotification sbn) {
+        // TODO
     }
 }
