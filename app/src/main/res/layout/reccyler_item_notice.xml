@@ -4,15 +4,10 @@
              android:id="@+id/frame_notice"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
+             android:clickable="true"
              android:foreground="?attr/selectableItemBackground"
-             android:clickable="true">
+             android:background="@color/white">
 
-    <FrameLayout android:id="@+id/wrapper"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:background="@color/white">
-    </FrameLayout>
-
-    <!-- TODO badge -->
+    <!-- DO NOTHING -->
 
 </FrameLayout>
