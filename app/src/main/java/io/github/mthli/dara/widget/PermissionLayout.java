@@ -49,7 +49,7 @@ public class PermissionLayout extends FrameLayout implements View.OnClickListene
             int width = View.MeasureSpec.getSize(widthMeasureSpec);
             int dp480 = (int) DisplayUtils.dp2px(getContext(), 480.0f);
             width = width < dp480 ? width : dp480;
-            widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST);
+            widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
         }
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);

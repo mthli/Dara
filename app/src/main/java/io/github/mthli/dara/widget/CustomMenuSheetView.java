@@ -134,7 +134,7 @@ public class CustomMenuSheetView extends FrameLayout {
             ((GridView) absListView).setNumColumns((int) (width / (columnWidthDp * density)));
         }
 
-        widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST);
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
