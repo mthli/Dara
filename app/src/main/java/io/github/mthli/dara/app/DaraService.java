@@ -12,37 +12,45 @@ import io.github.mthli.dara.event.NotificationRemovedEvent;
 import io.github.mthli.dara.event.ResponseNotificationListEvent;
 import io.github.mthli.dara.event.RequestNotificationListEvent;
 import io.github.mthli.dara.event.UpdateRecordEvent;
+import io.github.mthli.dara.record.Record;
 import io.github.mthli.dara.util.RxBus;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 public class DaraService extends NotificationListenerService {
-    public static boolean sIsAlive = false;
+    public static boolean sIsAlive;
+
+    private List<Record> mRecordList;
     private CompositeSubscription mSubscription;
 
     @Override
     public IBinder onBind(Intent intent) {
-        setupRxBus();
         sIsAlive = true;
+
+        mRecordList = new ArrayList<>();
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+        }
+        mSubscription = new CompositeSubscription();
+
+        setupRxBus();
         return super.onBind(intent);
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
         sIsAlive = false;
+
+        mRecordList.clear();
         if (mSubscription != null) {
             mSubscription.unsubscribe();
         }
+
         return super.onUnbind(intent);
     }
 
     private void setupRxBus() {
-        if (mSubscription != null) {
-            mSubscription.unsubscribe();
-        }
-        mSubscription = new CompositeSubscription();
-
         Subscription subscription = RxBus.getInstance()
                 .toObservable(RequestNotificationListEvent.class)
                 .subscribe(new Subscriber<RequestNotificationListEvent>() {
@@ -88,12 +96,14 @@ public class DaraService extends NotificationListenerService {
     private void onRequestNotificationListEvent() {
         List<StatusBarNotification> list = new ArrayList<>();
         List<String> group = new ArrayList<>();
+
         for (StatusBarNotification notification : getActiveNotifications()) {
             if (!notification.isOngoing() && !group.contains(notification.getGroupKey())) {
                 group.add(notification.getGroupKey());
                 list.add(notification);
             }
         }
+
         RxBus.getInstance().post(new ResponseNotificationListEvent(list));
     }
 
