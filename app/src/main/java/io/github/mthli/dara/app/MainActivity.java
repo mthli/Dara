@@ -12,6 +12,8 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 
 import io.github.mthli.dara.R;
+import io.github.mthli.dara.event.RequestNotificationListEvent;
+import io.github.mthli.dara.util.RxBus;
 import io.github.mthli.dara.widget.RecyclerLayout;
 import io.github.mthli.dara.widget.PermissionLayout;
 
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity
         } else if (isFirstResume) {
             setupWhenPermissionGrant();
             isFirstResume = false;
+        } else {
+            RxBus.getInstance().post(new RequestNotificationListEvent());
         }
     }
 
