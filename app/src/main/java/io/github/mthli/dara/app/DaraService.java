@@ -5,6 +5,8 @@ import android.os.IBinder;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
+import com.orm.query.Select;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class DaraService extends NotificationListenerService {
     public IBinder onBind(Intent intent) {
         sIsAlive = true;
 
-        mRecordList = new ArrayList<>();
+        mRecordList = Select.from(Record.class).list();
         if (mSubscription != null) {
             mSubscription.unsubscribe();
         }
@@ -36,18 +38,6 @@ public class DaraService extends NotificationListenerService {
 
         setupRxBus();
         return super.onBind(intent);
-    }
-
-    @Override
-    public boolean onUnbind(Intent intent) {
-        sIsAlive = false;
-
-        mRecordList.clear();
-        if (mSubscription != null) {
-            mSubscription.unsubscribe();
-        }
-
-        return super.onUnbind(intent);
     }
 
     private void setupRxBus() {
@@ -110,6 +100,18 @@ public class DaraService extends NotificationListenerService {
     private void onUpdateRecordEvent() {
         onRequestNotificationListEvent();
         // TODO
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        sIsAlive = false;
+
+        mRecordList.clear();
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+        }
+
+        return super.onUnbind(intent);
     }
 
     @Override

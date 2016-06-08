@@ -80,6 +80,7 @@ public class RecyclerLayout extends BottomSheetLayout
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
         setupMenuSheetView();
         setupRecyclerView();
         setupRxBus();
@@ -337,9 +338,11 @@ public class RecyclerLayout extends BottomSheetLayout
 
     private List<Notice> buildNoticeList(ResponseNotificationListEvent event) {
         List<Notice> list = new ArrayList<>();
+
         for (StatusBarNotification notification : event.getStatusBarNotificationList()) {
             list.add(new Notice(notification));
         }
+
         return list;
     }
 
