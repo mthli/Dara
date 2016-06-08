@@ -369,7 +369,7 @@ public class RecyclerLayout extends BottomSheetLayout
             }
         });
 
-        int hint = ContextCompat.getColor(getContext(), R.color.text_hint);
+        int hint = ContextCompat.getColor(getContext(), R.color.text_20p);
         int teal = ContextCompat.getColor(getContext(), R.color.teal_500);
         int i = 0;
         for (String packageName : packageList) {
