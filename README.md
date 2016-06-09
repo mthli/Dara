@@ -5,7 +5,7 @@ Shielding notifications that you don't want to see.
 
 Support Android Lollipop and up.
 
-**UNDER DEVELOPMENT**.
+[**STOP DEVELOPMENT**](https://code.google.com/p/android/issues/detail?id=93242 "NotificationListenerService - new method beforeNoitifcationPosted(StatusBarNotification sbn)").
 
 ## License
 
